@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">SESHealthPatient</string>
+    <string name="username_txt">Username</string>
+    <string name="email_example_com">email@example.com</string>
+    <string name="password_txt">Password</string>
+    <string name="log_in_txt">Log In</string>
+    <string name="login_activity_title">Log In</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="patient_information">Patient Information</string>
+    <string name="create_data_packet">Create Data Packet</string>
+    <string name="heart_rate">Heart Rate</string>
+    <string name="record_video">Record Video</string>
+    <string name="send_local_file">Send Local File</string>
+    <string name="facilities_map">Facilities Map</string>
+
+    <string name="drawer_open">Drawer Open</string>
+    <string name="drawer_close">Drawer Close</string>
+</resources>

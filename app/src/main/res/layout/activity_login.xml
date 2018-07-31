@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="yourteamnumber.seshealthpatient.Activities.LoginActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/login_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorPrimaryDark"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:titleTextColor="@color/whiteColor"
+        />
+
+
+    <TextView
+        android:id="@+id/usernameTV"
+        style="@style/LoginStyles"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
+        android:labelFor="@+id/usernameET"
+        android:text="@string/username_txt" />
+
+    <EditText
+        android:id="@id/usernameET"
+        style="@style/LoginStyles"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:layout_toEndOf="@id/usernameTV"
+        android:hint="@string/email_example_com"
+        android:inputType="textEmailAddress" />
+
+    <TextView
+        android:id="@+id/passwordTV"
+        style="@style/LoginStyles"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@id/usernameTV"
+        android:layout_marginTop="20dp"
+        android:labelFor="@+id/passwordET"
+        android:text="@string/password_txt" />
+
+    <EditText
+        android:id="@id/passwordET"
+        style="@style/LoginStyles"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@id/usernameET"
+        android:layout_marginTop="20dp"
+        android:layout_toEndOf="@id/passwordTV"
+        android:inputType="textPassword" />
+
+    <Button
+        android:id="@+id/login_btn"
+        style="@style/LoginStyles"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/passwordTV"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="70dp"
+        android:text="@string/log_in_txt" />
+
+
+</RelativeLayout>
