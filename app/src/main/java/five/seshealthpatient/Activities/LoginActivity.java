@@ -1,4 +1,4 @@
-package 5.seshealthpatient.Activities;
+package five.seshealthpatient.Activities;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -10,7 +10,7 @@ import android.widget.EditText;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import 5.seshealthpatient.R;
+import five.seshealthpatient.R;
 
 /**
  * Class: LoginActivity

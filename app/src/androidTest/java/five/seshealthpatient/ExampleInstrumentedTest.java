@@ -1,4 +1,4 @@
-package 5.seshealthpatient;
+package five.seshealthpatient;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
