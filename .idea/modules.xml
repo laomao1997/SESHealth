@@ -2,8 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/SESHealth.iml" filepath="$PROJECT_DIR$/SESHealth.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/SE_1B_Group05.iml" filepath="$PROJECT_DIR$/SE_1B_Group05.iml" />
     </modules>
   </component>
 </project>
