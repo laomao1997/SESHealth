@@ -1,11 +1,15 @@
 package five.seshealthpatient.Activities;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.widget.EditText;
+import android.widget.ProgressBar;
+
+import com.google.firebase.auth.FirebaseAuth;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -46,7 +50,8 @@ public class LoginActivity extends AppCompatActivity {
      * log messages by having different tags on different places.
      */
     private static String TAG = "LoginActivity";
-
+    private ProgressDialog progressDialog;
+    private FirebaseAuth firebaseAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +63,12 @@ public class LoginActivity extends AppCompatActivity {
         // A reference to the toolbar, that way we can modify it as we please
         Toolbar toolbar = findViewById(R.id.login_toolbar);
         setSupportActionBar(toolbar);
+
+        // A reference to the progress bar
+        progressDialog = new ProgressDialog(this);
+
+        //Initialise firebase auth
+        firebaseAuth = FirebaseAuth.getInstance();
 
         // Please try to use more String resources (values -> strings.xml) vs hardcoded Strings.
         setTitle(R.string.login_activity_title);
@@ -85,6 +96,12 @@ public class LoginActivity extends AppCompatActivity {
         // Start a new activity
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
+    }
+
+    @OnClick(R.id.createAccount_Btn)
+    public void registerUser(){
+        // TODO: open page to allow user registration
+
     }
 
 

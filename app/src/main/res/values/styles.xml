@@ -14,4 +14,10 @@
         <item name="android:textSize">8pt</item>
     </style>
 
+    <style name="CreateAccountStyles" >
+        <item name="android:padding">5dp</item>
+        <item name="android:textSize">6pt</item>
+    </style>
+
+
 </resources>

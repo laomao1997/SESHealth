@@ -4,7 +4,8 @@
     <string name="email_example_com">email@example.com</string>
     <string name="password_txt">Password</string>
     <string name="log_in_txt">Log In</string>
-    <string name="login_activity_title">Log In</string>
+    <string name="create_account_txt">Create new account</string>
+    <string name="login_activity_title">Login To</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
