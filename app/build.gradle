@@ -37,6 +37,11 @@ dependencies {
      */
     implementation 'com.jakewharton:butterknife:8.8.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
-
+    //Firebase Authentication
+    implementation 'com.google.firebase:firebase-auth:16.0.3'
+    //Firebase Database
+    implementation 'com.google.firebase:firebase-database:16.0.1'
+    //Firebase Storage
+    implementation 'com.google.firebase:firebase-storage:16.0.1'
 }
 apply plugin: 'com.google.gms.google-services'
