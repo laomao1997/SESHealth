@@ -1,8 +1,10 @@
 package five.seshealthpatient.Activities;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -86,6 +88,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
         // the default fragment on display is the patient information
         currentState = MenuStates.PATIENT_INFO;
 
@@ -126,8 +129,7 @@ public class MainActivity extends AppCompatActivity {
                                 break;
                             case R.id.nav_data_packet:
                                 if (currentState != MenuStates.DATA_PACKET) {
-                                    ChangeFragment(new DataPacketFragment());
-                                    currentState = MenuStates.DATA_PACKET;
+                                    SentDataPacket();//Zicheng Qu, In this case, I did not use the given fragment.
                                 }
                                 break;
                             case R.id.nav_heartrate:
@@ -227,5 +229,13 @@ public class MainActivity extends AppCompatActivity {
         transaction.replace(R.id.fragment_container, fragment);
         transaction.addToBackStack(null);
         transaction.commit();
+    }
+    /*
+     * Activity SentDataPacket is created by Zicheng Qu, because currently I do not know how to use a fragment.
+     */
+    protected void SentDataPacket()
+    {
+        Intent SentDataPacket = new Intent(MainActivity.this, SentDataPacket.class);
+        startActivityForResult(SentDataPacket, 7);
     }
 }

@@ -18,4 +18,5 @@
 
     <string name="drawer_open">Drawer Open</string>
     <string name="drawer_close">Drawer Close</string>
+    <string name="title_activity_sent_data_packet">SentDataPacket</string>
 </resources>
