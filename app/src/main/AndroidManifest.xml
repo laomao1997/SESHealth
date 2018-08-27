@@ -19,6 +19,8 @@
             </intent-filter>
         </activity>
         <activity android:name="five.seshealthpatient.Activities.MainActivity"></activity>
+        <activity android:name="five.seshealthpatient.Activities.RegisterActivity"></activity>
+        <activity android:name="five.seshealthpatient.Activities.ResetPasswordActivity"></activity>
     </application>
 
 </manifest>

@@ -1,11 +1,18 @@
 <resources>
     <string name="app_name">SESHealthPatient</string>
     <string name="username_txt">Username</string>
-    <string name="email_example_com">email@example.com</string>
+    <string name="email_example_com">Email</string>
     <string name="password_txt">Password</string>
     <string name="log_in_txt">Log In</string>
     <string name="create_account_txt">Create new account</string>
     <string name="login_activity_title">Login To</string>
+    <string name="register_activity_title">Register!</string>
+    <string name="reset_password_activity_title">Reset password</string>
+    <string name="forgot_password_txt">Forgot Password?</string>
+    <string name="register_txt">Register</string>
+    <string name="reset_txt">Reset password</string>
+    <string name="back_txt">Go back</string>
+    <string name="btn_link_to_login">Already registered. Login Me!</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
@@ -19,4 +26,6 @@
 
     <string name="drawer_open">Drawer Open</string>
     <string name="drawer_close">Drawer Close</string>
+    <string name="title_activity_register">RegisterActivity</string>
+    <string name="title_activity_reset_password">ResetPasswordActivity</string>
 </resources>

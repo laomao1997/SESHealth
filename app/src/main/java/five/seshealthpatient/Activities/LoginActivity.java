@@ -1,11 +1,13 @@
 package five.seshealthpatient.Activities;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 
@@ -98,10 +100,16 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    @OnClick(R.id.createAccount_Btn)
+    @OnClick(R.id.create_account_btn)
     public void registerUser(){
-        // TODO: open page to allow user registration
+        Intent intent = new Intent(this, RegisterActivity.class);
+        startActivity(intent);
+    }
 
+    @OnClick(R.id.reset_password_btn)
+    public void resetPassword(){
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
     }
 
 
