@@ -3,6 +3,7 @@ package five.seshealthpatient.Activities;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -16,6 +17,7 @@ import android.support.v7.widget.Toolbar;
 
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 
 
 import five.seshealthpatient.Fragments.DataPacketFragment;
@@ -61,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
      * Helps to manage the fragment that is being used in the main view.
      */
     private FragmentManager fragmentManager;
+    private Button sendDataPacket;
 
     /**
      * TAG to use
@@ -100,6 +103,17 @@ public class MainActivity extends AppCompatActivity {
         ActionBar actionbar = getSupportActionBar();
         actionbar.setDisplayHomeAsUpEnabled(true);
         actionbar.setHomeAsUpIndicator(R.drawable.ic_menu);
+
+        //Temp
+        sendDataPacket = (Button) findViewById(R.id.sendDataPacket);
+        sendDataPacket.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, SendDataPacket.class);
+                startActivity(intent);
+            }
+        });
+
 
         // Setup the navigation drawer, most of this code was taken from:
         // https://developer.android.com/training/implementing-navigation/nav-drawer
@@ -228,4 +242,6 @@ public class MainActivity extends AppCompatActivity {
         transaction.addToBackStack(null);
         transaction.commit();
     }
+
+
 }
