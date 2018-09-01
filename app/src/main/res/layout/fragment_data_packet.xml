@@ -5,9 +5,38 @@
     tools:context="five.seshealthpatient.Fragments.DataPacketFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
+
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:orientation="vertical"
+        android:gravity="center"
+        android:padding="10dp">
 
+        <TextView
+            android:id="@+id/tvDataPack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:textSize="25sp"
+            android:text="Data packets" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="350dp"
+            android:padding="5dp">
+            <ListView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/listview"/>
+        </RelativeLayout>
+
+        <Button
+            android:id="@+id/btnCreateNewPack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="create new data packet" />
+
+    </LinearLayout>
 </FrameLayout>

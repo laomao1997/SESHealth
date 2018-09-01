@@ -3,15 +3,33 @@ package five.seshealthpatient.Fragments;
 
 import android.os.Bundle;
 import android.app.Fragment;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import five.seshealthpatient.Model.UserInformation;
 import five.seshealthpatient.R;
+
+import static android.content.ContentValues.TAG;
 
 /**
  * Class: PatientInformationFragment
@@ -26,14 +44,32 @@ import five.seshealthpatient.R;
  */
 public class PatientInformationFragment extends Fragment {
 
+    private static final String TAG = "MainActivity";
 
-    // Note how Butter Knife also works on Fragments, but here it is a little different
-    @BindView(R.id.blank_frag_msg)
-    TextView blankFragmentTV;
+    /**
+     * add Firebase Database stuff
+     */
+    private FirebaseDatabase mFirebaseDatabase;
+    private FirebaseAuth mAuth;
+    private FirebaseAuth.AuthStateListener mAuthListener;
+    private DatabaseReference myRef;
+    private String userID;
 
+    /**
+     * UI references
+     */
+    @BindView(R.id.tvName) TextView mName;
+    @BindView(R.id.tvEmail) TextView mEmail;
+    @BindView(R.id.tvAge) TextView mAge;
+    @BindView(R.id.tvGender) TextView mGender;
+    @BindView(R.id.tvGroup) TextView mGroup;
+    @BindView(R.id.tvBirth) TextView mBirthday;
+    @BindView(R.id.tvHeight) TextView mHeight;
+    @BindView(R.id.tvWeight) TextView mWeight;
+    @BindView(R.id.tvCondition) TextView mCondition;
+    @BindView(R.id.btnEdit) Button mButtonEdit;
 
     public PatientInformationFragment() {
-        // Required empty public constructor
     }
 
     @Override
@@ -47,6 +83,7 @@ public class PatientInformationFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_patient_information, container, false);
 
@@ -56,11 +93,87 @@ public class PatientInformationFragment extends Fragment {
         return v;
     }
 
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
 
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        // Now that the view has been created, we can use butter knife functionality
-        blankFragmentTV.setText("Welcome to this fragment");
+        //declare the database reference object. This is what we use to access the database.
+        //NOTE: Unless you are signed in, this will not be useable.
+        mAuth = FirebaseAuth.getInstance();
+        mFirebaseDatabase = FirebaseDatabase.getInstance();
+        myRef = mFirebaseDatabase.getReference();
+        FirebaseUser user = mAuth.getCurrentUser();
+        userID = user.getUid();
+
+        mAuthListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+                if (user != null) {
+                    // User is signed in
+                    Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
+                    toastMessage("Successfully signed in with: " + user.getEmail());
+                } else {
+                    // User is signed out
+                    Log.d(TAG, "onAuthStateChanged:signed_out");
+                    toastMessage("Successfully signed out.");
+                }
+                // ...
+            }
+        };
+
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // This method is called once with the initial value and again
+                // whenever data at this location is updated.
+                showData(dataSnapshot);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    /**
+     * Get data from firebase and store in local string
+     * @param dataSnapshot
+     */
+    private void showData(DataSnapshot dataSnapshot) {
+        for(DataSnapshot ds : dataSnapshot.getChildren()){
+            UserInformation uInfo = new UserInformation();
+            uInfo.setName(ds.child(userID).getValue(UserInformation.class).getName()); //set the name
+            uInfo.setEmail(ds.child(userID).getValue(UserInformation.class).getEmail()); //set the email
+            uInfo.setAge(ds.child(userID).getValue(UserInformation.class).getAge()); //set the age
+            uInfo.setGender(ds.child(userID).getValue(UserInformation.class).isGender()); //set the gender
+            uInfo.setBirthday(ds.child(userID).getValue(UserInformation.class).getBirthday()); //set the birthday
+            uInfo.setGroup(ds.child(userID).getValue(UserInformation.class).getGroup()); //set the group
+            uInfo.setHeight(ds.child(userID).getValue(UserInformation.class).getHeight()); //set the group
+            uInfo.setWeight(ds.child(userID).getValue(UserInformation.class).getWeight()); //set the group
+            uInfo.setCondition(ds.child(userID).getValue(UserInformation.class).getCondition()); //set the group
+
+            mName.setText("Name: " + uInfo.getName());
+            mEmail.setText("Email: " + uInfo.getEmail());
+            mAge.setText("Age: " + uInfo.getAge());
+            mGender.setText("Gender: " + (uInfo.isGender()?"male":"female"));
+            mBirthday.setText("Birthday: " + uInfo.getBirthday());
+            mGroup.setText("Group: " + uInfo.getGroup());
+            mHeight.setText("Height: " + uInfo.getHeight());
+            mWeight.setText("Weight: " + uInfo.getWeight());
+            mCondition.setText("Mecical condition: " + uInfo.getCondition());
+        }
+    }
+
+
+
+    /**
+     * customizable toast
+     * @param message
+     */
+    private void toastMessage(String message){
+        Toast.makeText(getActivity(),message,Toast.LENGTH_SHORT).show();
     }
 }
+
+
