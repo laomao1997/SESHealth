@@ -1,8 +1,5 @@
  Health Client Application
  =======================
- 
- developed by SE_1B_Group05
- -----------------------
 ## ClientApp
 ### Data packet updated at 2018-09-01
 #### View packet
