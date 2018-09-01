@@ -11,7 +11,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:gravity="center">
+        android:gravity="center"
+        android:padding="10dp">
 
         <TextView
             android:id="@+id/tvDataPack"
@@ -19,28 +20,23 @@
             android:layout_height="wrap_content"
             android:textAlignment="center"
             android:textSize="25sp"
-            android:text="Data packet" />
+            android:text="Data packets" />
 
-        <Space
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            tools:layout_height="5dp" />
+            android:layout_height="350dp"
+            android:padding="5dp">
+            <ListView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/listview"/>
+        </RelativeLayout>
 
         <Button
             android:id="@+id/btnCreateNewPack"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="create new data packet" />
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            tools:layout_height="5dp" />
-
-        <ListView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/listview"/>
 
     </LinearLayout>
 </FrameLayout>

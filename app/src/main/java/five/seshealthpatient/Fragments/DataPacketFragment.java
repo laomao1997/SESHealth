@@ -1,6 +1,7 @@
 package five.seshealthpatient.Fragments;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.support.annotation.NonNull;
@@ -27,6 +28,9 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
+import five.seshealthpatient.Activities.MainActivity;
+import five.seshealthpatient.Activities.SendDataPacket;
 import five.seshealthpatient.Model.DataPacket;
 import five.seshealthpatient.Model.UserInformation;
 import five.seshealthpatient.R;
@@ -134,7 +138,11 @@ public class DataPacketFragment extends Fragment {
         mListView.setAdapter(adapter);
     }
 
-
+    @OnClick(R.id.btnCreateNewPack)
+    public void CreateNewPack() {
+        Intent intent = new Intent(getActivity(), SendDataPacket.class);
+        startActivity(intent);
+    }
 
     /**
      * customizable toast
