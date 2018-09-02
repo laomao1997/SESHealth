@@ -186,28 +186,28 @@
                 android:text="Add Image" />
         </RelativeLayout>
         <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="250dp">
+        <EditText
+            android:hint="Please input the relevant text if needed."
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:id="@+id/relevantText"/>
+        <ProgressBar
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:id="@+id/progressBar"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="120dp"
+            android:visibility="invisible"/>
+        <Button
             android:layout_width="wrap_content"
-            android:layout_height="250dp">
-            <EditText
-                android:hint="Please input the relevant text if needed."
-                android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:id="@+id/relevantText"/>
-            <ProgressBar
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:id="@+id/progressBar"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="120dp"
-                android:visibility="invisible"/>
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Submit"
-                android:id="@+id/submitBtn"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentEnd="true" />
-        </RelativeLayout>
+            android:layout_height="wrap_content"
+            android:text="Submit"
+            android:id="@+id/submitBtn"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true" />
+    </RelativeLayout>
     </LinearLayout>
 
 </ScrollView>
