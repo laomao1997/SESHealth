@@ -38,6 +38,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import five.seshealthpatient.Dialog.DialogSelectFile;
 import five.seshealthpatient.Fragments.PatientInformationFragment;
 import five.seshealthpatient.Model.DataPacket;
 import five.seshealthpatient.Model.UserInformation;
@@ -48,11 +49,10 @@ public class SendDataPacket extends AppCompatActivity {
 
     @BindView(R.id.fullName) TextView tvName;
     @BindView(R.id.heartRate) TextView heartRate;
-    @BindView(R.id.heartRateBtn) Button heartRateBtn;
     @BindView(R.id.currentLocation) TextView currentLocation;
-    @BindView(R.id.currentLocationBtn) Button currentLocationBtn;
     @BindView(R.id.relevantText) EditText relevantText;
     @BindView(R.id.submitBtn) Button submitBtn;
+    @BindView(R.id.textViewChooseFile) TextView textViewChooseFile;
 
     /**
      * FireBase set
@@ -145,6 +145,14 @@ public class SendDataPacket extends AppCompatActivity {
         relevantText.setText("");
     }
 
+    @OnClick(R.id.textViewChooseFile)
+    public void ChooseFile() {
+        DialogSelectFile dialogSelectFile = new DialogSelectFile(this);
+        dialogSelectFile.show();
+        Log.d(TAG, "ChooseFile: " + dialogSelectFile.getFileChoosed());
+        textViewChooseFile.setText(dialogSelectFile.getFileChoosed());
+    }
+
     private void initGPS() {
 
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
@@ -180,6 +188,8 @@ public class SendDataPacket extends AppCompatActivity {
             startActivityForResult(intent, 1315);
         }
     }
+
+
 
     @Override
     public void onStart() {
