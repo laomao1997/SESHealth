@@ -14,6 +14,7 @@
     <string name="register_txt">Register</string>
     <string name="reset_txt">Reset password</string>
     <string name="back_txt">Go back</string>
+    <string name="signOut_txt">Sign Out</string>
     <string name="btn_link_to_login">Already registered. Login Me!</string>
 
     <!-- TODO: Remove or change this placeholder text -->
