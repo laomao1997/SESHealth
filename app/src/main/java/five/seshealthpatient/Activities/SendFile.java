@@ -1,10 +1,12 @@
 package five.seshealthpatient.Activities;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
@@ -20,8 +22,11 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.Continuation;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -36,9 +41,11 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import five.seshealthpatient.R;
 
@@ -72,13 +79,18 @@ public class SendFile extends AppCompatActivity implements ChangePhotoDialog.OnP
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private DatabaseReference myRef;
+    private StorageReference mStorageRef;
     private  String userID;
+    Task<Uri> urlTask;
 
-    private EditText imageName;
-    private Button submitBtn, addImage;
+    private TextView fileAddress;
+    private EditText imageName, fileName;
+    private Button submitBtn, addImage, addFile;
     private ImageView imageAdded;
     String time;
     String mImageName;
+    String mFileName;
+    String filePath;
 
     private static final int REQUEST_CODE = 1234;
     private static final double MB_THRESHHOLD = 5.0;
@@ -95,7 +107,7 @@ public class SendFile extends AppCompatActivity implements ChangePhotoDialog.OnP
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_send_file);
-
+        mStorageRef = FirebaseStorage.getInstance().getReference();
         findID();
 
         //declare the database reference object. NOTE: Unless you are signed in, this will not be useable.
@@ -130,6 +142,10 @@ public class SendFile extends AppCompatActivity implements ChangePhotoDialog.OnP
             }
         });
 
+        Intent intent = getIntent(); //Get filepath from FolderActivity.
+        filePath = intent.getStringExtra("filePath");
+        fileAddress.setText(filePath);
+
         addImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -140,12 +156,20 @@ public class SendFile extends AppCompatActivity implements ChangePhotoDialog.OnP
 
         });
 
+        addFile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                    Intent SendFile = new Intent(SendFile.this, FolderActivity.class);
+                    startActivityForResult(SendFile, 7);
+            }
+        });
+
         submitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                 time = df.format(new Date());
-                //Upload the New Phot
+                //Upload the New Photo
                 if(mSelectedImageUri != null){
                     mImageName = imageName.getText().toString();
                     if(mImageName.equals("")){
@@ -160,6 +184,12 @@ public class SendFile extends AppCompatActivity implements ChangePhotoDialog.OnP
                     Log.d(TAG, "onClick: test 555");
                     uploadNewPhoto(mSelectedImageBitmap);
                 }
+                mFileName = fileName.getText().toString();
+                if(mFileName.equals("")){
+                    mFileName = "Unnamed";
+                }
+                String path = getSDPath()+"/111.docx";
+                uploadfile(filePath);
             }
         });
     }
@@ -278,13 +308,13 @@ public class SendFile extends AppCompatActivity implements ChangePhotoDialog.OnP
                     //Task<Uri> firebaseURL = mySto.getDownloadUrl();
                     String firebaseURL = taskSnapshot.getMetadata().getReference().getDownloadUrl().toString();
                     Toast.makeText(SendFile.this, "Upload Success", Toast.LENGTH_SHORT).show();
-                    Log.d(TAG, "onSuccess: firebase download url : " + firebaseURL.toString());
+                    Log.d(TAG, "onSuccess: test firebase download url : " + taskSnapshot.getMetadata().getReference().getDownloadUrl());
                     FirebaseDatabase.getInstance().getReference()
                             .child("user")
                             .child(userID)
                             .child("file")
                             .child(time)
-                            .setValue(firebaseURL.toString());
+                            .setValue(firebaseURL);
                     hideDialog();
 
                 }
@@ -311,16 +341,94 @@ public class SendFile extends AppCompatActivity implements ChangePhotoDialog.OnP
         }
     }
 
+    /**
+     * Unused in this code currently.
+     * @return
+     */
+    public String getSDPath(){
+        File sdDir = null;
+        boolean sdCardExist = Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED);//Determine if an sd card exists
+        if(sdCardExist)
+        {
+            sdDir = Environment.getExternalStorageDirectory();//Get the root directory
+            Log.d(TAG, "getSDPath: test true");
+        }
+        return sdDir.toString();
+    }
+
+    private void uploadfile(String path) {
+        File newFile = new File(path);
+        String fileName = newFile.getName();
+        String suffix = fileName.substring(fileName.lastIndexOf(".") + 1);
+
+        final Uri file = Uri.fromFile(newFile);
+        final StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("fill/users/" + FirebaseAuth.getInstance().getCurrentUser().getUid()+"/"+mFileName+"."+suffix);
+        //StorageReference riversRef = storageRef.child("file/"+file.getLastPathSegment());
+        UploadTask uploadTask = null;//if the image size is valid then I can submit to database
+        uploadTask = storageReference.putFile(file);
+
+        urlTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+            @Override
+            public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                if (!task.isSuccessful()) {
+                    throw task.getException();
+                }
+
+                // Continue with the task to get the download URL
+                return storageReference.getDownloadUrl();
+            }
+        }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+            @Override
+            public void onComplete(@NonNull Task<Uri> task) {
+                if (task.isSuccessful()) {
+                    Uri downloadUri = task.getResult();
+                } else {
+                    // Handle failures
+                    // ...
+                }
+            }
+        });
+
+// Register observers to listen for when the download is done or if it fails
+        uploadTask.addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                // Handle unsuccessful uploads
+                if(file!=null) {
+                    Log.d(TAG, "onFailure: Test, upload fail, not null");
+                }
+                if(file == null) {
+                    Log.d(TAG, "onFailure: Test, upload fail, null");
+                }
+            }
+        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                Log.d(TAG, "onSuccess: Test, upload success");
+                // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
+                /*FirebaseDatabase.getInstance().getReference()
+                        .child("user")
+                        .child(userID)
+                        .child("file")
+                        .child(time)
+                        .setValue(urlTask.toString());*/
+            }
+        });
+    }
+
     private void findID() {
         imageAdded = (ImageView) findViewById(R.id.imageAdded);
         imageName = (EditText) findViewById(R.id.imageName);
         addImage = (Button) findViewById(R.id.addImage);
 
+        fileName = (EditText) findViewById(R.id.fileName);
+        fileAddress = (TextView) findViewById(R.id.fileAddress);
+        addFile = (Button) findViewById(R.id.addFile);
+
         mProgressBar = (ProgressBar) findViewById(R.id.progressBar);
 
         submitBtn = (Button) findViewById(R.id.submitBtn);
     }
-
 
     /**
      * Generalized method for asking permission. Can pass any array of permissions
@@ -360,7 +468,6 @@ public class SendFile extends AppCompatActivity implements ChangePhotoDialog.OnP
         super.onStart();
         mAuth.addAuthStateListener(mAuthListener);
     }
-
     @Override
     public void onStop() {
         super.onStop();
@@ -368,7 +475,6 @@ public class SendFile extends AppCompatActivity implements ChangePhotoDialog.OnP
             mAuth.removeAuthStateListener(mAuthListener);
         }
     }
-
     /**
      * customizable toast
      */
@@ -376,3 +482,4 @@ public class SendFile extends AppCompatActivity implements ChangePhotoDialog.OnP
         Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
     }
 }
+
