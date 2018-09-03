@@ -18,4 +18,11 @@
 
     <string name="drawer_open">Drawer Open</string>
     <string name="drawer_close">Drawer Close</string>
+
+    <string name="reset_txt">Reset password</string>
+    <string name="back_txt">Go back</string>
+    <string name="register_activity_title">Register!</string>
+    <string name="forgot_password_txt">Forgot Password?</string>
+    <string name="create_account_txt">Create new account</string>
+    <string name="register_txt">Register</string>
 </resources>

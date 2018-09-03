@@ -4,210 +4,103 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".Activities.SendDataPacket">
+
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:gravity="center"
+        android:padding="10dp">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:src="@drawable/ic_data_packet"/>
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Send Packet"
-            android:textSize="20dp"
-            android:textStyle="bold"/>
+            android:gravity="center"
+            android:layout_marginTop="10dp"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            android:text="Create new Data Packet"/>
+
         <LinearLayout
-            android:padding="20dp"
             android:layout_width="match_parent"
-            android:layout_height="80dp"
-            android:orientation="horizontal">
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="10dp">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Full Name： "
-                android:textSize="20dp"
-                android:textStyle="bold"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:text="User name："
+                android:textSize="20sp"
                 android:id="@+id/fullName"/>
-        </LinearLayout>
 
-        <LinearLayout
-            android:padding="20dp"
-            android:layout_width="match_parent"
-            android:layout_height="80dp"
-            android:orientation="horizontal">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Gender： "
-                android:textSize="20dp"
-                android:textStyle="bold"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/gender"/>
-        </LinearLayout>
-        <LinearLayout
-            android:padding="20dp"
-            android:layout_width="match_parent"
-            android:layout_height="80dp"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Age： "
-                android:textSize="20dp"
-                android:textStyle="bold"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/age"/>
-        </LinearLayout>
-        <LinearLayout
-            android:padding="20dp"
-            android:layout_width="match_parent"
-            android:layout_height="80dp"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Height: "
-                android:textSize="20dp"
-                android:textStyle="bold"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/height"/>
-        </LinearLayout>
-        <LinearLayout
-            android:padding="20dp"
-            android:layout_width="match_parent"
-            android:layout_height="80dp"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Weight: "
-                android:textSize="20dp"
-                android:textStyle="bold"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/weight"/>
-        </LinearLayout>
-        <LinearLayout
-            android:padding="20dp"
-            android:layout_width="match_parent"
-            android:layout_height="80dp"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=" Medical Condition： "
-                android:textSize="20dp"
-                android:textStyle="bold"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/medicalCondition"/>
-        </LinearLayout>
-        <LinearLayout
-            android:padding="20dp"
-            android:layout_width="match_parent"
-            android:layout_height="80dp"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=" Heart Rate： "
-                android:textSize="20dp"
-                android:textStyle="bold"/>
-            <TextView
-                android:layout_width="135dp"
-                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Heart Rate： "
+                android:textSize="20sp"
                 android:id="@+id/heartRate"/>
-            <Button
-                android:layout_width="70dp"
-                android:layout_height="wrap_content"
-                android:text="Test1"
-                android:id="@+id/heartRateBtn"/>
-        </LinearLayout>
-        <LinearLayout
-            android:padding="20dp"
-            android:layout_width="match_parent"
-            android:layout_height="80dp"
-            android:orientation="horizontal">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text=" Current Location： "
-                android:textSize="20dp"
-                android:textStyle="bold"/>
-            <TextView
-                android:layout_width="70dp"
-                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Current Location： "
+                android:textSize="20sp"
                 android:id="@+id/currentLocation"/>
-            <Button
-                android:layout_width="70dp"
-                android:layout_height="wrap_content"
-                android:text="Test2"
-                android:id="@+id/currentLocationBtn"/>
+
         </LinearLayout>
 
         <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="200dp">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp">
 
-            <ImageView
-                android:id="@+id/imageAdded"
-                android:layout_width="286dp"
-                android:layout_height="200dp"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:src="@drawable/ic_launcher_foreground" />
-
-            <EditText
-                android:layout_width="98dp"
-                android:id="@+id/imageName"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentTop="true"
-                android:hint="Image Name" />
-
-            <Button
-                android:id="@+id/addImage"
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
+                android:text="File："
+                android:textSize="20sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="end"
+                android:textSize="20sp"
+                android:text="           Choose file "
+                android:drawableRight="@drawable/ic_action_choose_file"
                 android:layout_alignParentEnd="true"
-                android:text="Add Image" />
+                android:id="@+id/textViewChooseFile" />
+
         </RelativeLayout>
-        <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="250dp">
+
         <EditText
-            android:hint="Please input the relevant text if needed."
+            android:id="@+id/relevantText"
             android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:id="@+id/relevantText"/>
-        <ProgressBar
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:id="@+id/progressBar"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="120dp"
-            android:visibility="invisible"/>
+            android:layout_height="90dp"
+            android:padding="3dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/edittext"
+            android:gravity="start|top"
+            android:hint=" Input the relevant text if needed."
+            android:inputType="textMultiLine"
+            android:singleLine="false" />
+
         <Button
+            android:id="@+id/submitBtn"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="2dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Submit"
-            android:id="@+id/submitBtn"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentEnd="true" />
-    </RelativeLayout>
+            android:text="Submit"/>
     </LinearLayout>
-
 </ScrollView>
