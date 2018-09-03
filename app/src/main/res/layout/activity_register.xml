@@ -16,14 +16,14 @@
         />
 
     <TextView
-        android:id="@+id/welcomeTV"
+        android:id="@+id/reset_password_TV"
         style="@style/HeadingStyles"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="162dp"
-        android:text="@string/app_name"
+        android:text="@string/register_txt"
         android:textStyle="bold" />
 
     <EditText
@@ -47,36 +47,24 @@
         android:inputType="textPassword" />
 
     <Button
-        android:id="@+id/reset_password_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/usernameET"
-        android:layout_below="@+id/passwordET"
-        android:layout_marginTop="-210dp"
-        android:background="@null"
-        android:text="@string/forgot_password_txt"
-        android:textAllCaps="false"
-        android:textColor="@android:color/black" />
-
-    <Button
-        android:id="@+id/login_btn"
+        android:id="@+id/register_btn"
         style="@style/LoginStyles"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="94dp"
-        android:text="@string/log_in_txt" />
+        android:layout_marginBottom="86dp"
+        android:text="@string/register_txt" />
 
     <Button
-        android:id="@+id/create_account_btn"
+        android:id="@+id/back_btn"
         style="@style/CreateAccountStyles"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="25dp"
-        android:text="@string/create_account_txt" />
+        android:text="@string/back_txt" />
 
 
 </RelativeLayout>

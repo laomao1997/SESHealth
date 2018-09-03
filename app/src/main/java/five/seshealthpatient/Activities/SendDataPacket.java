@@ -71,6 +71,8 @@ public class SendDataPacket extends AppCompatActivity {
     private LocationManager lm;// Location management
     private FusedLocationProviderClient mFusedLocationClient;
 
+    String filePath;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -118,6 +120,10 @@ public class SendDataPacket extends AppCompatActivity {
         });
 
         initGPS();
+
+        Intent intent = getIntent();
+        filePath = intent.getStringExtra("name");
+        textViewChooseFile.setText(filePath);
     }
 
     private void showData(DataSnapshot dataSnapshot) {
@@ -136,7 +142,7 @@ public class SendDataPacket extends AppCompatActivity {
             userRelevantText = "Adding relevant information to database...";
         else
             userRelevantText = relevantText.getText().toString();
-        DataPacket dPack = new DataPacket(userRelevantText, GPS, "File description", "65");
+        DataPacket dPack = new DataPacket(userRelevantText, GPS, filePath, "65");
         myRef.child("user").child(userID).child("packet").child(time).child("file").setValue(dPack.getFile());
         myRef.child("user").child(userID).child("packet").child(time).child("heartrate").setValue(dPack.getHeartrate());
         myRef.child("user").child(userID).child("packet").child(time).child("gps").setValue(dPack.getGps());
@@ -149,8 +155,6 @@ public class SendDataPacket extends AppCompatActivity {
     public void ChooseFile() {
         DialogSelectFile dialogSelectFile = new DialogSelectFile(this);
         dialogSelectFile.show();
-        Log.d(TAG, "ChooseFile: " + dialogSelectFile.getFileChoosed());
-        textViewChooseFile.setText(dialogSelectFile.getFileChoosed());
     }
 
     private void initGPS() {

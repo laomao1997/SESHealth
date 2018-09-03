@@ -1,9 +1,9 @@
 package five.seshealthpatient.Dialog;
 
 import android.app.Dialog;
-import android.app.DialogFragment;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -34,10 +34,11 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import five.seshealthpatient.Activities.SendDataPacket;
 import five.seshealthpatient.Model.DataPacket;
 import five.seshealthpatient.R;
 
-public class DialogSelectFile extends DialogFragment {
+public class DialogSelectFile extends Dialog {
 
     private static final String TAG = "DialogSelectFile";
 
@@ -206,7 +207,11 @@ public class DialogSelectFile extends DialogFragment {
 
     @OnClick(R.id.submitBtn)
     public void submit() {
-        getFileChoosed();
+        String a = getFileChoosed();
+        Intent intent = new Intent();
+        intent.putExtra("name",a);
+        intent.setClass(getContext(), SendDataPacket.class);
+        getContext().startActivity(intent);
         dismiss();
     }
 
