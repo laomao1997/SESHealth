@@ -14,6 +14,13 @@ public class DataPacket {
 
     }
 
+    public DataPacket(String text, String gps, String file, String heartrate) {
+        this.text = text;
+        this.gps = gps;
+        this.file = file;
+        this.heartrate = heartrate;
+    }
+
     public static DataPacket newInstance() {
         return newInstance();
     }

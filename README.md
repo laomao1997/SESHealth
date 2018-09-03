@@ -1,5 +1,3 @@
- Health Client Application
- =======================
 ## ClientApp
 ### Data packet 
 updated at 2018-09-01

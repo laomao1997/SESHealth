@@ -14,114 +14,93 @@
         android:gravity="center"
         android:padding="10dp">
 
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="60dp" />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:src="@drawable/ic_data_packet"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Create new data packet"
+            android:gravity="center"
+            android:layout_marginTop="10dp"
             android:textSize="30sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:text="Create new Data Packet"/>
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="5dp">
+            android:orientation="vertical"
+            android:layout_marginTop="10dp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                android:text="Name："
+                android:text="User name："
                 android:textSize="20sp"
                 android:id="@+id/fullName"/>
 
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="5dp">
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="10dp"
                 android:layout_marginTop="10dp"
                 android:text="Heart Rate： "
                 android:textSize="20sp"
                 android:id="@+id/heartRate"/>
 
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentEnd="true"
-                android:text="Test1"
-                android:id="@+id/heartRateBtn"/>
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="5dp">
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="10dp"
                 android:layout_marginTop="10dp"
                 android:text="Current Location： "
                 android:textSize="20sp"
                 android:id="@+id/currentLocation"/>
 
-            <Button
-                android:id="@+id/currentLocationBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentEnd="true"
-                android:text="Test2" />
-
-        </RelativeLayout>
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="20dp" />
+        </LinearLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:padding="5dp">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp">
 
-            <EditText
-                android:id="@+id/relevantText"
-                android:layout_width="match_parent"
-                android:layout_height="90dp"
-                android:layout_marginLeft="10dp"
-                android:background="@drawable/edittext"
-                android:gravity="start|top"
-                android:hint=" Input the relevant text if needed."
-                android:inputType="textMultiLine"
-                android:singleLine="false" />
-
-            <Button
-                android:id="@+id/submitBtn"
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
+                android:text="File："
+                android:textSize="20sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="end"
+                android:textSize="20sp"
+                android:text="           Choose file "
+                android:drawableRight="@drawable/ic_action_choose_file"
                 android:layout_alignParentEnd="true"
-                android:text="Save and submit" />
+                android:id="@+id/textViewChooseFile" />
+
         </RelativeLayout>
+
+        <EditText
+            android:id="@+id/relevantText"
+            android:layout_width="match_parent"
+            android:layout_height="90dp"
+            android:padding="3dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/edittext"
+            android:gravity="start|top"
+            android:hint=" Input the relevant text if needed."
+            android:inputType="textMultiLine"
+            android:singleLine="false" />
+
+        <Button
+            android:id="@+id/submitBtn"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="2dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Submit"/>
     </LinearLayout>
 </ScrollView>

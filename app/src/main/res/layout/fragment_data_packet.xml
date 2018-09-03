@@ -14,6 +14,12 @@
         android:gravity="center"
         android:padding="10dp">
 
+        <Button
+            android:id="@+id/btnCreateNewPack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="create new data packet" />
+
         <TextView
             android:id="@+id/tvDataPack"
             android:layout_width="wrap_content"
@@ -24,19 +30,17 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="350dp"
+            android:layout_height="match_parent"
             android:padding="5dp">
-            <ListView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:id="@+id/listview"/>
+
+            <com.baoyz.swipemenulistview.SwipeMenuListView
+                android:id="@+id/listView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
         </RelativeLayout>
 
-        <Button
-            android:id="@+id/btnCreateNewPack"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="create new data packet" />
+
 
     </LinearLayout>
 </FrameLayout>
