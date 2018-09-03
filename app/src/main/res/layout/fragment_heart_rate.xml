@@ -5,9 +5,64 @@
     tools:context="five.seshealthpatient.Fragments.HeartRateFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="535dp"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/editText3"
+            android:layout_width="match_parent"
+            android:layout_height="82dp"
+            android:ems="10"
+            android:inputType="textMultiLine"
+            android:text="This measures heart rate by analysing the colour changes in blood flow in the tip of your finger"
+            android:textAlignment="center"
+            android:textSize="16sp" />
+
+        <EditText
+            android:id="@+id/editText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textMultiLine"
+            android:singleLine="false"
+            android:text="Gently place yhe tip of your finger on the camera lens so it completely covers the lens, with your finger covering the flashlight. Hold your phone steady until reading is complete."
+            android:textAlignment="center"
+            android:textSize="16sp" />
+
+        <EditText
+            android:id="@+id/editText2"
+            android:layout_width="match_parent"
+            android:layout_height="172dp"
+            android:ems="10"
+            android:inputType="textMultiLine"
+            android:text="Useing your maximum heart rate (220 - age)* and compare to the image below:                                                       *This is just an estimate"
+            android:textAlignment="center"
+            android:textSize="16sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="bottom"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/BtnBack"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Back" />
+
+            <Button
+                android:id="@+id/BtnNext"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="got it" />
+
+        </LinearLayout>
+    </LinearLayout>
 
 </FrameLayout>
