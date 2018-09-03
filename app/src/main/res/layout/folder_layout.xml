@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#ffffff" >
+    tools:context=".Activities.FolderActivity">
+
+    <TextView
+        android:id="@+id/folder_now"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#cfd1d1"
+        android:drawableLeft="@drawable/folder_backupimg"
+        android:drawablePadding="15dp"
+        android:ellipsize="start"
+        android:gravity="center_vertical"
+        android:paddingLeft="10dp"
+        android:text="hhhhhhhh"
+        android:textColor="#060606"
+        android:textSize="16sp" />
+    <ListView android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/folder_list"
+        android:dividerHeight="1dp"
+        android:divider="#86fda2" >
+    </ListView>
+
+</LinearLayout>
