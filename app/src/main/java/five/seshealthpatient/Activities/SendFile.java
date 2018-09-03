@@ -44,6 +44,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -91,6 +92,7 @@ public class SendFile extends AppCompatActivity implements ChangePhotoDialog.OnP
     String mImageName;
     String mFileName;
     String filePath;
+    SimpleDateFormat df;
 
     private static final int REQUEST_CODE = 1234;
     private static final double MB_THRESHHOLD = 5.0;
@@ -167,7 +169,7 @@ public class SendFile extends AppCompatActivity implements ChangePhotoDialog.OnP
         submitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                 time = df.format(new Date());
                 //Upload the New Photo
                 if(mSelectedImageUri != null){
@@ -188,7 +190,6 @@ public class SendFile extends AppCompatActivity implements ChangePhotoDialog.OnP
                 if(mFileName.equals("")){
                     mFileName = "Unnamed";
                 }
-                String path = getSDPath()+"/111.docx";
                 uploadfile(filePath);
             }
         });
@@ -293,12 +294,44 @@ public class SendFile extends AppCompatActivity implements ChangePhotoDialog.OnP
 
     private void executeUploadTask(){
         showDialog();//specify where the photo will be stored
-        StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("images/users/" + FirebaseAuth.getInstance().getCurrentUser().getUid()+"/"+time+"/" + mImageName); //just replace the old image with the new one
+        final StorageReference storageReference1 = FirebaseStorage.getInstance().getReference().child("images/users/" + FirebaseAuth.getInstance().getCurrentUser().getUid()+"/"+time+"/" + mImageName); //just replace the old image with the new one
         if(mBytes.length/MB < MB_THRESHHOLD) {// Create file metadata including the content type.
             StorageMetadata metadata = new StorageMetadata.Builder().setContentType("image/jpg").setContentLanguage("en").build();
             UploadTask uploadTask = null;//if the image size is valid then I can submit to database
-            uploadTask = storageReference.putBytes(mBytes, metadata);
+            uploadTask = storageReference1.putBytes(mBytes, metadata);
             //uploadTask = storageReference.putBytes(mBytes); //without metadata
+
+            urlTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+                @Override
+                public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                    if (!task.isSuccessful()) {
+                        throw task.getException();
+                    }
+
+                    // Continue with the task to get the download URL
+                    return storageReference1.getDownloadUrl();
+                }
+            }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+                @Override
+                public void onComplete(@NonNull Task<Uri> task) {
+                    if (task.isSuccessful()) {
+
+                        Uri downloadUri = task.getResult();
+
+                        FirebaseDatabase.getInstance().getReference()
+                                .child("user")
+                                .child(userID)
+                                .child("file")
+                                .child(time)
+                                .child(mImageName)
+                                .child("jpg")
+                                .setValue(downloadUri.toString());
+                    } else {
+                        // Handle failures
+                        // ...
+                    }
+                }
+            });
 
             uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
@@ -309,12 +342,21 @@ public class SendFile extends AppCompatActivity implements ChangePhotoDialog.OnP
                     String firebaseURL = taskSnapshot.getMetadata().getReference().getDownloadUrl().toString();
                     Toast.makeText(SendFile.this, "Upload Success", Toast.LENGTH_SHORT).show();
                     Log.d(TAG, "onSuccess: test firebase download url : " + taskSnapshot.getMetadata().getReference().getDownloadUrl());
-                    FirebaseDatabase.getInstance().getReference()
+                  /*  FirebaseDatabase.getInstance().getReference()
                             .child("user")
                             .child(userID)
                             .child("file")
                             .child(time)
-                            .setValue(firebaseURL);
+                            .child("link")
+                            .setValue(firebaseURL);*/
+/*                    FirebaseDatabase.getInstance().getReference()
+                            .child("user")
+                            .child(userID)
+                            .child("file")
+                            .child(time)
+                            .child(mImageName)
+                            .child("jpg")
+                            .setValue(firebaseURL);*/
                     hideDialog();
 
                 }
@@ -359,7 +401,7 @@ public class SendFile extends AppCompatActivity implements ChangePhotoDialog.OnP
     private void uploadfile(String path) {
         File newFile = new File(path);
         String fileName = newFile.getName();
-        String suffix = fileName.substring(fileName.lastIndexOf(".") + 1);
+        final String suffix = fileName.substring(fileName.lastIndexOf(".") + 1);
 
         final Uri file = Uri.fromFile(newFile);
         final StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("fill/users/" + FirebaseAuth.getInstance().getCurrentUser().getUid()+"/"+mFileName+"."+suffix);
@@ -381,7 +423,18 @@ public class SendFile extends AppCompatActivity implements ChangePhotoDialog.OnP
             @Override
             public void onComplete(@NonNull Task<Uri> task) {
                 if (task.isSuccessful()) {
+                    Calendar c = Calendar.getInstance();
+                    c.add(Calendar.SECOND, 1);
+                    String time = df.format(c.getTime());
                     Uri downloadUri = task.getResult();
+                    FirebaseDatabase.getInstance().getReference()
+                            .child("user")
+                            .child(userID)
+                            .child("file")
+                            .child(time)
+                            .child(mFileName)
+                            .child(suffix)
+                            .setValue(downloadUri.toString());
                 } else {
                     // Handle failures
                     // ...
