@@ -146,9 +146,8 @@ public class MainActivity extends AppCompatActivity {
                                 break;
                             case R.id.nav_sendfile:
                                 if (currentState != MenuStates.SEND_FILE) {
-                                    /*ChangeFragment(new SendFileFragment());
-                                    currentState = MenuStates.SEND_FILE;*/
-                                    SentFile();
+                                    ChangeFragment(new SendFileFragment());
+                                    currentState = MenuStates.SEND_FILE;
                                 }
                                 break;
                             case R.id.nav_map:
@@ -231,10 +230,10 @@ public class MainActivity extends AppCompatActivity {
         transaction.addToBackStack(null);
         transaction.commit();
     }
-    protected void SentFile()
+    /*protected void SentFile()
     {
         Intent SendFile = new Intent(MainActivity.this, SendFile.class);
         startActivityForResult(SendFile, 7);
-    }
+    }*/
 
 }

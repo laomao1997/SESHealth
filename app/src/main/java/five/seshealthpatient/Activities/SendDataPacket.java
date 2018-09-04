@@ -41,11 +41,14 @@ import butterknife.OnClick;
 import five.seshealthpatient.Dialog.DialogSelectFile;
 import five.seshealthpatient.Fragments.PatientInformationFragment;
 import five.seshealthpatient.Model.DataPacket;
+import five.seshealthpatient.Model.FilePacket;
 import five.seshealthpatient.Model.UserInformation;
 import five.seshealthpatient.R;
 
 public class SendDataPacket extends AppCompatActivity {
     private static final String TAG = "SendDataPacket";
+
+    String file = "";
 
     @BindView(R.id.fullName) TextView tvName;
     @BindView(R.id.heartRate) TextView heartRate;
@@ -71,7 +74,7 @@ public class SendDataPacket extends AppCompatActivity {
     private LocationManager lm;// Location management
     private FusedLocationProviderClient mFusedLocationClient;
 
-    String filePath;
+    FilePacket filePacket = new FilePacket();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -121,9 +124,14 @@ public class SendDataPacket extends AppCompatActivity {
 
         initGPS();
 
+
         Intent intent = getIntent();
-        filePath = intent.getStringExtra("name");
-        textViewChooseFile.setText(filePath);
+        file += intent.getStringExtra("file");
+        Log.d(TAG, "onCreate: file: " + file);
+
+        textViewChooseFile.setText(file);
+
+
     }
 
     private void showData(DataSnapshot dataSnapshot) {
@@ -134,6 +142,10 @@ public class SendDataPacket extends AppCompatActivity {
 
     @OnClick(R.id.submitBtn)
     public void SubmitDataPacket() {
+        if(!textViewChooseFile.equals("null")) {
+            filePacket.setDate(file.substring(file.lastIndexOf("\n")+1));
+            filePacket.setFileName(file.substring(0, file.lastIndexOf("\n")));
+        }
         toastMessage("Adding relevant information to database...");
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String time = df.format(new Date());
@@ -142,7 +154,7 @@ public class SendDataPacket extends AppCompatActivity {
             userRelevantText = "Adding relevant information to database...";
         else
             userRelevantText = relevantText.getText().toString();
-        DataPacket dPack = new DataPacket(userRelevantText, GPS, filePath, "65");
+        DataPacket dPack = new DataPacket(userRelevantText, GPS, filePacket.getFileName(), "65");
         myRef.child("user").child(userID).child("packet").child(time).child("file").setValue(dPack.getFile());
         myRef.child("user").child(userID).child("packet").child(time).child("heartrate").setValue(dPack.getHeartrate());
         myRef.child("user").child(userID).child("packet").child(time).child("gps").setValue(dPack.getGps());
