@@ -138,12 +138,6 @@ public class MainActivity extends AppCompatActivity {
                                     currentState = MenuStates.HEARTRATE;
                                 }
                                 break;
-                            case R.id.nav_recordvideo:
-                                if (currentState != MenuStates.RECORD_VIDEO) {
-                                    ChangeFragment(new RecordVideoFragment());
-                                    currentState = MenuStates.RECORD_VIDEO;
-                                }
-                                break;
                             case R.id.nav_sendfile:
                                 if (currentState != MenuStates.SEND_FILE) {
                                     ChangeFragment(new SendFileFragment());
@@ -230,10 +224,19 @@ public class MainActivity extends AppCompatActivity {
         transaction.addToBackStack(null);
         transaction.commit();
     }
+
     /*protected void SentFile()
     {
         Intent SendFile = new Intent(MainActivity.this, SendFile.class);
         startActivityForResult(SendFile, 7);
     }*/
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent i= new Intent(Intent.ACTION_MAIN);
+        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        i.addCategory(Intent.CATEGORY_HOME);
+        startActivity(i);
+    }
 }

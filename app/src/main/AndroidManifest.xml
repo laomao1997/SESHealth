@@ -27,7 +27,13 @@
         <activity android:name=".Activities.ResetPasswordActivity" />
         <activity android:name=".Activities.RegisterActivity" />
         <activity android:name=".Activities.MainActivity" />
-        <activity android:name=".Activities.SendDataPacket" />
+        <activity android:name=".Activities.SendDataPacket"
+            android:parentActivityName=".Activities.MainActivity">
+            <!-- The meta-data tag is required if you support API level 15 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Activities.MainActivity" />
+        </activity>
         <activity android:name=".Activities.SendFile" />
         <activity android:name=".Activities.FolderActivity"></activity>
     </application>

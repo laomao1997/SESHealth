@@ -154,6 +154,7 @@ public class PatientInformationFragment extends Fragment {
             uInfo.setCondition(ds.child(userID).getValue(UserInformation.class).getCondition()); //set the group
 
             mName.setText("Name: " + uInfo.getName());
+            getActivity().setTitle(uInfo.getName() + " Information");
             mEmail.setText("Email: " + uInfo.getEmail());
             mAge.setText("Age: " + uInfo.getAge());
             mGender.setText("Gender: " + (uInfo.isGender()?"male":"female"));

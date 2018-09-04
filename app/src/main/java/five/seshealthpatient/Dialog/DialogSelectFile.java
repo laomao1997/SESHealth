@@ -168,11 +168,20 @@ public class DialogSelectFile extends Dialog {
         final List<Map<String, Object>> datas=new ArrayList<Map<String, Object>>();
         for(DataSnapshot ds : dataSnapshot.child("user").child(userID).child("file").getChildren()){
             String date = ds.getKey();
-            String fileName = ds.child("name").getValue(String.class);
-            String link = ds.child("link").getValue(String.class);
+            String fileName = "";
+            String suffix = "";
+            String link = "";
+            for(DataSnapshot dss : ds.getChildren()) {
+                fileName = dss.getKey();
+                for(DataSnapshot dsss : dss.getChildren()) {
+                    suffix = dsss.getKey();
+                }
+                link = dss.child(suffix).getValue(String.class);
+            }
             Map map = new HashMap();
             map.put("date", date);
             map.put("fileName", fileName);
+            map.put("suffix", suffix);
             map.put("link", link);
             datas.add(map);
             // array.add(record);
@@ -197,8 +206,9 @@ public class DialogSelectFile extends Dialog {
                         // Remove data
                         // Remove pack from online database
                         String date = datas.get(position).get("date").toString();
-                        myRef.child("user").child(userID).child("file").child(date).child("link").setValue(null);
-                        myRef.child("user").child(userID).child("file").child(date).child("name").setValue(null);
+                        String fileName = datas.get(position).get("fileName").toString();
+                        String suffix = datas.get(position).get("suffix").toString();
+                        myRef.child("user").child(userID).child("file").child(date).child(fileName).child(suffix).setValue(null);
 
                         // Remove item from ListView
                         datas.remove(position);
