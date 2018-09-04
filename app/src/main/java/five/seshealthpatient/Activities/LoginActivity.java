@@ -48,6 +48,12 @@ public class LoginActivity extends AppCompatActivity {
     @BindView(R.id.passwordET)
     EditText passwordEditText;
 
+    @BindView(R.id.reset_password_btn)
+    Button resetPasswordButton;
+
+    @BindView(R.id.create_account_btn)
+    Button createAccountButton;
+
     /**
      * It is helpful to create a tag for every activity/fragment. It will be easier to understand
      * log messages by having different tags on different places.
@@ -83,7 +89,7 @@ public class LoginActivity extends AppCompatActivity {
                 if(user != null) {
                     Log.d(TAG, "onAuthStateChanged:signed_in" + user.getUid());
                     toastMessage("Successfully signed in with: " + user.getEmail());
-                    startActivity();
+                    startLog();
                 }
                 else {
                     Log.d(TAG, "onAuthStateChanged:signed_out");
@@ -100,27 +106,43 @@ public class LoginActivity extends AppCompatActivity {
      */
     @OnClick(R.id.login_btn)
     public void LogIn() {
-        String username = "jinghao1997@outlook.com";
-        String password = "12345678";
+        String username = usernameEditText.getText().toString();
+        String password = passwordEditText.getText().toString();
 
         // TODO: For now, the login button will simply print on the console the username/password and let you in
         // TODO: It is up to you guys to implement a proper login system
 
         // Having a tag, and the name of the function on the console message helps allot in
         // knowing where the message should appear.
-        Log.d(TAG, "LogIn: username: " + username + " password: " + password);
+        if(!username.equals("")&&!password.equals("")){
+            Log.d(TAG, "LogIn: username: " + username + " password: " + password);
 
-        String email = "jinghao1997@outlook.com";
-        String pass = "12345678";
-        mAuth.signInWithEmailAndPassword(username, password);
+            mAuth.signInWithEmailAndPassword(username, password);
+        }
 
 
+    }
+
+    @OnClick(R.id.reset_password_btn)
+    public void ResetPassword() {
+        usernameEditText.setText("");
+        passwordEditText.setText("");
+        Intent intent = new Intent(this, ResetPasswordActivity.class);
+        startActivity(intent);
+    }
+
+    @OnClick(R.id.create_account_btn)
+    public void createAccount() {
+        usernameEditText.setText("");
+        passwordEditText.setText("");
+        Intent intent = new Intent(this, RegisterActivity.class);
+        startActivity(intent);
     }
 
     /**
      * Start a new activity
      */
-    public void startActivity() {
+    public void startLog() {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
