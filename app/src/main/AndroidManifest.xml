@@ -24,6 +24,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".Activities.ResetPasswordActivity" />
+        <activity android:name=".Activities.RegisterActivity" />
         <activity android:name=".Activities.MainActivity" />
         <activity android:name=".Activities.SendDataPacket" />
         <activity android:name=".Activities.SendFile" />

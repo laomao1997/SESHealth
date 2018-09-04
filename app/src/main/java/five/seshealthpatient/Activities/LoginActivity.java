@@ -1,5 +1,6 @@
 package five.seshealthpatient.Activities;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -127,8 +128,9 @@ public class LoginActivity extends AppCompatActivity {
     public void ResetPassword() {
         usernameEditText.setText("");
         passwordEditText.setText("");
-        Intent intent = new Intent(this, ResetPasswordActivity.class);
-        startActivity(intent);
+        Intent intentResetPass = new Intent(LoginActivity.this, ResetPasswordActivity.class);
+        intentResetPass.putExtra("resetPass", "0");
+        startActivity(intentResetPass);
     }
 
     @OnClick(R.id.create_account_btn)
