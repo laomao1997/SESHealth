@@ -5,7 +5,7 @@
     <string name="password_txt">Password</string>
     <string name="log_in_txt">Log In</string>
     <string name="create_account_txt">Create new account</string>
-    <string name="login_activity_title">Login To</string>
+    <string name="login_activity_title">Login</string>
     <string name="minimum_password">Password too short, enter minimum 6 characters!</string>
     <string name="auth_failed">Authentication failed, check your email and password or sign up</string>
     <string name="register_activity_title">Register!</string>

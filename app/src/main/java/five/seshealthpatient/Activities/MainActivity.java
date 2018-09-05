@@ -15,7 +15,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 
 
-
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -161,8 +161,7 @@ public class MainActivity extends AppCompatActivity {
                             case R.id.nav_signout:
                                 FirebaseAuth.getInstance().signOut();
                                 finish();
-                                //Intent intent = new Intent(this, LoginActivity.class);
-                                //startActivity(intent);
+                                signOut();
                         }
 
                         return true;
@@ -236,5 +235,10 @@ public class MainActivity extends AppCompatActivity {
         transaction.replace(R.id.fragment_container, fragment);
         transaction.addToBackStack(null);
         transaction.commit();
+    }
+    // Start login activity once signed out
+    private void signOut(){
+        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+        startActivity(intent);
     }
 }
