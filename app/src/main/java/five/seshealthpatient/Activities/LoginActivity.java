@@ -1,19 +1,24 @@
 package five.seshealthpatient.Activities;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -49,23 +54,13 @@ public class LoginActivity extends AppCompatActivity {
     @BindView(R.id.passwordET)
     EditText passwordEditText;
 
-    @BindView(R.id.reset_password_btn)
-    Button resetPasswordButton;
-
-    @BindView(R.id.create_account_btn)
-    Button createAccountButton;
-
     /**
      * It is helpful to create a tag for every activity/fragment. It will be easier to understand
      * log messages by having different tags on different places.
      */
     private static String TAG = "LoginActivity";
-
-    /**
-     * Firebase Instance
-     */
-    private FirebaseAuth mAuth;
-    private FirebaseAuth.AuthStateListener mAuthListener;
+    private ProgressDialog progressDialog;
+    private FirebaseAuth firebaseAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,26 +73,21 @@ public class LoginActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.login_toolbar);
         setSupportActionBar(toolbar);
 
+        // A reference to the progress bar
+        progressDialog = new ProgressDialog(this);
+
+        //Initialise firebase auth
+        firebaseAuth = FirebaseAuth.getInstance();
+
         // Please try to use more String resources (values -> strings.xml) vs hardcoded Strings.
         setTitle(R.string.login_activity_title);
 
-        mAuth = FirebaseAuth.getInstance();
+        if (firebaseAuth.getCurrentUser() != null) {
+            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+            finish();
+        }
+        firebaseAuth = FirebaseAuth.getInstance();
 
-        mAuthListener = new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                FirebaseUser user = firebaseAuth.getCurrentUser();
-                if(user != null) {
-                    Log.d(TAG, "onAuthStateChanged:signed_in" + user.getUid());
-                    toastMessage("Successfully signed in with: " + user.getEmail());
-                    startLog();
-                }
-                else {
-                    Log.d(TAG, "onAuthStateChanged:signed_out");
-                    toastMessage("Successfully signed out.");
-                }
-            }
-        };
     }
 
 
@@ -108,66 +98,56 @@ public class LoginActivity extends AppCompatActivity {
     @OnClick(R.id.login_btn)
     public void LogIn() {
         String username = usernameEditText.getText().toString();
-        String password = passwordEditText.getText().toString();
-
-        // TODO: For now, the login button will simply print on the console the username/password and let you in
-        // TODO: It is up to you guys to implement a proper login system
+        final String password = passwordEditText.getText().toString();
 
         // Having a tag, and the name of the function on the console message helps allot in
         // knowing where the message should appear.
-        if(!username.equals("")&&!password.equals("")){
-            Log.d(TAG, "LogIn: username: " + username + " password: " + password);
+        Log.d(TAG, "LogIn: username: " + username + " password: " + password);
 
-            mAuth.signInWithEmailAndPassword(username, password);
+        //Check username is entered
+        if (TextUtils.isEmpty(username)){
+            Toast.makeText(getApplicationContext(), "Enter email address!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        //Check password is entered
+        if (TextUtils.isEmpty(password)){
+            Toast.makeText(getApplicationContext(), "Enter password!", Toast.LENGTH_SHORT).show();
+            return;
         }
 
-
-    }
-
-    @OnClick(R.id.reset_password_btn)
-    public void ResetPassword() {
-        usernameEditText.setText("");
-        passwordEditText.setText("");
-        Intent intentResetPass = new Intent(LoginActivity.this, ResetPasswordActivity.class);
-        intentResetPass.putExtra("resetPass", "0");
-        startActivity(intentResetPass);
+        //authenticate user
+        firebaseAuth.signInWithEmailAndPassword(username, password)
+                .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (!task.isSuccessful()) {
+                            // there was an error
+                            if (password.length() < 6) {
+                                passwordEditText.setError(getString(R.string.minimum_password));
+                            } else {
+                                Toast.makeText(LoginActivity.this, getString(R.string.auth_failed), Toast.LENGTH_LONG).show();
+                            }
+                        } else {
+                            // Start a new activity
+                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                            startActivity(intent);
+                            finish();
+                        }
+                    }
+                });
     }
 
     @OnClick(R.id.create_account_btn)
-    public void createAccount() {
-        usernameEditText.setText("");
-        passwordEditText.setText("");
+    public void registerUser(){
         Intent intent = new Intent(this, RegisterActivity.class);
         startActivity(intent);
     }
 
-    /**
-     * Start a new activity
-     */
-    public void startLog() {
-        Intent intent = new Intent(this, MainActivity.class);
+    @OnClick(R.id.reset_password_btn)
+    public void resetPassword(){
+        Intent intent = new Intent(this, ResetPasswordActivity.class);
         startActivity(intent);
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        mAuth.addAuthStateListener(mAuthListener);
-    }
 
-    @Override
-    public void onStop() {
-        super.onStop();
-        if(mAuthListener != null) {
-            mAuth.removeAuthStateListener(mAuthListener);
-        }
-    }
-
-    /**
-     * add a toast to show when successfully signed in
-     * @param message
-     */
-    private void toastMessage(String message) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
-    }
 }
