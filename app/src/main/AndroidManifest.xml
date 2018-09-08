@@ -17,6 +17,7 @@
             </intent-filter>
         </activity>
         <activity android:name="five.seshealthpatient.Activities.MainActivity"></activity>
+        <activity android:name=".Fragments.HeartRateFragment" />
     </application>
 
 </manifest>
