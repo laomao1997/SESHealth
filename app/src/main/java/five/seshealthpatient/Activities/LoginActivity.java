@@ -97,8 +97,14 @@ public class LoginActivity extends AppCompatActivity {
      */
     @OnClick(R.id.login_btn)
     public void LogIn() {
-        String username = usernameEditText.getText().toString();
-        final String password = passwordEditText.getText().toString();
+        // String username = usernameEditText.getText().toString();
+        // final String password = passwordEditText.getText().toString();
+
+        /**
+         * for test auth
+         */
+        String username = "jinghao1997@outlook.com";
+        final String password = "12345678";
 
         // Having a tag, and the name of the function on the console message helps allot in
         // knowing where the message should appear.

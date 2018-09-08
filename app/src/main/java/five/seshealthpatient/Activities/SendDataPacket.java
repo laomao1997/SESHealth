@@ -65,7 +65,7 @@ public class SendDataPacket extends AppCompatActivity {
     private FirebaseAuth.AuthStateListener mAuthListener;
     private DatabaseReference myRef;
     private String userID;
-    private String userLocation;
+
 
     /**
      * GPS location set
