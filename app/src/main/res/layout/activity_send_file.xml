@@ -6,9 +6,19 @@
     android:layout_height="match_parent"
     tools:context=".Activities.SendFile">
 
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/registerInfor_toolbar"
+        app:title="Send File!"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorPrimaryDark"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:titleTextColor="@color/whiteColor"
+        />
+
     <RelativeLayout
         android:layout_width="wrap_content"
-        android:layout_height="200dp"
+        android:layout_height="150dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
         android:layout_marginBottom="159dp">
@@ -22,7 +32,7 @@
         <EditText
             android:id="@+id/imageName"
             android:layout_width="98dp"
-            android:layout_height="157dp"
+            android:layout_height="100dp"
             android:layout_alignParentEnd="true"
             android:layout_alignParentTop="true"
             android:hint="Image Name" />
@@ -38,19 +48,24 @@
 
     <RelativeLayout
         android:layout_width="wrap_content"
-        android:layout_height="200dp"
-        android:layout_marginBottom="160dp">
+        android:layout_height="150dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="74dp">
 
         <TextView
+            android:id="@+id/fileAddress"
             android:layout_width="270dp"
             android:layout_height="150dp"
-            android:id="@+id/fileAddress"
-            android:text="File Local Address"/>
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:gravity="center"
+            android:text="File Local Address" />
 
         <EditText
             android:id="@+id/fileName"
             android:layout_width="98dp"
-            android:layout_height="149dp"
+            android:layout_height="100dp"
             android:layout_alignParentEnd="true"
             android:layout_alignParentTop="true"
             android:hint="File Name" />
@@ -77,6 +92,14 @@
             android:layout_above="@+id/submitBtn"
             android:layout_centerHorizontal="true"
             android:visibility="invisible" />
+
+        <Button
+            android:id="@+id/returnBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true"
+            android:text="Return" />
 
         <Button
             android:id="@+id/submitBtn"

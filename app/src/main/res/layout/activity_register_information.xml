@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activities.RegisterInformation">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="650dp">
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/registerInfor_toolbar"
+            app:title="Register Information!"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/colorPrimaryDark"
+            android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+            app:titleTextColor="@color/whiteColor"
+            />
+
+        <TextView
+            style="@style/HeadingStyles"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/registerInfor_toolbar"
+            android:text="Name: "
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/nameInfor"
+            style="@style/HeadingStyles"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@+id/registerInfor_toolbar"
+            android:hint="Please input your name here."
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/emailInfor"
+            style="@style/HeadingStyles"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="105dp"
+            android:text="Email: "
+            android:textStyle="bold" />
+
+        <TextView
+            style="@style/HeadingStyles"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="156dp"
+            android:text="Age: "
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/ageInfor"
+            style="@style/HeadingStyles"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignStart="@+id/nameInfor"
+            android:layout_marginTop="155dp"
+            android:hint="Please input your age here."
+            android:textStyle="bold" />
+
+        <TextView
+            style="@style/HeadingStyles"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="210dp"
+            android:text="Gender: "
+            android:textStyle="bold" />
+
+
+
+        <Switch
+            android:id="@+id/genderInfor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginEnd="121dp"
+            android:layout_marginTop="215dp"
+            android:textOff="Female"
+            android:textOn="Male"
+            android:showText="true"
+            android:text="Switch" />
+
+        <TextView
+            android:id="@+id/group"
+            style="@style/HeadingStyles"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="270dp"
+            android:text="Group: "
+            android:textStyle="bold" />
+
+
+        <Switch
+            android:id="@+id/groupInfor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/genderInfor"
+            android:layout_alignTop="@+id/group"
+            android:textOff="Doctor"
+            android:textOn="Patient"
+            android:showText="true"
+            android:text="Switch" />
+
+        <TextView
+            android:id="@+id/birthday"
+            style="@style/HeadingStyles"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="330dp"
+            android:text="Birthday: "
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/birthdayInfor"
+            style="@style/HeadingStyles"
+            android:layout_width="271dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignTop="@+id/birthday"
+            android:hint="Eg: 01 Aug 2000"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/height"
+            style="@style/HeadingStyles"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/birthdayInfor"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="4dp"
+            android:text="Height: "
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/heightInfor"
+            style="@style/HeadingStyles"
+            android:layout_width="291dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignTop="@+id/height"
+            android:hint="Please input your height."
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/weight"
+            style="@style/HeadingStyles"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/height"
+            android:text="Weight: "
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/weightInfor"
+            style="@style/HeadingStyles"
+            android:layout_width="291dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignTop="@+id/weight"
+            android:hint="Please input your weight."
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/mc"
+            style="@style/HeadingStyles"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="450dp"
+            android:text="Medical Condition: "
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/medicalConditionInfor"
+            style="@style/HeadingStyles"
+            android:layout_width="379dp"
+            android:layout_height="85dp"
+            android:layout_below="@+id/mc"
+            android:layout_centerHorizontal="true"
+            android:hint="Please input your medical condition here."
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/submitBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:text="Submit" />
+
+    </RelativeLayout>
+
+
+
+</ScrollView>

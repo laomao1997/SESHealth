@@ -86,7 +86,7 @@ public class SendFile extends AppCompatActivity implements ChangePhotoDialog.OnP
 
     private TextView fileAddress;
     private EditText imageName, fileName;
-    private Button submitBtn, addImage, addFile;
+    private Button submitBtn, addImage, addFile, returnBtn;
     private ImageView imageAdded;
     String time;
     String mImageName;
@@ -192,6 +192,15 @@ public class SendFile extends AppCompatActivity implements ChangePhotoDialog.OnP
                     mFileName = "Unnamed";
                 }
                 if(filePath!=null) uploadfile(filePath);
+            }
+        });
+
+        returnBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent();
+                intent.setClass(SendFile.this,MainActivity.class);
+                SendFile.this.startActivity(intent);
             }
         });
     }
@@ -482,6 +491,7 @@ public class SendFile extends AppCompatActivity implements ChangePhotoDialog.OnP
 
         mProgressBar = (ProgressBar) findViewById(R.id.progressBar);
 
+        returnBtn = (Button) findViewById(R.id.returnBtn);
         submitBtn = (Button) findViewById(R.id.submitBtn);
     }
 

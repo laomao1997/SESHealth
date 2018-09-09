@@ -103,8 +103,10 @@ public class LoginActivity extends AppCompatActivity {
         /**
          * for test auth
          */
-        String username = "jinghao1997@outlook.com";
-        final String password = "12345678";
+        /*String username = "jinghao1997@outlook.com";
+        final String password = "12345678";*/
+        String username = usernameEditText.getText().toString();
+        final String password = passwordEditText.getText().toString();
 
         // Having a tag, and the name of the function on the console message helps allot in
         // knowing where the message should appear.
