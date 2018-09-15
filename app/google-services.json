@@ -23,6 +23,14 @@
           }
         },
         {
+          "client_id": "728958832217-7ju1ckkn4tssh7rr0udqifftoa29psrr.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "five.seshealthpatient",
+            "certificate_hash": "f295e55bf74a2f9e071e59aaa3ab0ccf9d3a1cf2"
+          }
+        },
+        {
           "client_id": "728958832217-cf6l802sqsfe254u892cjpc1j2djg5bu.apps.googleusercontent.com",
           "client_type": 3
         }

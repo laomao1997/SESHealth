@@ -45,7 +45,7 @@ dependencies {
     //Firebase Authentication
     implementation 'com.google.firebase:firebase-auth:16.0.3'
     //Firebase Database
-    implementation 'com.google.firebase:firebase-database:16.0.1'
+    implementation 'com.google.firebase:firebase-database:16.0.2'
     //Firebase Storage
     implementation 'com.google.firebase:firebase-storage:16.0.1'
 
