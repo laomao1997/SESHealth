@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">SESHealthPatient</string>
     <string name="username_txt">Username</string>
-    <string name="email_example_com">Email</string>
+    <string name="email_example_com">email@example.com</string>
     <string name="password_txt">Password</string>
     <string name="log_in_txt">Log In</string>
     <string name="create_account_txt">Create new account</string>
@@ -19,7 +19,6 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-
     <string name="patient_information">Patient Information</string>
     <string name="create_data_packet">Create Data Packet</string>
     <string name="heart_rate">Heart Rate</string>
@@ -29,6 +28,5 @@
 
     <string name="drawer_open">Drawer Open</string>
     <string name="drawer_close">Drawer Close</string>
-    <string name="title_activity_register">RegisterActivity</string>
-    <string name="title_activity_reset_password">ResetPasswordActivity</string>
+
 </resources>

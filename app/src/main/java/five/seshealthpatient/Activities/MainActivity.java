@@ -1,6 +1,5 @@
 package five.seshealthpatient.Activities;
 
-import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
@@ -18,6 +17,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -163,7 +163,6 @@ public class MainActivity extends AppCompatActivity {
                                 finish();
                                 signOut();
                         }
-
                         return true;
                     }
                 });

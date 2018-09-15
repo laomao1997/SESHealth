@@ -9,19 +9,9 @@
     </style>
 
 
-    <style name="LoginStyles">
+    <style name="LoginStyles" >
         <item name="android:padding">5dp</item>
         <item name="android:textSize">8pt</item>
-    </style>
-
-    <style name="CreateAccountStyles">
-        <item name="android:padding">5dp</item>
-        <item name="android:textSize">6pt</item>
-    </style>
-
-    <style name="ForgotPasswordStyles">
-        <item name="android:padding">5dp</item>
-        <item name="android:textSize">5pt</item>
     </style>
 
     <style name="HeadingStyles">
@@ -29,8 +19,9 @@
         <item name="android:textSize">10pt</item>
     </style>
 
-    <style name="AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-
-    <style name="PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="CreateAccountStyles">
+        <item name="android:padding">5dp</item>
+        <item name="android:textSize">6pt</item>
+    </style>
 
 </resources>
