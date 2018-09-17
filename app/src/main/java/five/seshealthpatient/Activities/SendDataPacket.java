@@ -44,7 +44,7 @@ import five.seshealthpatient.Model.DataPacket;
 import five.seshealthpatient.Model.UserInformation;
 import five.seshealthpatient.R;
 
-public class SendDataPacket extends AppCompatActivity {
+public class   SendDataPacket extends AppCompatActivity {
     private static final String TAG = "SendDataPacket";
 
     @BindView(R.id.fullName) TextView tvName;
