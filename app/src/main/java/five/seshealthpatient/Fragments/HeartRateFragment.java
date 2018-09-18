@@ -46,7 +46,7 @@ public class HeartRateFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View v = inflater.inflate(R.layout.fragment_patient_information, container, false);
+        View v = inflater.inflate(R.layout.heartrate_measure, container, false);
 
         // Note how we are telling butter knife to bind during the on create view method
         ButterKnife.bind(this, v);

@@ -85,7 +85,7 @@ public class HeartRate_MainActivity extends AppCompatActivity {
         PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
         wakeLock = pm.newWakeLock(PowerManager.FULL_WAKE_LOCK, "DoNotDimScreen");
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         Intent intentThatStartedThisActivity = getIntent();
         if(intentThatStartedThisActivity.hasExtra("age")){
