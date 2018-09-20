@@ -16,6 +16,19 @@
     <string name="back_txt">Go back</string>
     <string name="signOut_txt">Sign Out</string>
     <string name="btn_link_to_login">Already registered. Login Me!</string>
+    <string name="btn_confirm">Confirm</string>
+    <string name="btn_exit">Exit</string>
+    <string name="name_txt">Enter name</string>
+    <string name="email_txt">Enter email</string>
+    <string name="age_txt">Enter age</string>
+    <string name="gender_txt">Enter gender</string>
+    <string name="birth_txt">Enter D.O.B</string>
+    <string name="height_txt">Enter height</string>
+    <string name="weight_txt">Enter weight</string>
+    <string name="condition_txt">Enter medical condition</string>
+    <string name="doctor_txt">Doctor</string>
+    <string name="patient_txt">Patient</string>
+
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

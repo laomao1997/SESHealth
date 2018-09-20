@@ -5,7 +5,6 @@ package five.seshealthpatient.Model;
  */
 
 public class UserInformation {
-
     private String name;
     private String email;
     private String age;

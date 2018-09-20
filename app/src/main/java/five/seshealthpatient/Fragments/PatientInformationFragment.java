@@ -1,6 +1,8 @@
 package five.seshealthpatient.Fragments;
 
 
+import android.app.FragmentManager;
+import android.content.Intent;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.support.annotation.NonNull;
@@ -26,6 +28,8 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
+import five.seshealthpatient.Activities.LoginActivity;
 import five.seshealthpatient.Model.UserInformation;
 import five.seshealthpatient.R;
 
@@ -75,7 +79,6 @@ public class PatientInformationFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //TODO: Instead of hardcoding the title perhaps take the user name from somewhere?
         // Note the use of getActivity() to reference the Activity holding this fragment
         getActivity().setTitle("Username Information");
     }
@@ -123,7 +126,7 @@ public class PatientInformationFragment extends Fragment {
 
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
                 showData(dataSnapshot);
@@ -131,7 +134,8 @@ public class PatientInformationFragment extends Fragment {
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-
+                // Failed to read value + add exception
+                Log.w(TAG, "Failed to read value.");
             }
         });
     }
@@ -140,6 +144,7 @@ public class PatientInformationFragment extends Fragment {
      * Get data from firebase and store in local string
      * @param dataSnapshot
      */
+
     private void showData(DataSnapshot dataSnapshot) {
         for(DataSnapshot ds : dataSnapshot.getChildren()){
             UserInformation uInfo = new UserInformation();
@@ -149,8 +154,8 @@ public class PatientInformationFragment extends Fragment {
             uInfo.setGender(ds.child(userID).getValue(UserInformation.class).isGender()); //set the gender
             uInfo.setBirthday(ds.child(userID).getValue(UserInformation.class).getBirthday()); //set the birthday
             uInfo.setGroup(ds.child(userID).getValue(UserInformation.class).getGroup()); //set the group
-            uInfo.setHeight(ds.child(userID).getValue(UserInformation.class).getHeight()); //set the group
-            uInfo.setWeight(ds.child(userID).getValue(UserInformation.class).getWeight()); //set the group
+            uInfo.setHeight(ds.child(userID).getValue(UserInformation.class).getHeight()); //set the height
+            uInfo.setWeight(ds.child(userID).getValue(UserInformation.class).getWeight()); //set the weight
             uInfo.setCondition(ds.child(userID).getValue(UserInformation.class).getCondition()); //set the group
 
             mName.setText("Name: " + uInfo.getName());
@@ -161,11 +166,19 @@ public class PatientInformationFragment extends Fragment {
             mGroup.setText("Group: " + uInfo.getGroup());
             mHeight.setText("Height: " + uInfo.getHeight());
             mWeight.setText("Weight: " + uInfo.getWeight());
-            mCondition.setText("Mecical condition: " + uInfo.getCondition());
+            mCondition.setText("Medical condition: " + uInfo.getCondition());
+
         }
     }
 
-
+    @OnClick(R.id.btnEdit)
+    public void editInfo(){
+        EditInformationFragment editFrag= new EditInformationFragment();
+        getActivity().getFragmentManager().beginTransaction()
+                .replace(R.id.fragment_container, editFrag,"findThisFragment")
+                .addToBackStack(null)
+                .commit();
+    }
 
     /**
      * customizable toast
