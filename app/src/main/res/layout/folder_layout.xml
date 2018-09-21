@@ -17,7 +17,7 @@
         android:ellipsize="start"
         android:gravity="center_vertical"
         android:paddingLeft="10dp"
-        android:text="hhhhhhhh"
+        android:text="menu"
         android:textColor="#060606"
         android:textSize="16sp" />
     <ListView android:layout_width="match_parent"

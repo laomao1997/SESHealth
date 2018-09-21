@@ -139,6 +139,8 @@ public class SendFile extends AppCompatActivity implements ChangePhotoDialog.OnP
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                boolean a = dataSnapshot.hasChildren();
+                Log.d(TAG, "onDataChange: testHas?"+a);
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {

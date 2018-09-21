@@ -86,7 +86,7 @@ public class FolderActivity extends Activity implements OnItemClickListener,OnCl
 //        permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
         checkPermission();
         baseFile=GetFilesUtils.getInstance().getBasePath();
-
+        Log.d(TAG, "onCreate: folder1"+baseFile);
 //        titleTv=(TextView) findViewById(R.id.title_text);
 //        titleTv.setText("Local file");
         folderLv=(ListView) findViewById(R.id.folder_list);
@@ -178,10 +178,13 @@ public class FolderActivity extends Activity implements OnItemClickListener,OnCl
         if(v.getId()==R.id.folder_now){
             try {
                 String folder=GetFilesUtils.getInstance().getParentPath(foldernowTv.getText().toString());
-                if(folder==null){
+                Log.d(TAG, "onClick: folder1"+folder);
+                //if(folder==null){
+                if(folder.equals("/storage/emulated")){
                     Intent SendFile = new Intent(FolderActivity.this, SendFile.class);
                     startActivityForResult(SendFile, 7);
-                }else{
+                }
+                else{
                     loadFolderList(folder);
                 }
             } catch (IOException e) {
