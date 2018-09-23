@@ -46,7 +46,12 @@
         </activity>
         <activity android:name=".Activities.SendFile" />
         <activity android:name=".Activities.FolderActivity" />
-        <activity android:name=".Activities.RegisterInformation"></activity>
+        <activity android:name=".Activities.RegisterInformation" />
+        <activity
+            android:name=".Activities.UsersActivity"
+            android:parentActivityName=".Activities.MainActivity" />
+        <activity android:name=".Activities.AddNewPair"
+            android:parentActivityName=".Activities.UsersActivity"></activity>
     </application>
 
 </manifest>

@@ -106,6 +106,7 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseAuth.AuthStateListener mAuthListener;
     private DatabaseReference myRef;
     private String userID;
+    private Button pair;
 
     /**
      * Location setting
@@ -227,6 +228,16 @@ public class MainActivity extends AppCompatActivity {
         setUser();
 
         getLocationPermission();
+
+        pair = (Button) findViewById(R.id.pair);
+        pair.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent loadAllPaired = new Intent(MainActivity.this, UsersActivity.class);
+                startActivity(loadAllPaired);
+            }
+
+        });
     }
 
     /**
@@ -292,11 +303,13 @@ public class MainActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
+                Log.d(TAG, "onDataChange:");
                 showData(dataSnapshot);
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
+
 
             }
         });

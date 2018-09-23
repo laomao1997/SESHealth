@@ -22,6 +22,8 @@ dependencies {
     implementation 'com.google.firebase:firebase-core:16.0.0'
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'com.android.support:appcompat-v7:27.1.1'
+    //recyclerview support for friend management function.
+    implementation 'com.android.support:recyclerview-v7:27.1.1'
     // Using the design implementation to use the navigation drawer
     implementation 'com.android.support:design:27.1.1'
     implementation 'com.android.support.constraint:constraint-layout:1.1.2'
@@ -48,6 +50,8 @@ dependencies {
     implementation 'com.google.firebase:firebase-database:16.0.1'
     //Firebase Storage
     implementation 'com.google.firebase:firebase-storage:16.0.1'
+    // FirebaseUI for Firebase Realtime Database
+    //implementation 'com.firebaseui:firebase-ui-database:4.2.0'
 
     /**
      * GPS

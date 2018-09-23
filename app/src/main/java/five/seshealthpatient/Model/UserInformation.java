@@ -15,9 +15,22 @@ public class UserInformation {
     private String condition;
     private String group;
     private boolean gender;
+    private String UID;
 
-    public UserInformation(){
+    public UserInformation() {
+    }
 
+    public UserInformation(String name, String email, String age, String birthday, String height, String weight, String condition, String group, boolean gender, String UID) {
+        this.name = name;
+        this.email = email;
+        this.age = age;
+        this.birthday = birthday;
+        this.height = height;
+        this.weight = weight;
+        this.condition = condition;
+        this.group = group;
+        this.gender = gender;
+        this.UID = UID;
     }
 
     public static UserInformation newInstance() {
@@ -94,5 +107,13 @@ public class UserInformation {
 
     public void setGroup(String group) {
         this.group = group;
+    }
+
+    public String getUID() {
+        return UID;
+    }
+
+    public void setUID(String UID) {
+        this.UID = UID;
     }
 }
