@@ -35,6 +35,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import five.seshealthpatient.Fragments.DataPacketFragment;
+import five.seshealthpatient.Fragments.DoctorDataPacketFragment;
 import five.seshealthpatient.Fragments.HeartRateFragment;
 import five.seshealthpatient.Fragments.MapFragment;
 import five.seshealthpatient.Fragments.PatientInformationFragment;
@@ -107,6 +108,8 @@ public class MainActivity extends AppCompatActivity {
     private DatabaseReference myRef;
     private String userID;
 
+    private String groupInfo;
+
     /**
      * Location setting
      * @param savedInstanceState
@@ -161,7 +164,12 @@ public class MainActivity extends AppCompatActivity {
                                 break;
                             case R.id.nav_data_packet:
                                 if (currentState != MenuStates.DATA_PACKET) {
-                                    ChangeFragment(new DataPacketFragment());
+                                    if(groupInfo.equals("patient")) {
+                                        ChangeFragment(new DataPacketFragment());
+                                    }
+                                    else {
+                                        ChangeFragment(new DoctorDataPacketFragment());
+                                    }
                                     currentState = MenuStates.DATA_PACKET;
                                 }
                                 break;
@@ -313,8 +321,10 @@ public class MainActivity extends AppCompatActivity {
             UserInformation uInfo = new UserInformation();
             uInfo.setName(ds.child(userID).getValue(UserInformation.class).getName()); //set the name
             uInfo.setEmail(ds.child(userID).getValue(UserInformation.class).getEmail()); //set the email
+            uInfo.setGroup(ds.child(userID).getValue(UserInformation.class).getGroup());
             userName.setText(uInfo.getName());
             userEmail.setText(uInfo.getEmail());
+            groupInfo = uInfo.getGroup();
         }
     }
 

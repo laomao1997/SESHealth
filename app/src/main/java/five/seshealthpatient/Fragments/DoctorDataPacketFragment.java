@@ -85,7 +85,7 @@ public class DoctorDataPacketFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         // Inflate the layout for this fragment
-        View v = inflater.inflate(R.layout.fragment_data_packet, container, false);
+        View v = inflater.inflate(R.layout.fragment_doctor_data_packet, container, false);
 
         // Note how we are telling butter knife to bind during the on create view method
         ButterKnife.bind(this, v);
@@ -178,11 +178,15 @@ public class DoctorDataPacketFragment extends Fragment {
             dPack.setGps(ds.getValue(DataPacket.class).getGps());
             dPack.setHeartrate(ds.getValue(DataPacket.class).getHeartrate());
             dPack.setText(ds.getValue(DataPacket.class).getText());
+            if(ds.hasChild("comment")) {
+                dPack.setComment(ds.getValue(DataPacket.class).getComment());
+            }
             String record = "Date: " + ds.getKey() + "\n"
                     + "Text: " + dPack.getText() + "\n"
                     + "Heart rate: " + dPack.getHeartrate() + "\n"
                     + "GPS: " + dPack.getGps() + "\n"
-                    + "File: " + dPack.getFile();
+                    + "File: " + dPack.getFile() + "\n"
+                    + "comment: " + dPack.getComment();
             Log.d(TAG, "Value is: " + record);
             Map map = new HashMap();
             map.put("date", ds.getKey());
@@ -190,11 +194,12 @@ public class DoctorDataPacketFragment extends Fragment {
             map.put("heart", dPack.getHeartrate());
             map.put("gps", dPack.getGps());
             map.put("file", dPack.getFile());
+            map.put("comment", dPack.getComment());
             datas.add(map);
             // array.add(record);
         }
 
-        simpleAdapter=new SimpleAdapter(getActivity(),datas,R.layout.listview_data_packet,new String[]{"date","text","heart","gps","file"},new int[]{R.id.dateTvInLv,R.id.textTvInLv,R.id.heartTvInLv,R.id.gpsTvInLv,R.id.fileTvInLv});
+        simpleAdapter=new SimpleAdapter(getActivity(),datas,R.layout.listview_data_packet,new String[]{"date","text","heart","gps","file","comment"},new int[]{R.id.dateTvInLv,R.id.textTvInLv,R.id.heartTvInLv,R.id.gpsTvInLv,R.id.fileTvInLv,R.id.commentTvInLv});
         mListView.setAdapter(simpleAdapter);
 
         mListView.setOnMenuItemClickListener(new SwipeMenuListView.OnMenuItemClickListener() {
@@ -205,6 +210,8 @@ public class DoctorDataPacketFragment extends Fragment {
                     case 0:
                         date = datas.get(position).get("date").toString();
                         myRef.child("user").child(patientID).child("packet").child(date).child("comment").setValue(getComment());
+                        simpleAdapter.notifyDataSetChanged();
+                        simpleAdapter.notifyDataSetChanged();
                         break;
                     case 1:
                         // Remove data
@@ -214,6 +221,7 @@ public class DoctorDataPacketFragment extends Fragment {
                         myRef.child("user").child(patientID).child("packet").child(date).child("gps").setValue(null);
                         myRef.child("user").child(patientID).child("packet").child(date).child("heartrate").setValue(null);
                         myRef.child("user").child(patientID).child("packet").child(date).child("text").setValue(null);
+                        myRef.child("user").child(patientID).child("packet").child(date).child("comment").setValue(null);
 
                         // Remove item from ListView
                         datas.remove(position);

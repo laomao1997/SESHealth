@@ -9,6 +9,7 @@ public class DataPacket {
     private String gps;
     private String file;
     private String heartrate;
+    private String comment;
 
     public DataPacket() {
 
@@ -55,5 +56,13 @@ public class DataPacket {
 
     public void setHeartrate(String heartrate) {
         this.heartrate = heartrate;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 }
