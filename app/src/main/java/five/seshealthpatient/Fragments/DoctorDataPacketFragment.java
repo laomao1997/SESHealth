@@ -1,20 +1,17 @@
 package five.seshealthpatient.Fragments;
 
-
-import android.content.Intent;
+import android.app.Fragment;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.app.Fragment;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ListView;
+import android.widget.EditText;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -38,18 +35,13 @@ import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
-import five.seshealthpatient.Activities.MainActivity;
-import five.seshealthpatient.Activities.SendDataPacket;
 import five.seshealthpatient.Model.DataPacket;
-import five.seshealthpatient.Model.UserInformation;
 import five.seshealthpatient.R;
 
-/**
- * A simple {@link Fragment} subclass.
- */
-public class DataPacketFragment extends Fragment {
-    private static final String TAG = "DataPacketFragment";
+public class DoctorDataPacketFragment extends Fragment {
+
+    private static final String TAG = "DoctorDataPacketFragmen";
+
     /**
      * add Firebase Database stuff
      */
@@ -58,6 +50,7 @@ public class DataPacketFragment extends Fragment {
     private FirebaseAuth.AuthStateListener mAuthListener;
     private DatabaseReference myRef;
     private String userID;
+    private String patientID;
 
     /**
      * ListView sub text
@@ -68,12 +61,15 @@ public class DataPacketFragment extends Fragment {
     /**
      * UI references
      */
-    @BindView(R.id.tvDataPack) TextView mTextViewDataPack;
-    @BindView(R.id.btnCreateNewPack) Button mButtonCreateNewPack;
-    @BindView(R.id.listView) SwipeMenuListView mListView;
+    @BindView(R.id.tvDataPack)
+    TextView mTextViewDataPack;
+    @BindView(R.id.listView)
+    SwipeMenuListView mListView;
+    @BindView(R.id.editTextComment)
+    EditText mEditTextComment;
 
-    public DataPacketFragment() {
-        // Required empty public constructor
+    public DoctorDataPacketFragment() {
+
     }
 
     @Override
@@ -136,6 +132,18 @@ public class DataPacketFragment extends Fragment {
 
             @Override
             public void create(SwipeMenu menu) {
+                // create "comment" item
+                SwipeMenuItem selectItem = new SwipeMenuItem(
+                        getContext());
+                // set item background
+                selectItem.setBackground(new ColorDrawable(Color.rgb(0x00,
+                        0x99, 0x33)));
+                // set item width
+                selectItem.setWidth(170);
+                // set a icon
+                selectItem.setIcon(R.drawable.ic_action_select);
+                // add to menu
+                menu.addMenuItem(selectItem);
 
                 // create "delete" item
                 SwipeMenuItem deleteItem = new SwipeMenuItem(
@@ -163,7 +171,8 @@ public class DataPacketFragment extends Fragment {
     private void showData(DataSnapshot dataSnapshot) {
         // ArrayList<String> array  = new ArrayList<>();
         final List<Map<String, Object>> datas=new ArrayList<Map<String, Object>>();
-        for(DataSnapshot ds : dataSnapshot.child("user").child(userID).child("packet").getChildren()){
+        patientID = "NHNRQvqNUuRkQlKK8iebtyzgRvt2"; // ID of patient, here is jinghao1997@outlook.com
+        for(DataSnapshot ds : dataSnapshot.child("user").child(patientID).child("packet").getChildren()){
             DataPacket dPack = new DataPacket();
             dPack.setFile(ds.getValue(DataPacket.class).getFile());
             dPack.setGps(ds.getValue(DataPacket.class).getGps());
@@ -191,15 +200,20 @@ public class DataPacketFragment extends Fragment {
         mListView.setOnMenuItemClickListener(new SwipeMenuListView.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(int position, SwipeMenu menu, int index) {
+                String date;
                 switch (index) {
                     case 0:
+                        date = datas.get(position).get("date").toString();
+                        myRef.child("user").child(patientID).child("packet").child(date).child("comment").setValue(getComment());
+                        break;
+                    case 1:
                         // Remove data
                         // Remove pack from online database
-                        String date = datas.get(position).get("date").toString();
-                        myRef.child("user").child(userID).child("packet").child(date).child("file").setValue(null);
-                        myRef.child("user").child(userID).child("packet").child(date).child("gps").setValue(null);
-                        myRef.child("user").child(userID).child("packet").child(date).child("heartrate").setValue(null);
-                        myRef.child("user").child(userID).child("packet").child(date).child("text").setValue(null);
+                        date = datas.get(position).get("date").toString();
+                        myRef.child("user").child(patientID).child("packet").child(date).child("file").setValue(null);
+                        myRef.child("user").child(patientID).child("packet").child(date).child("gps").setValue(null);
+                        myRef.child("user").child(patientID).child("packet").child(date).child("heartrate").setValue(null);
+                        myRef.child("user").child(patientID).child("packet").child(date).child("text").setValue(null);
 
                         // Remove item from ListView
                         datas.remove(position);
@@ -213,18 +227,12 @@ public class DataPacketFragment extends Fragment {
         });
     }
 
-
-    @OnClick(R.id.btnCreateNewPack)
-    public void CreateNewPack() {
-        Intent intent = new Intent(getActivity(), SendDataPacket.class);
-        startActivity(intent);
+    private String getComment() {
+        return mEditTextComment.getText().toString();
     }
 
-    /**
-     * customizable toast
-     * @param message
-     */
     private void toastMessage(String message){
         Toast.makeText(getActivity(),message,Toast.LENGTH_SHORT).show();
     }
+
 }

@@ -4,9 +4,9 @@ import android.Manifest;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.support.design.widget.NavigationView;
 import android.support.v4.content.ContextCompat;
@@ -216,7 +216,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         // More on this code, check the tutorial at http://www.vogella.com/tutorials/AndroidFragments/article.html
-        fragmentManager = getSupportFragmentManager();
+        fragmentManager = getFragmentManager();
 
         // Add the default Fragment once the user logged in
         FragmentTransaction ft = fragmentManager.beginTransaction();
