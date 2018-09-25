@@ -10,6 +10,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +21,15 @@ import android.widget.Toast;
 
 import butterknife.ButterKnife;
 import five.seshealthpatient.R;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -32,13 +42,24 @@ public class HeartRateFragment extends Fragment {
 
     LinearLayout thrLinearLayout;
 
+    private FirebaseDatabase mFirebaseDatabase;
+    private FirebaseAuth mAuth;
+    private FirebaseAuth.AuthStateListener mAuthListener;
+    private DatabaseReference myRef;
+    private String userID;
+    private String userHeartRate;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
+
 
         super.onCreate(savedInstanceState);
         //TODO: Instead of hardcoding the title perhaps take the user name from somewhere?
         // Note the use of getActivity() to reference the Activity holding this fragment
         getActivity().setTitle("Heartrate Home");
+
+
+
     }
 
 
@@ -58,6 +79,31 @@ public class HeartRateFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         //setContentView(R.layout.heartrate_measure);
+
+        final String TAG = "SendHeartRate";
+        mAuth = FirebaseAuth.getInstance();
+        mFirebaseDatabase = FirebaseDatabase.getInstance();
+        myRef = mFirebaseDatabase.getReference();
+        FirebaseUser user = mAuth.getCurrentUser();
+        userID = user.getUid();
+
+
+        mAuthListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+                if (user != null) {
+                    // User is signed in
+                    Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
+                    //toastMessage("Successfully signed in with: " + user.getEmail());
+                } else {
+                    // User is signed out
+                    Log.d(TAG, "onAuthStateChanged:signed_out");
+                    //toastMessage("Successfully signed out.");
+                }
+                // ...
+            }
+        };
 
         setUpPermissions();
 
@@ -158,5 +204,11 @@ public class HeartRateFragment extends Fragment {
             String restingHeartRate = data.getStringExtra("restingHeartRate");
             rhrTextView.setText(restingHeartRate);
         }
+
+
+        //SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        //String time = df.format(new Date());
+        myRef.child("user").child(userID).child("heartrate").setValue(rhrTextView.getText());
+        //HERE I SEND THE DATA TO THE FIREBASE
     }
 }
