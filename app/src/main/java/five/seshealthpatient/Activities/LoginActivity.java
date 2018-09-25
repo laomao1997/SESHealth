@@ -19,10 +19,17 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import five.seshealthpatient.Model.UserInformation;
 import five.seshealthpatient.R;
 
 /**
@@ -61,6 +68,11 @@ public class LoginActivity extends AppCompatActivity {
     private static String TAG = "LoginActivity";
     private ProgressDialog progressDialog;
     private FirebaseAuth firebaseAuth;
+    private FirebaseDatabase mFirebaseDatabase;
+    private DatabaseReference myRef;
+    private FirebaseAuth.AuthStateListener mAuthListener;
+    private UserInformation uInfo;
+    private String userID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,17 +90,20 @@ public class LoginActivity extends AppCompatActivity {
 
         //Initialise firebase auth
         firebaseAuth = FirebaseAuth.getInstance();
+        mFirebaseDatabase = FirebaseDatabase.getInstance();
+        myRef = mFirebaseDatabase.getReference();
 
         // Please try to use more String resources (values -> strings.xml) vs hardcoded Strings.
         setTitle(R.string.login_activity_title);
 
-        if (firebaseAuth.getCurrentUser() != null) {
-            startActivity(new Intent(LoginActivity.this, MainActivity.class));
-            finish();
-        }
+       // if (firebaseAuth.getCurrentUser() != null) {
+            //startActivity(new Intent(LoginActivity.this, MainActivity.class));
+           // finish();
+       // }
         firebaseAuth = FirebaseAuth.getInstance();
-
     }
+
+
 
 
     /**
@@ -129,8 +144,16 @@ public class LoginActivity extends AppCompatActivity {
                             }
                         } else {
                             // Start a new activity
-                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                            startActivity(intent);
+                            userID = firebaseAuth.getCurrentUser().getUid();
+                            toastMessage(userID);
+                            if (myRef.child(userID).child("group").getKey().equals("doctor")) {
+                                Intent intent = new Intent(LoginActivity.this, DoctorActivity.class);
+                                startActivity(intent);
+                            }
+                            else {
+                                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                startActivity(intent);
+                            }
 
                         }
                     }
@@ -147,6 +170,10 @@ public class LoginActivity extends AppCompatActivity {
     public void resetPassword(){
         Intent intent = new Intent(this, ResetPasswordActivity.class);
         startActivity(intent);
+    }
+
+    private void toastMessage(String message){
+        Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
     }
 
 
