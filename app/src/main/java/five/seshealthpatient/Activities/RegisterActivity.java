@@ -8,36 +8,26 @@ import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.widget.EditText;
 import android.widget.ProgressBar;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import five.seshealthpatient.Model.UserInformation;
 import five.seshealthpatient.R;
 
 public class RegisterActivity extends AppCompatActivity {
 
     private static String TAG = "RegisterActivity";
-    @BindView(R.id.usernameET) EditText usernameEditText;
-    @BindView(R.id.passwordET) EditText passwordEditText;
+    @BindView(R.id.usernameET)
+    EditText usernameEditText;
 
-    private FirebaseDatabase mFirebaseDatabase;
-    private FirebaseAuth.AuthStateListener mAuthListener;
-    private DatabaseReference myRef;
-    private String userID;
+    @BindView(R.id.passwordET)
+    EditText passwordEditText;
 
     private FirebaseAuth firebaseAuth;
     private ProgressBar progressBar;
@@ -58,14 +48,12 @@ public class RegisterActivity extends AppCompatActivity {
 
         //Get instance
         firebaseAuth = FirebaseAuth.getInstance();
-        mFirebaseDatabase = FirebaseDatabase.getInstance();
-        myRef = mFirebaseDatabase.getReference("user");
 
     }
 
     @OnClick(R.id.register_btn)
     public void register(){
-        String username = usernameEditText.getText().toString();
+        final String username = usernameEditText.getText().toString();
         final String password = passwordEditText.getText().toString();
 
         if (TextUtils.isEmpty(username)){
@@ -92,9 +80,12 @@ public class RegisterActivity extends AppCompatActivity {
                     Toast.makeText(RegisterActivity.this, "Authentication failed." + task.getException(),
                             Toast.LENGTH_SHORT).show();
                 } else {
-                    // Set blank values for user info
-                    setUp();
-                    startActivity(new Intent(RegisterActivity.this, MainActivity.class));
+                    Intent intent = new Intent();
+                    intent.putExtra("username" ,username); //Pass the key value filePath, and the value is the string filePath.
+                    intent.setClass(RegisterActivity.this,RegisterInformation.class);
+                    RegisterActivity.this.startActivity(intent);
+                    //startActivity(new Intent(RegisterActivity.this, RegisterInformation.class));
+                    //startActivity(new Intent(RegisterActivity.this, MainActivity.class));
                     finish();
                 }
             }
@@ -106,34 +97,4 @@ public class RegisterActivity extends AppCompatActivity {
         Intent intent = new Intent(this, LoginActivity.class);
         finish();
     }
-    // Set up blank user details
-    private void setUp(){
-        mFirebaseDatabase = FirebaseDatabase.getInstance();
-        myRef = mFirebaseDatabase.getReference("user");
-        FirebaseUser user = firebaseAuth.getCurrentUser();
-        userID = user.getUid();
-        String userEmail = user.getEmail();
-        String name = " ";
-        String age = " ";
-        String birthday = "";
-        String height = " ";
-        String weight = " ";
-        String condition = " ";
-        String group = " ";
-        Boolean gender = true;
-        UserInformation userInfo = new UserInformation();
-        userInfo.setName(name);
-        userInfo.setEmail(userEmail);
-        userInfo.setAge(age);
-        userInfo.setBirthday(birthday);
-        userInfo.setHeight(height);
-        userInfo.setWeight(weight);
-        userInfo.setCondition(condition);
-        userInfo.setGroup(group);
-        userInfo.setGender(gender);
-
-        myRef.child(userID).setValue(userInfo);
-    }
-
 }
-
