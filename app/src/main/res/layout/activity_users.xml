@@ -23,7 +23,7 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/pair_toolbar"
-        android:text="Paired Sum: "
+        android:text="Paired Sum: 0"
         android:textColor="@android:color/holo_red_light"
         android:textSize="30sp"
         android:textStyle="bold" />

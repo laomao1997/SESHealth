@@ -20,6 +20,7 @@
         android:id="@+id/users_list_new"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_above="@+id/addUserTxt"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/pair_toolbar_new"></android.support.v7.widget.RecyclerView>
 

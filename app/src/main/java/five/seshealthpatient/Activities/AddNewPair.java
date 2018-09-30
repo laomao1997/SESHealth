@@ -1,6 +1,5 @@
 package five.seshealthpatient.Activities;
 
-import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -61,30 +60,31 @@ public class AddNewPair extends AppCompatActivity {
 
         findID();
         initialization();
-        showAllUsers();
+        //showAllUsers();
 
         addUserBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(btnStateTextList.get(listItemPosition).equals("Waiting")){
-                    toastMessage("You have already sent request to the user, please wait for the user's response.");
-                    return;
+                if(btnStateTextList.get(listItemPosition).equals("Cancel Request")){
+                    cancelRequest();
+                    //toastMessage("You have already sent request to the user, please wait for the user's response.");
                 }
                 if(btnStateTextList.get(listItemPosition).equals("Delete")){
                     deleteUser();
-                    toastMessage("You have successfully deleted this user from your list.");
+                    //toastMessage("You have successfully deleted this user from your list.");
                 }
                 if(btnStateTextList.get(listItemPosition).equals("Requested")){
                     agreeRequest();
-                    toastMessage("You have agreed to the user's application.");
+                    //toastMessage("You have agreed to the user's application.");
                 }
                 if(btnStateTextList.get(listItemPosition).equals("Add")){
                     addNewUser();
-                    toastMessage("Request sent successfully!");
+                    //toastMessage("Request sent successfully!");
                 }
+                userInformation = null; // Set the user ( assigned in line 200 ) to null.
+                addUserTxt.setText("User: ");
             }
         });
-
     }
 
     private void findID(){
@@ -130,7 +130,10 @@ public class AddNewPair extends AppCompatActivity {
                 // whenever data at this location is updated.
                 Log.d(TAG, "onDataChange:");
                 dsTest = dataSnapshot;
+                userList.clear(); // I have to clear the list, or once the dataChange, the data will be added repeated into the list.
+                btnStateTextList.clear();
                 getAllUsers(dataSnapshot);
+                showAllUsers();
             }
 
             @Override
@@ -148,6 +151,7 @@ public class AddNewPair extends AppCompatActivity {
             UserInformation uInfo = new UserInformation();
             uInfo.setName(ds.getValue(UserInformation.class).getName()); //set the name
             uInfo.setGroup(ds.getValue(UserInformation.class).getGroup());
+            uInfo.setCondition(ds.getValue(UserInformation.class).getCondition());
             String UID = ds.getKey();
             uInfo.setUID(UID); //set the email
             userList.add(uInfo);
@@ -196,7 +200,7 @@ public class AddNewPair extends AppCompatActivity {
                     userName = userInformation.getName();
                     addUserTxt.setText(btnStateTextList.get(position)+": "+userName);
                     Log.d(TAG, "onClick: test111: " + btnStateTextList.get(position));
-                    Toast.makeText(v.getContext(),"you clicked user: "+ userInformation.getName(),Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(v.getContext(),"you clicked user: "+ userInformation.getName(),Toast.LENGTH_SHORT).show();
                 }
             });
             holder.btn.setOnClickListener(new View.OnClickListener() {
@@ -208,7 +212,7 @@ public class AddNewPair extends AppCompatActivity {
                     userName = userInformation.getName();
                     addUserTxt.setText(btnStateTextList.get(position)+": "+userName);
                     Log.d(TAG, "onClick: test112: " + btnStateTextList.get(position));
-                    Toast.makeText(v.getContext(),"you clicked user: "+ userInformation.getName(),Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(v.getContext(),"you clicked user: "+ userInformation.getName(),Toast.LENGTH_SHORT).show();
                 }
             });
             return holder;
@@ -218,7 +222,8 @@ public class AddNewPair extends AppCompatActivity {
         public void onBindViewHolder(@NonNull AddNewPair.UserAdapter.ViewHolder holder, int position) {
             UserInformation user = userInformations.get(position);
             holder.userName.setText(user.getName());
-            holder.userDescription.setText(user.getGroup()+": Self-introduction");
+            String condition = user.getCondition();
+            holder.userDescription.setText(user.getGroup()+": "+ condition);
             btnStateText = btnState(user);
             btnStateTextList.add(btnStateText);
             holder.btn.setText(btnStateText);
@@ -252,7 +257,7 @@ public class AddNewPair extends AppCompatActivity {
             return "Delete";
         }
         if(isWait){
-            return "Waiting";
+            return "Cancel Request";
         }
         return "Add";
     }
@@ -260,6 +265,17 @@ public class AddNewPair extends AppCompatActivity {
     public void addNewUser(){
         if(userInformation==null){
             toastMessage("Please select a user.");
+            return;
+        }
+        String userGroup = dsTest.child("user").child(userID).child("group").getValue(String.class);
+        String userAddGroup = dsTest.child("user").child(userInformation.getUID()).child("group").getValue(String.class);
+        long childrenCount = dsTest.child("user").child(userID).child("pair").getChildrenCount();
+        if(userGroup.equals("patient")&&childrenCount!=0){
+            toastMessage("Patients can only add one doctor.");
+            return;
+        }
+        if(userGroup.equals("doctor")){
+            toastMessage("Doctors can only be added by patients");
             return;
         }
         Boolean hasRequest = false;
@@ -283,10 +299,13 @@ public class AddNewPair extends AppCompatActivity {
             toastMessage("You have already received the request from this user, please confirm it.");
             return;
         }
-        if((userInformation!=null)&& !hasRequest&&!hasPass&&!isWait){
+        if((userInformation!=null)&& !hasRequest&&!hasPass&&!isWait&&userAddGroup.equals("doctor")){
             myRef.child("user").child(userInformation.getUID()).child("pair").child(userID).setValue("requested");
             myRef.child("user").child(userID).child("pair").child(userInformation.getUID()).setValue("waiting");
-            //toastMessage("Request sent successfully!");
+            toastMessage("Request sent successfully!");
+        }else{
+            Log.d(TAG, "addNewUser: test111: "+userAddGroup);
+            toastMessage("Patients can only add doctors.");
         }
     }
 
@@ -294,7 +313,9 @@ public class AddNewPair extends AppCompatActivity {
         if(userInformation!=null){
             myRef.child("user").child(userInformation.getUID()).child("pair").child(userID).setValue("passed");
             myRef.child("user").child(userID).child("pair").child(userInformation.getUID()).setValue("passed");
-            //toastMessage("You have agreed to the user's application.");
+            toastMessage("You have agreed to the user's application.");
+        }else{
+            toastMessage("Please select a user.");
         }
     }
 
@@ -302,9 +323,20 @@ public class AddNewPair extends AppCompatActivity {
         if(userInformation!=null){
             myRef.child("user").child(userInformation.getUID()).child("pair").child(userID).setValue(null);
             myRef.child("user").child(userID).child("pair").child(userInformation.getUID()).setValue(null);
-            //toastMessage("You have successfully deleted this user from your list.");
+            toastMessage("You have successfully deleted this user from your list.");
+        }else{
+            toastMessage("Please select a user.");
         }
+    }
 
+    public void cancelRequest(){
+        if(userInformation!=null){
+            myRef.child("user").child(userInformation.getUID()).child("pair").child(userID).setValue(null);
+            myRef.child("user").child(userID).child("pair").child(userInformation.getUID()).setValue(null);
+            toastMessage("You have successfully cancelled the request.");
+        }else{
+            toastMessage("Please select a user.");
+        }
     }
 
     /**

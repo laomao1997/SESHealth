@@ -1,6 +1,7 @@
 package five.seshealthpatient.Fragments;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.annotation.NonNull;
@@ -26,6 +27,9 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
+import five.seshealthpatient.Activities.MainActivity;
+// import five.seshealthpatient.Activities.UsersActivity;
 import five.seshealthpatient.Model.UserInformation;
 import five.seshealthpatient.R;
 
@@ -68,6 +72,7 @@ public class PatientInformationFragment extends Fragment {
     @BindView(R.id.tvWeight) TextView mWeight;
     @BindView(R.id.tvCondition) TextView mCondition;
     @BindView(R.id.btnEdit) Button mButtonEdit;
+    @BindView(R.id.pair) Button mButtonPair;
 
     public PatientInformationFragment() {
     }
@@ -165,7 +170,6 @@ public class PatientInformationFragment extends Fragment {
             mCondition.setText("Mecical condition: " + uInfo.getCondition());
         }
     }
-
 
 
     /**

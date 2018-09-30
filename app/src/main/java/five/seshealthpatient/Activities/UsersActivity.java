@@ -2,7 +2,6 @@ package five.seshealthpatient.Activities;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
-import android.support.design.widget.NavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -58,7 +57,7 @@ public class UsersActivity extends AppCompatActivity {
 
         findID();
         initialization();
-        showPairedUsers();
+        //showPairedUsers();
 
         addNew.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -124,7 +123,9 @@ public class UsersActivity extends AppCompatActivity {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
                 Log.d(TAG, "onDataChange:");
+                userList.clear();
                 getPairedUsers(dataSnapshot);
+                showPairedUsers();
             }
 
             @Override
