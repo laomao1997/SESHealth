@@ -1,7 +1,9 @@
 package five.seshealthpatient.Fragments;
 
 import android.Manifest;
+import android.app.AlertDialog;
 import android.app.Fragment;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
@@ -24,9 +26,11 @@ import five.seshealthpatient.R;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -35,7 +39,7 @@ import static android.app.Activity.RESULT_OK;
 
 public class HeartRateFragment extends Fragment {
 
-    EditText ageEditText;
+    TextView ageEditText;
 
     LinearLayout rhrLinearLayout;
     TextView rhrTextView;
@@ -105,9 +109,21 @@ public class HeartRateFragment extends Fragment {
             }
         };
 
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // This method is called once with the initial value and again
+                // whenever data at this location is updated.
+               showData(dataSnapshot);
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
+
         setUpPermissions();
 
-        ageEditText = (EditText) getView().findViewById(R.id.et_age);
+        ageEditText = (TextView) getView().findViewById(R.id.et_age);
         rhrLinearLayout = (LinearLayout) getView().findViewById(R.id.ll_restingHeartRate);
         rhrTextView = (TextView) getView().findViewById(R.id.tv_restingHeartRate);
         thrLinearLayout = (LinearLayout) getView().findViewById(R.id.ll_targetHeartRate);
@@ -198,17 +214,52 @@ public class HeartRateFragment extends Fragment {
         }
     }
 
+    private void showData(DataSnapshot dataSnapshot) {
+        String age = "NUL";
+        for (DataSnapshot ds : dataSnapshot.getChildren()) {
+            age = ds.child(userID).child("age").getValue(String.class); //set the age
+        }
+        ageEditText.setText(age);
+    }
+
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(requestCode == 1 && resultCode == RESULT_OK){
             String restingHeartRate = data.getStringExtra("restingHeartRate");
             rhrTextView.setText(restingHeartRate);
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(this.getContext());
+            builder.setCancelable(true);
+            builder.setTitle("Warning");
+            builder.setMessage("Would you like to save this heart rate of: " + rhrTextView.getText() + " BMP?");
+            builder.setPositiveButton("Confirm",
+                    new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                            String time = df.format(new Date());
+                            myRef.child("user").child(userID).child("heartrate").child(time).setValue(rhrTextView.getText());
+                        }
+                    });
+            builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                }
+            });
+
+            AlertDialog dialog = builder.create();
+            dialog.show();
+
         }
 
 
-        //SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        //String time = df.format(new Date());
-        myRef.child("user").child(userID).child("heartrate").setValue(rhrTextView.getText());
+
+
+
+
+
+
         //HERE I SEND THE DATA TO THE FIREBASE
     }
 }

@@ -80,8 +80,8 @@ It is not necessary to cover the flash. Hold your phone steady."
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:padding="4dp"
-            android:textSize="20sp"
-            android:text="Ideal Resting Heart Rates range:"/>
+            android:text="Ideal Resting Heart Rates range:"
+            android:textSize="20sp" />
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

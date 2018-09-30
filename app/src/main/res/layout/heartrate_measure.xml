@@ -9,59 +9,85 @@
     tools:context="five.seshealthpatient.Fragments.HeartRateFragment"
     android:padding="16dp">
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="2"
-        android:src="@drawable/common_full_open_on_phone"/>
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_margin="8dp">
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Enter your Age:"
-        android:textSize="22sp"
-        android:padding="16dp"/>
+        android:layout_margin="8dp"
+        android:orientation="horizontal">
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:id="@+id/et_age"
-        android:hint="age"
-        android:inputType="number"
-        android:textSize="22sp"
-        android:padding="16dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:text="Your age:"
+            android:textAlignment="center"
+            android:textSize="22sp" />
+
+        <TextView
+            android:id="@+id/et_age"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:hint="age"
+            android:inputType="number"
+            android:padding="16dp"
+            android:textAlignment="center"
+            android:textSize="22sp" />
     </LinearLayout>
 
-    <LinearLayout
+    <TextView
+        android:id="@+id/textView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="16dp"
+        android:layout_marginTop="8dp"
+        android:padding="4dp"
+        android:text="Ideal Resting Heart Rates range:"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="4dp"
+        android:text="60 to 100 bpm"
+        android:textColor="#000000"
+        android:textSize="28sp" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:padding="4dp"
+        android:text="In a healthier heart achieved via regular exercise, this can drop to around 40 bpm."
+        android:textSize="20sp" />
+
+    <LinearLayout
+        android:id="@+id/ll_restingHeartRate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_margin="8dp"
-        android:orientation="horizontal"
+        android:background="@color/colorPrimary"
         android:clickable="true"
         android:focusable="true"
-        android:id="@+id/ll_restingHeartRate"
-        android:background="@color/colorPrimary">
+        android:orientation="horizontal"
+        android:padding="16dp">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Resting Heart Rate:"
             android:textColor="@color/colorPrimaryDark"
-            android:textSize="22sp"/>
+            android:textSize="22sp" />
 
         <TextView
+            android:id="@+id/tv_restingHeartRate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingLeft="8dp"
-            android:id="@+id/tv_restingHeartRate"
             android:hint="get RHR"
+            android:paddingLeft="8dp"
             android:textColor="@color/colorPrimaryDark"
-            android:textSize="22sp"/>
+            android:textSize="22sp" />
     </LinearLayout>
 
     <LinearLayout
