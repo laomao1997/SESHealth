@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activities.SelectUserActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="850dp"
+        android:orientation="vertical">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/registerInfor_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorPrimaryDark"
+            android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+            app:title="Register Information!"
+            app:titleTextColor="@color/whiteColor" />
+
+        <TextView
+            android:id="@+id/tvLabel"
+            style="@style/HeadingStyles"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Select user:"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/patientBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:paddingTop="10dp"
+            android:text="Patient" />
+
+        <Button
+            android:id="@+id/doctorBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:paddingTop="10dp"
+            android:text="Doctor" />
+
+    </LinearLayout>
+
+
+
+</ScrollView>

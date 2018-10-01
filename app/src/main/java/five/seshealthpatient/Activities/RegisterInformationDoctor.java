@@ -1,5 +1,6 @@
 package five.seshealthpatient.Activities;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -30,7 +31,7 @@ import five.seshealthpatient.R;
 
 public class RegisterInformationDoctor extends AppCompatActivity {
 
-    private static final String TAG = "RegisterInformation";
+    private static final String TAG = "RegisterInformationDoc";
 
     private String username;
     private FirebaseDatabase mFirebaseDatabase;
@@ -40,16 +41,19 @@ public class RegisterInformationDoctor extends AppCompatActivity {
     private StorageReference mStorageRef;
     private  String userID;
 
-    private TextView emailInfor;
-    private EditText nameInfor, ageInfor, birthdayInfor, heightInfor, weightInfor, medicalConditionInfor;
-    private Button submitBtn;
-    private Switch genderInfor, groupInfor;
 
     private String name;
     private String email;
     private boolean gender;
     private String group = "doctor";
     private String occupation;
+
+    private String age;
+    private String DOB;
+    private String height;
+    private String weight;
+    private String medicalCondition;
+
 
     @BindView(R.id.nameET)
     EditText nameEditText;
@@ -106,7 +110,6 @@ public class RegisterInformationDoctor extends AppCompatActivity {
     private void getEmailFromRegisterActivity(){
         Intent intent = getIntent(); //Get filepath from FolderActivity.
         username = intent.getStringExtra("username");
-        emailInfor.setText("Email: "+username);
         email = username;
     }
 
@@ -117,9 +120,14 @@ public class RegisterInformationDoctor extends AppCompatActivity {
     private void uploadInfor(){
         myRef.child("user").child(userID).child("name").setValue(name);
         myRef.child("user").child(userID).child("email").setValue(email);
+        myRef.child("user").child(userID).child("age").setValue(age);
         myRef.child("user").child(userID).child("gender").setValue(gender);
         myRef.child("user").child(userID).child("group").setValue(group);
-        //update occupation
+        myRef.child("user").child(userID).child("birthday").setValue(DOB);
+        myRef.child("user").child(userID).child("height").setValue(height);
+        myRef.child("user").child(userID).child("weight").setValue(weight);
+        myRef.child("user").child(userID).child("height").setValue(height);
+        myRef.child("user").child(userID).child("condition").setValue(medicalCondition);
         //myRef.child("user").child(userID).child("occupation").setValue(occupation);
 
     }
@@ -130,9 +138,9 @@ public class RegisterInformationDoctor extends AppCompatActivity {
 
     @OnClick(R.id.submitBtn)
         public void registerDoctor(){
-        if(!(nameInfor.getText().toString().equals(""))){
-            name = nameInfor.getText().toString();
-            Log.d(TAG, "getInforInput: not null"+ nameInfor.getText().toString());
+        if(!(nameEditText.getText().toString().isEmpty())){
+            name = nameEditText.getText().toString();
+            Log.d(TAG, "getInforInput: not null"+ nameEditText.getText().toString());
         }else{
             Toast.makeText(RegisterInformationDoctor.this, "Empty name!", Toast.LENGTH_SHORT).show();
             Log.d(TAG, "getInforInput: null");
@@ -140,24 +148,32 @@ public class RegisterInformationDoctor extends AppCompatActivity {
         }
 
 
-                /*if(genderInfor.getText().toString()!=null){
-                    age = ageInfor.getText().toString();
-                }else{
-                    Toast.makeText(RegisterInformation.this, "Empty age!", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                if(groupInfor.getText().toString()!=null){
-                    age = ageInfor.getText().toString();
-                }else{
-                    Toast.makeText(RegisterInformation.this, "Empty age!", Toast.LENGTH_SHORT).show();
-                    return;
-                }*/
-
+        if(genderEditText.getText().toString().toLowerCase().equals("male")){
+            gender = true;
+        }
+        else if(genderEditText.getText().toString().toLowerCase().equals("female")){
+            gender = false;
+        }
+        else{
+            Toast.makeText(RegisterInformationDoctor.this, "Empty gender!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if(occupationEditText.getText().toString()!=null){
+            occupation = occupationEditText.getText().toString();
+        }
+        else{
+            Toast.makeText(RegisterInformationDoctor.this, "Empty occupation!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        age = " ";
+        DOB = " ";
+        height = " ";
+        weight = " ";
+        medicalCondition = " ";
         uploadInfor();
         Toast.makeText(RegisterInformationDoctor.this, "Register Successful!", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent();
-        intent.setClass(RegisterInformationDoctor.this,MainActivity.class);
+        intent.setClass(RegisterInformationDoctor.this,DoctorActivity.class);
         RegisterInformationDoctor.this.startActivity(intent);
     }
 }

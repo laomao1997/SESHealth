@@ -51,12 +51,12 @@ public class RegisterInformation extends AppCompatActivity implements CompoundBu
     private String email;
     private String age;
     private boolean gender;
-    private String group = "doctor";
+    private String group = "patient";
     private String DOB;
     private String height;
     private String weight;
     private String medicalCondition;
-
+    private String occupation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -132,6 +132,7 @@ public class RegisterInformation extends AppCompatActivity implements CompoundBu
                     return;
                 }
 
+                occupation = " ";
                 uploadInfor();
                 Toast.makeText(RegisterInformation.this, "Register Successful!", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent();
@@ -151,11 +152,6 @@ public class RegisterInformation extends AppCompatActivity implements CompoundBu
                 if(compoundButton.isChecked()) gender = true;
                 else gender = false;
                 break;
-            case R.id.groupInfor:
-                if(compoundButton.isChecked()) group = "patient";
-                else group = "doctor";
-                break;
-
         }
     }
 
@@ -164,7 +160,6 @@ public class RegisterInformation extends AppCompatActivity implements CompoundBu
         emailInfor = (TextView) findViewById(R.id.emailInfor);
         ageInfor = (EditText) findViewById(R.id.ageInfor);
         genderInfor = (Switch) findViewById(R.id.genderInfor);
-        groupInfor = (Switch) findViewById(R.id.groupInfor);
         birthdayInfor = (EditText) findViewById(R.id.birthdayInfor);
         heightInfor = (EditText) findViewById(R.id.heightInfor);
         weightInfor = (EditText) findViewById(R.id.weightInfor);
@@ -227,6 +222,7 @@ public class RegisterInformation extends AppCompatActivity implements CompoundBu
         myRef.child("user").child(userID).child("weight").setValue(weight);
         myRef.child("user").child(userID).child("height").setValue(height);
         myRef.child("user").child(userID).child("condition").setValue(medicalCondition);
+        //myRef.child("user").child(userID).child("occupation").setValue(occupation);
     }
 
     private void toastMessage(String message){

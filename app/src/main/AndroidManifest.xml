@@ -23,8 +23,10 @@
         <activity android:name=".Activities.MainActivity" />
         <activity android:name=".Activities.RegisterActivity" />
         <activity android:name=".Activities.ResetPasswordActivity" />
-        <activity android:name=".Activities.RegisterInformation"/>
-        <activity android:name=".Activities.DoctorActivity"/>
+        <activity android:name=".Activities.RegisterInformation" />
+        <activity android:name=".Activities.DoctorActivity" />
+        <activity android:name=".Activities.RegisterInformationDoctor"/>
+        <activity android:name=".Activities.SelectUserActivity"></activity>
     </application>
 
 </manifest>

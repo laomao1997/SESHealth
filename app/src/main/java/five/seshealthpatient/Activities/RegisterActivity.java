@@ -82,11 +82,11 @@ public class RegisterActivity extends AppCompatActivity {
                 } else {
                     Intent intent = new Intent();
                     intent.putExtra("username" ,username); //Pass the key value filePath, and the value is the string filePath.
-                    intent.setClass(RegisterActivity.this,RegisterInformation.class);
+                    intent.setClass(RegisterActivity.this,SelectUserActivity.class);
                     RegisterActivity.this.startActivity(intent);
                     //startActivity(new Intent(RegisterActivity.this, RegisterInformation.class));
                     //startActivity(new Intent(RegisterActivity.this, MainActivity.class));
-                    finish();
+                    //finish();
                 }
             }
         });
