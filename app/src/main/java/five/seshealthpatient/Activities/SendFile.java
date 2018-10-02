@@ -93,6 +93,7 @@ public class SendFile extends AppCompatActivity implements ChangePhotoDialog.OnP
     String mFileName;
     String filePath;
     SimpleDateFormat df;
+    String fileNameFile;
 
     private static final int REQUEST_CODE = 1234;
     private static final double MB_THRESHHOLD = 5.0;
@@ -190,7 +191,7 @@ public class SendFile extends AppCompatActivity implements ChangePhotoDialog.OnP
                 if(mFileName.equals("")){
                     mFileName = "Unnamed";
                 }
-                uploadfile(filePath);
+                if(filePath!=null) uploadfile(filePath);
             }
         });
     }
@@ -323,7 +324,7 @@ public class SendFile extends AppCompatActivity implements ChangePhotoDialog.OnP
                                 .child(userID)
                                 .child("file")
                                 .child(time)
-                                .child(mImageName)
+                                .child(time)
                                 .child("jpg")
                                 .setValue(downloadUri.toString());
                     } else {
@@ -401,6 +402,7 @@ public class SendFile extends AppCompatActivity implements ChangePhotoDialog.OnP
     private void uploadfile(String path) {
         File newFile = new File(path);
         String fileName = newFile.getName();
+        fileNameFile = fileName.substring(0,fileName.lastIndexOf("."));
         final String suffix = fileName.substring(fileName.lastIndexOf(".") + 1);
 
         final Uri file = Uri.fromFile(newFile);
@@ -432,7 +434,7 @@ public class SendFile extends AppCompatActivity implements ChangePhotoDialog.OnP
                             .child(userID)
                             .child("file")
                             .child(time)
-                            .child(mFileName)
+                            .child(fileNameFile)
                             .child(suffix)
                             .setValue(downloadUri.toString());
                 } else {

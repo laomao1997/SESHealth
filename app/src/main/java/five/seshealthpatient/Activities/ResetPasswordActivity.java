@@ -1,5 +1,6 @@
 package five.seshealthpatient.Activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -34,6 +35,9 @@ public class ResetPasswordActivity extends AppCompatActivity {
         btnReset = (Button) findViewById(R.id.reset_password_Btn);
         btnBack = (Button) findViewById(R.id.back_Btn);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
+
+        Intent intent = getIntent();
+        String key = intent.getStringExtra("resetPass");
 
         auth = FirebaseAuth.getInstance();
 

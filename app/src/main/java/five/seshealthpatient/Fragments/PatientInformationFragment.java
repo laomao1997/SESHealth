@@ -1,6 +1,7 @@
 package five.seshealthpatient.Fragments;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.support.annotation.NonNull;
@@ -26,6 +27,8 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
+import five.seshealthpatient.Activities.LoginActivity;
 import five.seshealthpatient.Model.UserInformation;
 import five.seshealthpatient.R;
 
@@ -154,6 +157,7 @@ public class PatientInformationFragment extends Fragment {
             uInfo.setCondition(ds.child(userID).getValue(UserInformation.class).getCondition()); //set the group
 
             mName.setText("Name: " + uInfo.getName());
+            getActivity().setTitle(uInfo.getName() + " Information");
             mEmail.setText("Email: " + uInfo.getEmail());
             mAge.setText("Age: " + uInfo.getAge());
             mGender.setText("Gender: " + (uInfo.isGender()?"male":"female"));
@@ -163,6 +167,13 @@ public class PatientInformationFragment extends Fragment {
             mWeight.setText("Weight: " + uInfo.getWeight());
             mCondition.setText("Mecical condition: " + uInfo.getCondition());
         }
+    }
+
+    @OnClick(R.id.btnLogout)
+    public void logout() {
+        FirebaseAuth.getInstance().signOut();
+        Intent intentToLogin = new Intent(getContext(), LoginActivity.class);
+        startActivity(intentToLogin);
     }
 
 

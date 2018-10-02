@@ -1,11 +1,9 @@
 package five.seshealthpatient.Fragments;
 
-
-import android.content.Intent;
+import android.app.Fragment;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.app.Fragment;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -13,7 +11,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.baoyz.swipemenulistview.SwipeMenu;
 import com.baoyz.swipemenulistview.SwipeMenuCreator;
@@ -34,17 +35,12 @@ import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
-import five.seshealthpatient.Activities.SendFile;
-import five.seshealthpatient.Model.FilePacket;
+import five.seshealthpatient.Model.DataPacket;
 import five.seshealthpatient.R;
 
-/**
- * A simple {@link Fragment} subclass.
- */
-public class SendFileFragment extends Fragment {
+public class DoctorDataPacketFragment extends Fragment {
 
-    private static final String TAG = "SendFileFragment";
+    private static final String TAG = "DoctorDataPacketFragmen";
 
     /**
      * add Firebase Database stuff
@@ -54,44 +50,50 @@ public class SendFileFragment extends Fragment {
     private FirebaseAuth.AuthStateListener mAuthListener;
     private DatabaseReference myRef;
     private String userID;
-
-    FilePacket filePacket = new FilePacket();
+    private String patientID;
 
     /**
      * ListView sub text
      */
     private SimpleAdapter simpleAdapter;
 
+
     /**
      * UI references
      */
-    @BindView(R.id.btn_upload_file)
-    Button btnUploadFile;
+    @BindView(R.id.tvDataPack)
+    TextView mTextViewDataPack;
     @BindView(R.id.listView)
     SwipeMenuListView mListView;
+    @BindView(R.id.editTextComment)
+    EditText mEditTextComment;
 
-    public SendFileFragment() {
-        // Required empty public constructor
+    public DoctorDataPacketFragment() {
+
     }
-
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getActivity().setTitle("Send local file");
+        //TODO: Instead of hardcoding the title perhaps take the user name from somewhere?
+        // Note the use of getActivity() to reference the Activity holding this fragment
+        getActivity().setTitle("Data packet");
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         // Inflate the layout for this fragment
-        View v = inflater.inflate(R.layout.fragment_send_file, container, false);
+        View v = inflater.inflate(R.layout.fragment_doctor_data_packet, container, false);
+
+        // Note how we are telling butter knife to bind during the on create view method
         ButterKnife.bind(this, v);
+
         return v;
     }
 
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+    public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
         //declare the database reference object. This is what we use to access the database.
@@ -130,7 +132,18 @@ public class SendFileFragment extends Fragment {
 
             @Override
             public void create(SwipeMenu menu) {
-
+                // create "comment" item
+                SwipeMenuItem selectItem = new SwipeMenuItem(
+                        getContext());
+                // set item background
+                selectItem.setBackground(new ColorDrawable(Color.rgb(0x00,
+                        0x99, 0x33)));
+                // set item width
+                selectItem.setWidth(170);
+                // set a icon
+                selectItem.setIcon(R.drawable.ic_action_select);
+                // add to menu
+                menu.addMenuItem(selectItem);
 
                 // create "delete" item
                 SwipeMenuItem deleteItem = new SwipeMenuItem(
@@ -139,7 +152,7 @@ public class SendFileFragment extends Fragment {
                 deleteItem.setBackground(new ColorDrawable(Color.rgb(0xF9,
                         0x3F, 0x25)));
                 // set item width
-                deleteItem.setWidth(150);
+                deleteItem.setWidth(170);
                 // set a icon
                 deleteItem.setIcon(R.drawable.ic_action_delete);
                 // add to menu
@@ -151,47 +164,68 @@ public class SendFileFragment extends Fragment {
         mListView.setMenuCreator(creator);
     }
 
+    /**
+     * Get data from firebase and store in local string
+     * @param dataSnapshot
+     */
     private void showData(DataSnapshot dataSnapshot) {
         // ArrayList<String> array  = new ArrayList<>();
         final List<Map<String, Object>> datas=new ArrayList<Map<String, Object>>();
-        for(DataSnapshot ds : dataSnapshot.child("user").child(userID).child("file").getChildren()){
-            String date = ds.getKey();
-            String fileName = "";
-            String suffix = "";
-            String link = "";
-            for(DataSnapshot dss : ds.getChildren()) {
-                fileName = dss.getKey();
-                for(DataSnapshot dsss : dss.getChildren()) {
-                    suffix = dsss.getKey();
-                }
-                link = dss.child(suffix).getValue(String.class);
+        patientID = "NHNRQvqNUuRkQlKK8iebtyzgRvt2"; // ID of patient, here is jinghao1997@outlook.com
+        for(DataSnapshot ds : dataSnapshot.child("user").child(patientID).child("packet").getChildren()){
+            DataPacket dPack = new DataPacket();
+            dPack.setFile(ds.getValue(DataPacket.class).getFile());
+            dPack.setGps(ds.getValue(DataPacket.class).getGps());
+            dPack.setHeartrate(ds.getValue(DataPacket.class).getHeartrate());
+            dPack.setText(ds.getValue(DataPacket.class).getText());
+            if(ds.hasChild("comment")) {
+                dPack.setComment(ds.getValue(DataPacket.class).getComment());
             }
+            String record = "Date: " + ds.getKey() + "\n"
+                    + "Text: " + dPack.getText() + "\n"
+                    + "Heart rate: " + dPack.getHeartrate() + "\n"
+                    + "GPS: " + dPack.getGps() + "\n"
+                    + "File: " + dPack.getFile() + "\n"
+                    + "comment: " + dPack.getComment();
+            Log.d(TAG, "Value is: " + record);
             Map map = new HashMap();
-            map.put("date", date);
-            map.put("fileName", fileName);
-            map.put("suffix", suffix);
-            map.put("link", link);
+            map.put("date", ds.getKey());
+            map.put("text", dPack.getText());
+            map.put("heart", dPack.getHeartrate());
+            map.put("gps", dPack.getGps());
+            map.put("file", dPack.getFile());
+            map.put("comment", dPack.getComment());
             datas.add(map);
             // array.add(record);
         }
 
-        simpleAdapter=new SimpleAdapter(getContext(),datas,R.layout.listview_file,new String[]{"fileName", "date"},new int[]{R.id.fileTvInLv, R.id.dateTvInLv});
+        simpleAdapter=new SimpleAdapter(getActivity(),datas,R.layout.listview_data_packet,new String[]{"date","text","heart","gps","file","comment"},new int[]{R.id.dateTvInLv,R.id.textTvInLv,R.id.heartTvInLv,R.id.gpsTvInLv,R.id.fileTvInLv,R.id.commentTvInLv});
         mListView.setAdapter(simpleAdapter);
 
         mListView.setOnMenuItemClickListener(new SwipeMenuListView.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(int position, SwipeMenu menu, int index) {
+                String date;
                 switch (index) {
                     case 0:
+                        date = datas.get(position).get("date").toString();
+                        myRef.child("user").child(patientID).child("packet").child(date).child("comment").setValue(getComment());
+                        simpleAdapter.notifyDataSetChanged();
+                        simpleAdapter.notifyDataSetChanged();
+                        break;
+                    case 1:
                         // Remove data
                         // Remove pack from online database
-                        String date = datas.get(position).get("date").toString();
-                        String fileName = datas.get(position).get("fileName").toString();
-                        String suffix = datas.get(position).get("suffix").toString();
-                        myRef.child("user").child(userID).child("file").child(date).child(fileName).child(suffix).setValue(null);
+                        date = datas.get(position).get("date").toString();
+                        myRef.child("user").child(patientID).child("packet").child(date).child("file").setValue(null);
+                        myRef.child("user").child(patientID).child("packet").child(date).child("gps").setValue(null);
+                        myRef.child("user").child(patientID).child("packet").child(date).child("heartrate").setValue(null);
+                        myRef.child("user").child(patientID).child("packet").child(date).child("text").setValue(null);
+                        myRef.child("user").child(patientID).child("packet").child(date).child("comment").setValue(null);
 
                         // Remove item from ListView
                         datas.remove(position);
+                        simpleAdapter.notifyDataSetChanged();
                         simpleAdapter.notifyDataSetChanged();
                         break;
                 }
@@ -201,10 +235,12 @@ public class SendFileFragment extends Fragment {
         });
     }
 
-    @OnClick(R.id.btn_upload_file)
-    public void uploadFile() {
-        Intent intent = new Intent(getActivity(), SendFile.class);
-        startActivity(intent);
+    private String getComment() {
+        return mEditTextComment.getText().toString();
+    }
+
+    private void toastMessage(String message){
+        Toast.makeText(getActivity(),message,Toast.LENGTH_SHORT).show();
     }
 
 }

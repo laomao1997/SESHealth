@@ -34,8 +34,10 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import five.seshealthpatient.Activities.ChangePhotoDialog;
 import five.seshealthpatient.Activities.SendDataPacket;
 import five.seshealthpatient.Model.DataPacket;
+import five.seshealthpatient.Model.FilePacket;
 import five.seshealthpatient.R;
 
 public class DialogSelectFile extends Dialog {
@@ -64,8 +66,10 @@ public class DialogSelectFile extends Dialog {
     @BindView(R.id.tvFileChoosed)
     TextView tvFileChoosed;
 
-    String fileChoosed = "";
-    String dateChoosed = "";
+    FilePacket filePacket = new FilePacket();
+
+
+
 
 
 
@@ -79,10 +83,6 @@ public class DialogSelectFile extends Dialog {
 
     protected DialogSelectFile(Context context, boolean cancelable, DialogInterface.OnCancelListener cancelListener) {
         super(context, cancelable, cancelListener);
-    }
-
-    public interface OnFileSelectedListener {
-        public void onFileSelected (String date, String file);
     }
 
     @Override
@@ -168,15 +168,26 @@ public class DialogSelectFile extends Dialog {
         final List<Map<String, Object>> datas=new ArrayList<Map<String, Object>>();
         for(DataSnapshot ds : dataSnapshot.child("user").child(userID).child("file").getChildren()){
             String date = ds.getKey();
-            String file = ds.getValue(String.class);
+            String fileName = "";
+            String suffix = "";
+            String link = "";
+            for(DataSnapshot dss : ds.getChildren()) {
+                fileName = dss.getKey();
+                for(DataSnapshot dsss : dss.getChildren()) {
+                    suffix = dsss.getKey();
+                }
+                link = dss.child(suffix).getValue(String.class);
+            }
             Map map = new HashMap();
             map.put("date", date);
-            map.put("file", file);
+            map.put("fileName", fileName);
+            map.put("suffix", suffix);
+            map.put("link", link);
             datas.add(map);
             // array.add(record);
         }
 
-        simpleAdapter=new SimpleAdapter(getContext(),datas,R.layout.listview_file,new String[]{"file"},new int[]{R.id.fileTvInLv});
+        simpleAdapter=new SimpleAdapter(getContext(),datas,R.layout.listview_file,new String[]{"fileName", "date"},new int[]{R.id.fileTvInLv, R.id.dateTvInLv});
         mListView.setAdapter(simpleAdapter);
 
         mListView.setOnMenuItemClickListener(new SwipeMenuListView.OnMenuItemClickListener() {
@@ -184,15 +195,20 @@ public class DialogSelectFile extends Dialog {
             public boolean onMenuItemClick(int position, SwipeMenu menu, int index) {
                 switch (index) {
                     case 0:
-                        fileChoosed = datas.get(position).get("file").toString();
-                        dateChoosed = datas.get(position).get("date").toString();
-                        tvFileChoosed.setText("File: " + fileChoosed);
+                        filePacket.setFileName(datas.get(position).get("fileName").toString());
+                        filePacket.setDate(datas.get(position).get("date").toString());
+                        filePacket.setLink(datas.get(position).get("link").toString());
+                        Log.d(TAG, "onMenuItemClick: " + filePacket.getFileName());
+                        tvFileChoosed.setText("File: " + filePacket.getFileName());
+
                         break;
                     case 1:
                         // Remove data
                         // Remove pack from online database
                         String date = datas.get(position).get("date").toString();
-                        myRef.child("user").child(userID).child("file").child(date).setValue(null);
+                        String fileName = datas.get(position).get("fileName").toString();
+                        String suffix = datas.get(position).get("suffix").toString();
+                        myRef.child("user").child(userID).child("file").child(date).child(fileName).child(suffix).setValue(null);
 
                         // Remove item from ListView
                         datas.remove(position);
@@ -205,22 +221,16 @@ public class DialogSelectFile extends Dialog {
         });
     }
 
+
     @OnClick(R.id.submitBtn)
     public void submit() {
-        String a = getFileChoosed();
         Intent intent = new Intent();
-        intent.putExtra("name",a);
+        intent.putExtra("file", filePacket.getFileName()+"\n"+filePacket.getDate());
         intent.setClass(getContext(), SendDataPacket.class);
         getContext().startActivity(intent);
+        Log.d(TAG, "submit: " + filePacket.toString());
+
         dismiss();
-    }
-
-    public String getDateChoosed() {
-        return dateChoosed;
-    }
-
-    public String getFileChoosed() {
-        return fileChoosed;
     }
 
 }
