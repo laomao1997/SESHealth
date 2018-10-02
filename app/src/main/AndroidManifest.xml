@@ -48,6 +48,7 @@
         </activity>
         <activity android:name=".Activities.SendFile" />
         <activity android:name=".Activities.FolderActivity"></activity>
+        <activity android:name="five.seshealthpatient.Fragments.HeartRate_MainActivity" />
     </application>
 
 </manifest>

@@ -46,7 +46,7 @@ import five.seshealthpatient.R;
 
 
 /**
- * Class: MainActivity
+ * Class: HeartRate_MainActivity
  * Extends:  {@link AppCompatActivity}
  * Author:  Carlos Tirado < Carlos.TiradoCorts@uts.edu.au>, and YOU!
  * Description:
@@ -83,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
     /**
      * TAG to use
      */
-    private static String TAG = "MainActivity";
+    private static String TAG = "HeartRate_MainActivity";
 
     /**
      * I am using this enum to know which is the current fragment being displayed, you will see

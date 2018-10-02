@@ -137,6 +137,18 @@ public class SendDataPacket extends AppCompatActivity {
     private void showData(DataSnapshot dataSnapshot) {
         for(DataSnapshot ds : dataSnapshot.getChildren()){
             tvName.setText("User name: " + ds.child(userID).getValue(UserInformation.class).getName());
+
+        }
+
+        if(dataSnapshot.child("user").child(userID).child("heartrate").hasChildren()) {
+            int countOfHeartRate = (int) dataSnapshot.child("user").child(userID).child("heartrate").getChildrenCount();
+            int i = 0;
+            for(DataSnapshot dataSnapshot1 : dataSnapshot.child("user").child(userID).child("heartrate").getChildren()) {
+                i++;
+                if(i == countOfHeartRate) {
+                    heartRate.setText("Heart rate: " + dataSnapshot1.getValue(String.class));
+                }
+            }
         }
     }
 
