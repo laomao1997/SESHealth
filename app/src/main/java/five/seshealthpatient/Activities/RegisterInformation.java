@@ -67,8 +67,8 @@ public class RegisterInformation extends AppCompatActivity implements CompoundBu
         firebaseInfor();
         getEmailFromRegisterActivity();
 
-        genderInfor.setOnCheckedChangeListener(this);
-        groupInfor.setOnCheckedChangeListener(this);
+        //genderInfor.setOnCheckedChangeListener(this);
+        //groupInfor.setOnCheckedChangeListener(this);
 
         submitBtn.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -28,6 +28,8 @@
     <string name="condition_txt">Enter medical condition</string>
     <string name="doctor_txt">Doctor</string>
     <string name="patient_txt">Patient</string>
+    <string name="doctor_information">Doctor Information</string>
+    <string name="view_data_packet_txt">View Data Packet</string>
 
 
     <!-- TODO: Remove or change this placeholder text -->

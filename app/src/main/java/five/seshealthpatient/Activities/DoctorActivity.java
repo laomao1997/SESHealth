@@ -49,7 +49,7 @@ public class DoctorActivity extends AppCompatActivity {
      * what I mean with this later in this code.
      */
     private enum MenuStates {
-        DOCTOR_INFO, DATA_PACKET, HEARTRATE, RECORD_VIDEO, SEND_FILE, NAVIGATION_MAP
+        DOCTOR_INFO, VIEW_DATA_PACKET, HEARTRATE, RECORD_VIDEO, SEND_FILE, NAVIGATION_MAP
     }
 
     /**
@@ -93,18 +93,18 @@ public class DoctorActivity extends AppCompatActivity {
                         // Using a switch to see which item on the menu was clicked
                         switch (menuItem.getItemId()) {
                             // You can find these id's at: res -> menu -> drawer_view.xml
-                            case R.id.nav_patient_info:
+                            case R.id.nav_doctor_info:
                                 // If the user clicked on a different item than the current item
                                 if (currentState != MenuStates.DOCTOR_INFO) {
                                     // change the fragment to the new fragment
-                                    ChangeFragment(new PatientInformationFragment());
+                                    ChangeFragment(new DoctorInformationFragment());
                                     currentState = MenuStates.DOCTOR_INFO;
                                 }
                                 break;
-                            case R.id.nav_data_packet:
-                                if (currentState != DoctorActivity.MenuStates.DATA_PACKET) {
+                            case R.id.nav_view_data_packet:
+                                if (currentState != MenuStates.VIEW_DATA_PACKET) {
                                     ChangeFragment(new DataPacketFragment());
-                                    currentState = DoctorActivity.MenuStates.DATA_PACKET;
+                                    currentState = MenuStates.VIEW_DATA_PACKET;
                                 }
                                 break;
                             case R.id.nav_signout:
