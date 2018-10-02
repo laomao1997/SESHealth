@@ -191,6 +191,10 @@ public class MainActivity extends AppCompatActivity {
                                     currentState = MenuStates.NAVIGATION_MAP;
                                 }
                                 break;
+                            case R.id.nav_signout:
+                                FirebaseAuth.getInstance().signOut();
+                                finish();
+                                signOut();
                         }
 
                         return true;
@@ -365,5 +369,10 @@ public class MainActivity extends AppCompatActivity {
         // ChangeFragment(new PatientInformationFragment());
         if(currentState == MenuStates.PATIENT_INFO)
             startActivity(i);
+    }
+    // Start login activity once signed out
+    private void signOut(){
+        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+        startActivity(intent);
     }
 }

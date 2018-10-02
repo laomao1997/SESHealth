@@ -23,5 +23,10 @@
             android:id="@+id/nav_map"
             android:icon="@drawable/ic_menu_map"
             android:title="@string/facilities_map" />
+
+        <item
+            android:id="@+id/nav_signout"
+            android:icon="@drawable/ic_menu_map"
+            android:title="@string/signout_txt" />
     </group>
 </menu>
