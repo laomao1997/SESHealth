@@ -3,6 +3,8 @@ package five.seshealthpatient.Fragments;
 import android.app.Fragment;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -28,9 +30,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import butterknife.BindView;
@@ -192,7 +196,12 @@ public class DoctorDataPacketFragment extends Fragment {
             map.put("date", ds.getKey());
             map.put("text", dPack.getText());
             map.put("heart", dPack.getHeartrate());
-            map.put("gps", dPack.getGps());
+            // map.put("gps", dPack.getGps());
+            try{
+                map.put("gps", getAddressFromLocation(dPack.getGps()));
+            }catch (IOException e){
+                Log.d(TAG, "showData: " + e.getMessage());
+            }
             map.put("file", dPack.getFile());
             map.put("comment", dPack.getComment());
             datas.add(map);
@@ -233,6 +242,42 @@ public class DoctorDataPacketFragment extends Fragment {
                 return false;
             }
         });
+    }
+
+    private String getAddressFromLocation(String location) throws IOException {
+        Geocoder geocoder = new Geocoder(this.getContext(), Locale.getDefault());
+        boolean falg = geocoder.isPresent();
+        String addressName = "";
+        double latitude;
+        double longitude;
+        location = location.substring(1,location.length()-1);
+        latitude = Double.parseDouble(location.substring(0, location.indexOf(",")));
+        longitude = Double.parseDouble(location.substring(location.indexOf(",")+1, location.length()-1));
+        try{
+            List<Address> addresses = geocoder.getFromLocation(latitude, longitude, 1);
+            StringBuilder stringBuilder = new StringBuilder();
+            if(addresses.size() > 0){
+                Address address = addresses.get(0);
+                for(int i = 0; i < address.getMaxAddressLineIndex()+1; i++) {
+                    stringBuilder.append(address.getAddressLine(i)).append(", ");
+                }
+                //stringBuilder.append(address.getLocality()).append("_");
+                //stringBuilder.append(address.getPostalCode()).append("_");
+                //stringBuilder.append(address.getCountryCode()).append("_");
+                //stringBuilder.append(address.getCountryName()).append("_");
+                stringBuilder
+                        .append(address.getLocality()).append(", ")
+                        .append(address.getAdminArea()).append(", ")
+                        .append(address.getCountryName());
+                addressName = stringBuilder.toString();
+            }
+        } catch (IOException e) {
+            // Log.d(TAG, "getAddressFromLocation: 经度:" + latitude);
+        }
+        Log.d(TAG, "getAddressFromLocation: 经度:" + latitude);
+        Log.d(TAG, "getAddressFromLocation: 纬度:" + longitude);
+        Log.d(TAG, "getAddressFromLocation: " + addressName);
+        return addressName;
     }
 
     private String getComment() {

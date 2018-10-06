@@ -171,8 +171,7 @@ public class PatientInformationFragment extends Fragment {
     }
 
     @OnClick(R.id.btnPair)
-    public void logout() {
-        FirebaseAuth.getInstance().signOut();
+    public void doPair() {
         Intent intentToPair = new Intent(getContext(), UsersActivity.class);
         startActivity(intentToPair);
     }
