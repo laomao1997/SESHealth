@@ -47,6 +47,11 @@
                 android:value=".Activities.MainActivity" />
         </activity>
         <activity android:name=".Activities.SendFile" />
+        <activity
+            android:name=".Activities.UsersActivity"
+            android:parentActivityName=".Activities.MainActivity" />
+        <activity android:name=".Activities.AddNewPair"
+            android:parentActivityName=".Activities.UsersActivity"></activity>
         <activity android:name=".Activities.FolderActivity"></activity>
         <activity android:name="five.seshealthpatient.Fragments.HeartRate_MainActivity" />
     </application>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activities.AddNewPair">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/pair_toolbar_new"
+        app:title="User Management"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorPrimaryDark"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:titleTextColor="@color/whiteColor"
+        />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/users_list_new"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/addUserTxt"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/pair_toolbar_new"></android.support.v7.widget.RecyclerView>
+
+    <TextView
+        android:id="@+id/addUserTxt"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:text="User: "
+        android:textSize="30sp"
+        android:textStyle="bold" />
+    <Button
+        android:id="@+id/addUserBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:text="Confirm" />
+
+</RelativeLayout>

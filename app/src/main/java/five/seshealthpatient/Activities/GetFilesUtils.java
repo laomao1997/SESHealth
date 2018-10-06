@@ -211,25 +211,25 @@ public class GetFilesUtils {
      * get the size of the file path
      * @return String path size
     public String getFileSize(File path) throws IOException{
-        if(path.exists()){
-            DecimalFormat df = new DecimalFormat("#.00");
-            String sizeStr="";
-            FileInputStream fis=new FileInputStream(path);
-            long size=fis.available();
-            fis.close();
-            if(size<1024){
-                sizeStr=size+"B";
-            }else if(size<1048576){
-                sizeStr=df.format(size/(double)1024)+"KB";
-            }else if(size<1073741824){
-                sizeStr=df.format(size/(double)1048576)+"MB";
-            }else{
-                sizeStr=df.format(size/(double)1073741824)+"GB";
-            }
-            return sizeStr;
-        }else{
-            return null;
-        }
+    if(path.exists()){
+    DecimalFormat df = new DecimalFormat("#.00");
+    String sizeStr="";
+    FileInputStream fis=new FileInputStream(path);
+    long size=fis.available();
+    fis.close();
+    if(size<1024){
+    sizeStr=size+"B";
+    }else if(size<1048576){
+    sizeStr=df.format(size/(double)1024)+"KB";
+    }else if(size<1073741824){
+    sizeStr=df.format(size/(double)1048576)+"MB";
+    }else{
+    sizeStr=df.format(size/(double)1073741824)+"GB";
+    }
+    return sizeStr;
+    }else{
+    return null;
+    }
     }
 
     /**
