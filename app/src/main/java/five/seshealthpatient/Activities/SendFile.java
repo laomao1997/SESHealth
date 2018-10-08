@@ -86,7 +86,7 @@ public class SendFile extends AppCompatActivity implements ChangePhotoDialog.OnP
 
     private TextView fileAddress;
 
-    private Button submitBtn, addImage, addFile;
+    private Button submitBtn, addImage, addFile, btnReturn;
     private ImageView imageAdded;
     String time;
     String mImageName;
@@ -166,6 +166,14 @@ public class SendFile extends AppCompatActivity implements ChangePhotoDialog.OnP
             public void onClick(View view) {
                     Intent SendFile = new Intent(SendFile.this, FolderActivity.class);
                     startActivityForResult(SendFile, 7);
+            }
+        });
+
+        btnReturn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(SendFile.this, MainActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -467,7 +475,7 @@ public class SendFile extends AppCompatActivity implements ChangePhotoDialog.OnP
     private void findID() {
         imageAdded = (ImageView) findViewById(R.id.imageAdded);
         addImage = (Button) findViewById(R.id.addImage);
-
+        btnReturn = (Button) findViewById(R.id.btnReturn);
         fileAddress = (TextView) findViewById(R.id.fileAddress);
         addFile = (Button) findViewById(R.id.addFile);
 

@@ -21,10 +21,10 @@
 
     <Button
         android:id="@+id/submitBtn"
-        android:layout_width="356dp"
+        android:layout_width="172dp"
         android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/fileAddress"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
         android:text="Submit" />
 
     <TextView
@@ -61,6 +61,13 @@
         android:background="@drawable/textedge"
         app:srcCompat="@drawable/doctor" />
 
+    <Button
+        android:id="@+id/btnReturn"
+        android:layout_width="170dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@+id/fileAddress"
+        android:text="Return" />
     <Button
         android:id="@+id/addImage"
         android:layout_width="353dp"
