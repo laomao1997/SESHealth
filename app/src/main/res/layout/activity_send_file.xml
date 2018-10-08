@@ -4,87 +4,69 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:paddingLeft="2dp"
+    android:paddingRight="2dp"
+    android:paddingTop="2dp"
     tools:context=".Activities.SendFile">
 
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="200dp"
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="159dp">
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="61dp"
+        android:visibility="invisible" />
 
-        <ImageView
-            android:id="@+id/imageAdded"
-            android:layout_width="286dp"
-            android:layout_height="200dp"
-            android:src="@drawable/ic_launcher_foreground" />
-
-        <EditText
-            android:id="@+id/imageName"
-            android:layout_width="98dp"
-            android:layout_height="157dp"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentTop="true"
-            android:hint="Image Name" />
-
-        <Button
-            android:id="@+id/addImage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentEnd="true"
-            android:text="Add Image" />
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="200dp"
-        android:layout_marginBottom="160dp">
-
-        <TextView
-            android:layout_width="270dp"
-            android:layout_height="150dp"
-            android:id="@+id/fileAddress"
-            android:text="File Local Address"/>
-
-        <EditText
-            android:id="@+id/fileName"
-            android:layout_width="98dp"
-            android:layout_height="149dp"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentTop="true"
-            android:hint="File Name" />
-
-        <Button
-            android:id="@+id/addFile"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentEnd="true"
-            android:text="Add File" />
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="150dp"
+    <Button
+        android:id="@+id/submitBtn"
+        android:layout_width="356dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true">
+        android:layout_centerHorizontal="true"
+        android:text="Submit" />
 
-        <ProgressBar
-            android:id="@+id/progressBar"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_above="@+id/submitBtn"
-            android:layout_centerHorizontal="true"
-            android:visibility="invisible" />
+    <TextView
+        android:id="@+id/fileAddress"
+        android:layout_width="348dp"
+        android:layout_height="78dp"
+        android:layout_above="@+id/addFile"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="-86dp"
+        android:background="@drawable/textedge"
+        android:gravity="center"
+        android:padding="2dp"
+        android:paddingLeft="2dp"
+        android:paddingRight="5dp"
+        android:paddingTop="2dp"
+        android:text="File Local Address" />
 
-        <Button
-            android:id="@+id/submitBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentEnd="true"
-            android:text="Submit" />
-    </RelativeLayout>
+    <Button
+        android:id="@+id/addFile"
+        android:layout_width="352dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="89dp"
+        android:text="Add File" />
 
+    <ImageView
+        android:id="@+id/imageAdded"
+        android:layout_width="350dp"
+        android:layout_height="251dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="146dp"
+        android:background="@drawable/textedge"
+        app:srcCompat="@drawable/doctor" />
+
+    <Button
+        android:id="@+id/addImage"
+        android:layout_width="353dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/imageAdded"
+        android:layout_centerHorizontal="true"
+        android:text="Add Image" />
 </RelativeLayout>
+
