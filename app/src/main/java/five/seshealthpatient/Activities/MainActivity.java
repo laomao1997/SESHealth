@@ -4,6 +4,7 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -18,9 +19,18 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import five.seshealthpatient.Fragments.DataPacketFragment;
 import five.seshealthpatient.Fragments.HeartRateFragment;
@@ -28,6 +38,7 @@ import five.seshealthpatient.Fragments.MapFragment;
 import five.seshealthpatient.Fragments.PatientInformationFragment;
 import five.seshealthpatient.Fragments.RecordVideoFragment;
 import five.seshealthpatient.Fragments.SendFileFragment;
+import five.seshealthpatient.Model.UserInformation;
 import five.seshealthpatient.R;
 
 
@@ -70,6 +81,16 @@ public class MainActivity extends AppCompatActivity {
      * TAG to use
      */
     private static String TAG = "MainActivity";
+
+    // Database references and objects
+    private FirebaseAuth mAuth;
+    private FirebaseDatabase mFirebaseDatabase;
+    private DatabaseReference myRef;
+    private FirebaseAuth.AuthStateListener mAuthListener;
+    private StorageReference mStorageRef;
+    private String userID;
+    private String group;
+    private UserInformation uInfo;
 
     /**
      * I am using this enum to know which is the current fragment being displayed, you will see
@@ -239,5 +260,9 @@ public class MainActivity extends AppCompatActivity {
     private void signOut(){
         Intent intent = new Intent(MainActivity.this, LoginActivity.class);
         startActivity(intent);
+    }
+
+    private void toastMessage(String message){
+        Toast.makeText(MainActivity.this,message,Toast.LENGTH_SHORT).show();
     }
 }

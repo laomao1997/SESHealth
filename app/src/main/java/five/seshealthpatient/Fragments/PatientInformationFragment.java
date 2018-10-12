@@ -29,7 +29,11 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import five.seshealthpatient.Activities.DoctorActivity;
 import five.seshealthpatient.Activities.LoginActivity;
+import five.seshealthpatient.Activities.MainActivity;
+import five.seshealthpatient.Activities.RegisterInformation;
+import five.seshealthpatient.Activities.RegisterInformationDoctor;
 import five.seshealthpatient.Model.UserInformation;
 import five.seshealthpatient.R;
 
@@ -58,7 +62,7 @@ public class PatientInformationFragment extends Fragment {
     private FirebaseAuth.AuthStateListener mAuthListener;
     private DatabaseReference myRef;
     private String userID;
-
+    private UserInformation uInfo;
     /**
      * UI references
      */
@@ -147,7 +151,7 @@ public class PatientInformationFragment extends Fragment {
 
     private void showData(DataSnapshot dataSnapshot) {
         for(DataSnapshot ds : dataSnapshot.getChildren()){
-            UserInformation uInfo = new UserInformation();
+            uInfo = new UserInformation();
             uInfo.setName(ds.child(userID).getValue(UserInformation.class).getName()); //set the name
             uInfo.setEmail(ds.child(userID).getValue(UserInformation.class).getEmail()); //set the email
             uInfo.setAge(ds.child(userID).getValue(UserInformation.class).getAge()); //set the age
