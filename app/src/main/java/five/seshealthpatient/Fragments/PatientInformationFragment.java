@@ -34,6 +34,7 @@ import five.seshealthpatient.Activities.LoginActivity;
 import five.seshealthpatient.Activities.MainActivity;
 import five.seshealthpatient.Activities.RegisterInformation;
 import five.seshealthpatient.Activities.RegisterInformationDoctor;
+import five.seshealthpatient.Activities.UsersActivity;
 import five.seshealthpatient.Model.UserInformation;
 import five.seshealthpatient.R;
 

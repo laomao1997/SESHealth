@@ -20,12 +20,29 @@
             android:layout_height="wrap_content"
             android:textAlignment="center"
             android:textSize="25sp"
-            android:textColor="black"
-            android:text="All your patients showed below" />
+            android:text="View Data Packets of Patient" />
 
-        <ListView
+
+        <EditText
+            android:id="@+id/editTextComment"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="50dp"
+            android:hint="Write Comment here"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="5dp">
+
+            <com.baoyz.swipemenulistview.SwipeMenuListView
+                android:id="@+id/listView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+
+        </RelativeLayout>
+
+
 
 
     </LinearLayout>

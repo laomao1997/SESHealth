@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.design.widget.NavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -13,6 +14,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -77,7 +79,8 @@ public class LoginActivity extends AppCompatActivity {
     private UserInformation uInfo;
     private String group;
     private String userID;
-    private boolean doctor = false;
+    private boolean loginSuccess = false;
+    private String doctor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,6 +101,7 @@ public class LoginActivity extends AppCompatActivity {
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         myRef = mFirebaseDatabase.getReference();
 
+
         // Please try to use more String resources (values -> strings.xml) vs hardcoded Strings.
         setTitle(R.string.login_activity_title);
 
@@ -117,7 +121,7 @@ public class LoginActivity extends AppCompatActivity {
      */
     @OnClick(R.id.login_btn)
     public void LogIn() {
-        String username = usernameEditText.getText().toString();
+        final String username = usernameEditText.getText().toString();
         final String password = passwordEditText.getText().toString();
 
         // Having a tag, and the name of the function on the console message helps allot in
@@ -148,15 +152,46 @@ public class LoginActivity extends AppCompatActivity {
                                 Toast.makeText(LoginActivity.this, getString(R.string.auth_failed), Toast.LENGTH_LONG).show();
                             }
                         } else {
-                            // Start a new activity
-                            firebaseInfo();
-                            if(!doctor) {
-                                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                                startActivity(intent);
-                            }
+
+                            myRef = mFirebaseDatabase.getReference();
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            userID = user.getUid();
+                            myRef.addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                    // This method is called once with the initial value and again
+                                    // whenever data at this location is updated.
+                                    showData(dataSnapshot);
+                                    if(doctor.equals("doctor")) {
+                                        Intent intent = new Intent(LoginActivity.this, DoctorActivity.class);
+                                        startActivity(intent);
+                                    }
+                                    else{
+                                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                        startActivity(intent);
+                                    }
+                                    //toastMessage("Welcome. "+doctor+".");
+                                }
+
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
+
+                                }
+                            });
+
+
                         }
                     }
                 });
+
+    }
+
+    private void showData(DataSnapshot dataSnapshot) {
+        for(DataSnapshot ds : dataSnapshot.getChildren()) {
+            UserInformation uInfo = new UserInformation();
+            uInfo.setGroup(ds.child(userID).getValue(UserInformation.class).getGroup());
+            doctor = uInfo.getGroup();
+        }
     }
 
     @OnClick(R.id.create_account_btn)
@@ -175,67 +210,7 @@ public class LoginActivity extends AppCompatActivity {
         Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
     }
 
-    private void firebaseInfo(){
-        mAuth = FirebaseAuth.getInstance();
-        mFirebaseDatabase = FirebaseDatabase.getInstance();
-        myRef = mFirebaseDatabase.getReference();
-        FirebaseUser user = mAuth.getCurrentUser();
-        userID = user.getUid();
-
-        mAuthListener = new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                FirebaseUser user = firebaseAuth.getCurrentUser();
-                if (user != null) {
-                    // User is signed in
-                    Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
-                    toastMessage("Successfully signed in with: " + user.getEmail());
-                } else {
-                    // User is signed out
-                    Log.d(TAG, "onAuthStateChanged:signed_out");
-                    toastMessage("Successfully signed out.");
-                }
-                // ...
-            }
-        };
-
-        myRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                // This method is called once with the initial value and again
-                // whenever data at this location is updated.
-                showData(dataSnapshot);
-                if(uInfo.getGroup().toLowerCase().equals("doctor")){
-                    doctor = true;
-                    Intent intent = new Intent();
-                    intent.setClass(LoginActivity.this,DoctorActivity.class);
-                    LoginActivity.this.startActivity(intent);
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                // Failed to read value + add exception
-                Log.w(TAG, "Failed to read value.");
-            }
-        });
-    }
 
 
-    private void showData(DataSnapshot dataSnapshot){
-        for(DataSnapshot ds : dataSnapshot.getChildren()){
-            uInfo = new UserInformation();
-            uInfo.setName(ds.child(userID).getValue(UserInformation.class).getName()); //set the name
-            uInfo.setEmail(ds.child(userID).getValue(UserInformation.class).getEmail()); //set the email
-            //uInfo.setAge(ds.child(userID).getValue(UserInformation.class).getAge()); //set the age
-            uInfo.setGender(ds.child(userID).getValue(UserInformation.class).isGender()); //set the gender
-            // uInfo.setBirthday(ds.child(userID).getValue(UserInformation.class).getBirthday()); //set the birthday
-            uInfo.setGroup(ds.child(userID).getValue(UserInformation.class).getGroup()); //set the group
-            Log.d(TAG, "!!!!ZZLSDJFI USER:" +uInfo.getGroup() + uInfo.getName());
-            //group = ds.child(userID).getValue(UserInformation.class).getGroup();
-            //uInfo.setHeight(ds.child(userID).getValue(UserInformation.class).getHeight()); //set the height
-            // uInfo.setWeight(ds.child(userID).getValue(UserInformation.class).getWeight()); //set the weight
-            // uInfo.setCondition(ds.child(userID).getValue(UserInformation.class).getCondition()); //set the group
-        }
-    }
+
 }

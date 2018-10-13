@@ -129,43 +129,6 @@ public class DoctorDataPacketFragment extends Fragment {
             }
         });
 
-        /**
-         * Swipe Menu ListView Creator
-         */
-        SwipeMenuCreator creator = new SwipeMenuCreator() {
-
-            @Override
-            public void create(SwipeMenu menu) {
-                // create "comment" item
-                SwipeMenuItem selectItem = new SwipeMenuItem(
-                        getContext());
-                // set item background
-                selectItem.setBackground(new ColorDrawable(Color.rgb(0x00,
-                        0x99, 0x33)));
-                // set item width
-                selectItem.setWidth(170);
-                // set a icon
-                selectItem.setIcon(R.drawable.ic_action_select);
-                // add to menu
-                menu.addMenuItem(selectItem);
-
-                // create "delete" item
-                SwipeMenuItem deleteItem = new SwipeMenuItem(
-                        getContext());
-                // set item background
-                deleteItem.setBackground(new ColorDrawable(Color.rgb(0xF9,
-                        0x3F, 0x25)));
-                // set item width
-                deleteItem.setWidth(170);
-                // set a icon
-                deleteItem.setIcon(R.drawable.ic_action_delete);
-                // add to menu
-                menu.addMenuItem(deleteItem);
-            }
-        };
-
-        // set creator
-        mListView.setMenuCreator(creator);
     }
 
     /**
@@ -173,115 +136,8 @@ public class DoctorDataPacketFragment extends Fragment {
      * @param dataSnapshot
      */
     private void showData(DataSnapshot dataSnapshot) {
-        // ArrayList<String> array  = new ArrayList<>();
-        final List<Map<String, Object>> datas=new ArrayList<Map<String, Object>>();
-        patientID = "NHNRQvqNUuRkQlKK8iebtyzgRvt2"; // ID of patient, here is jinghao1997@outlook.com
-        for(DataSnapshot ds : dataSnapshot.child("user").child(patientID).child("packet").getChildren()){
-            DataPacket dPack = new DataPacket();
-            dPack.setFile(ds.getValue(DataPacket.class).getFile());
-            dPack.setGps(ds.getValue(DataPacket.class).getGps());
-            dPack.setHeartrate(ds.getValue(DataPacket.class).getHeartrate());
-            dPack.setText(ds.getValue(DataPacket.class).getText());
-            if(ds.hasChild("comment")) {
-                dPack.setComment(ds.getValue(DataPacket.class).getComment());
-            }
-            String record = "Date: " + ds.getKey() + "\n"
-                    + "Text: " + dPack.getText() + "\n"
-                    + "Heart rate: " + dPack.getHeartrate() + "\n"
-                    + "GPS: " + dPack.getGps() + "\n"
-                    + "File: " + dPack.getFile() + "\n"
-                    + "comment: " + dPack.getComment();
-            Log.d(TAG, "Value is: " + record);
-            Map map = new HashMap();
-            map.put("date", ds.getKey());
-            map.put("text", dPack.getText());
-            map.put("heart", dPack.getHeartrate());
-            // map.put("gps", dPack.getGps());
-            try{
-                map.put("gps", getAddressFromLocation(dPack.getGps()));
-            }catch (IOException e){
-                Log.d(TAG, "showData: " + e.getMessage());
-            }
-            map.put("file", dPack.getFile());
-            map.put("comment", dPack.getComment());
-            datas.add(map);
-            // array.add(record);
-        }
 
-        simpleAdapter=new SimpleAdapter(getActivity(),datas,R.layout.listview_data_packet,new String[]{"date","text","heart","gps","file","comment"},new int[]{R.id.dateTvInLv,R.id.textTvInLv,R.id.heartTvInLv,R.id.gpsTvInLv,R.id.fileTvInLv,R.id.commentTvInLv});
-        mListView.setAdapter(simpleAdapter);
 
-        mListView.setOnMenuItemClickListener(new SwipeMenuListView.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(int position, SwipeMenu menu, int index) {
-                String date;
-                switch (index) {
-                    case 0:
-                        date = datas.get(position).get("date").toString();
-                        myRef.child("user").child(patientID).child("packet").child(date).child("comment").setValue(getComment());
-                        simpleAdapter.notifyDataSetChanged();
-                        simpleAdapter.notifyDataSetChanged();
-                        break;
-                    case 1:
-                        // Remove data
-                        // Remove pack from online database
-                        date = datas.get(position).get("date").toString();
-                        myRef.child("user").child(patientID).child("packet").child(date).child("file").setValue(null);
-                        myRef.child("user").child(patientID).child("packet").child(date).child("gps").setValue(null);
-                        myRef.child("user").child(patientID).child("packet").child(date).child("heartrate").setValue(null);
-                        myRef.child("user").child(patientID).child("packet").child(date).child("text").setValue(null);
-                        myRef.child("user").child(patientID).child("packet").child(date).child("comment").setValue(null);
-
-                        // Remove item from ListView
-                        datas.remove(position);
-                        simpleAdapter.notifyDataSetChanged();
-                        simpleAdapter.notifyDataSetChanged();
-                        break;
-                }
-                // false : close the menu; true : not close the menu
-                return false;
-            }
-        });
-    }
-
-    private String getAddressFromLocation(String location) throws IOException {
-        Geocoder geocoder = new Geocoder(this.getContext(), Locale.getDefault());
-        boolean falg = geocoder.isPresent();
-        String addressName = "";
-        double latitude;
-        double longitude;
-        location = location.substring(1,location.length()-1);
-        latitude = Double.parseDouble(location.substring(0, location.indexOf(",")));
-        longitude = Double.parseDouble(location.substring(location.indexOf(",")+1, location.length()-1));
-        try{
-            List<Address> addresses = geocoder.getFromLocation(latitude, longitude, 1);
-            StringBuilder stringBuilder = new StringBuilder();
-            if(addresses.size() > 0){
-                Address address = addresses.get(0);
-                for(int i = 0; i < address.getMaxAddressLineIndex()+1; i++) {
-                    stringBuilder.append(address.getAddressLine(i)).append(", ");
-                }
-                //stringBuilder.append(address.getLocality()).append("_");
-                //stringBuilder.append(address.getPostalCode()).append("_");
-                //stringBuilder.append(address.getCountryCode()).append("_");
-                //stringBuilder.append(address.getCountryName()).append("_");
-                stringBuilder
-                        .append(address.getLocality()).append(", ")
-                        .append(address.getAdminArea()).append(", ")
-                        .append(address.getCountryName());
-                addressName = stringBuilder.toString();
-            }
-        } catch (IOException e) {
-            // Log.d(TAG, "getAddressFromLocation: 经度:" + latitude);
-        }
-        Log.d(TAG, "getAddressFromLocation: 经度:" + latitude);
-        Log.d(TAG, "getAddressFromLocation: 纬度:" + longitude);
-        Log.d(TAG, "getAddressFromLocation: " + addressName);
-        return addressName;
-    }
-
-    private String getComment() {
-        return mEditTextComment.getText().toString();
     }
 
     private void toastMessage(String message){

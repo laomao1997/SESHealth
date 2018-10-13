@@ -3,9 +3,11 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_doctor_info"
+            android:icon="@drawable/ic_menu_patient_information"
             android:title="@string/doctor_information" />
         <item
             android:id="@+id/nav_view_data_packet"
+            android:icon="@drawable/ic_menu_data_packet"
             android:title="@string/view_data_packet_txt" />
 
         <item

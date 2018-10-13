@@ -4,6 +4,7 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -13,16 +14,25 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import five.seshealthpatient.Fragments.DataPacketFragment;
+import five.seshealthpatient.Fragments.DoctorDataPacketFragment;
 import five.seshealthpatient.Fragments.DoctorInformationFragment;
 import five.seshealthpatient.Fragments.HeartRateFragment;
 import five.seshealthpatient.Fragments.MapFragment;
 import five.seshealthpatient.Fragments.PatientInformationFragment;
 import five.seshealthpatient.Fragments.RecordVideoFragment;
 import five.seshealthpatient.Fragments.SendFileFragment;
+import five.seshealthpatient.Model.UserInformation;
 import five.seshealthpatient.R;
 
 public class DoctorActivity extends AppCompatActivity {
@@ -57,11 +67,25 @@ public class DoctorActivity extends AppCompatActivity {
      */
     private DoctorActivity.MenuStates currentState;
 
+    /**
+     * FireBase setting
+     * @param savedInstanceState
+     */
+    private FirebaseDatabase mFirebaseDatabase;
+    private FirebaseAuth mAuth;
+    private FirebaseAuth.AuthStateListener mAuthListener;
+    private DatabaseReference myRef;
+    private String userID;
+
+    private String groupInfo;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_doctor);
+
+        setUser();
 
         // the default fragment on display is the doctor information
         currentState = MenuStates.DOCTOR_INFO;
@@ -103,7 +127,7 @@ public class DoctorActivity extends AppCompatActivity {
                                 break;
                             case R.id.nav_view_data_packet:
                                 if (currentState != MenuStates.VIEW_DATA_PACKET) {
-                                    ChangeFragment(new DataPacketFragment());
+                                    ChangeFragment(new DoctorDataPacketFragment());
                                     currentState = MenuStates.VIEW_DATA_PACKET;
                                 }
                                 break;
@@ -184,6 +208,59 @@ public class DoctorActivity extends AppCompatActivity {
         transaction.addToBackStack(null);
         transaction.commit();
     }
+
+
+    private void setUser() {
+        //declare the database reference object. This is what we use to access the database.
+        //NOTE: Unless you are signed in, this will not be useable.
+        //declare the database reference object. This is what we use to access the database.
+        //NOTE: Unless you are signed in, this will not be useable.
+        mAuth = FirebaseAuth.getInstance();
+        mFirebaseDatabase = FirebaseDatabase.getInstance();
+        myRef = mFirebaseDatabase.getReference();
+        FirebaseUser user = mAuth.getCurrentUser();
+        userID = user.getUid();
+
+        mAuthListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+            }
+        };
+
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // This method is called once with the initial value and again
+                // whenever data at this location is updated.
+                showData(dataSnapshot);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    private void showData(DataSnapshot dataSnapshot) {
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        // Bind View
+        View headerView = navigationView.getHeaderView(0);
+        TextView userName = headerView.findViewById(R.id.textView_userName);
+        TextView userEmail = headerView.findViewById(R.id.textView_userEmail);
+
+        for(DataSnapshot ds : dataSnapshot.getChildren()) {
+            UserInformation uInfo = new UserInformation();
+            uInfo.setName(ds.child(userID).getValue(UserInformation.class).getName()); //set the name
+            uInfo.setEmail(ds.child(userID).getValue(UserInformation.class).getEmail()); //set the email
+            uInfo.setGroup(ds.child(userID).getValue(UserInformation.class).getGroup());
+            userName.setText(uInfo.getName());
+            userEmail.setText(uInfo.getEmail());
+            groupInfo = uInfo.getGroup();
+        }
+    }
+
     // Start login activity once signed out
     private void signOut(){
         Intent intent = new Intent(DoctorActivity.this, LoginActivity.class);

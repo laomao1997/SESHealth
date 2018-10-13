@@ -18,7 +18,7 @@
         android:layout_height="wrap_content"
         android:contentDescription="Navigation header"
         android:paddingTop="8dp"
-        app:srcCompat="@drawable/icons8_pill_64" />
+        app:srcCompat="@drawable/icons8_medical_doctor_80" />
 
     <TextView
         android:id="@+id/textView_userName"

@@ -36,6 +36,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import five.seshealthpatient.Fragments.DataPacketFragment;
 import five.seshealthpatient.Fragments.DoctorDataPacketFragment;
+import five.seshealthpatient.Fragments.DoctorInformationFragment;
 import five.seshealthpatient.Fragments.HeartRateFragment;
 import five.seshealthpatient.Fragments.MapFragment;
 import five.seshealthpatient.Fragments.PatientInformationFragment;
@@ -92,11 +93,15 @@ public class MainActivity extends AppCompatActivity {
     private enum MenuStates {
         PATIENT_INFO, DATA_PACKET, HEARTRATE, RECORD_VIDEO, SEND_FILE, NAVIGATION_MAP
     }
+    private enum DoctorMenuStates {
+        DOCTOR_INFO, VIEW_DATA_PACKET
+    }
 
     /**
      * The current fragment being displayed.
      */
     private MenuStates currentState;
+    private DoctorMenuStates currentStateDoctor;
 
     /**
      * FireBase setting
@@ -122,6 +127,35 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
+        setUser();
+
+        /*if(groupInfo.equals("patient")) {
+            setPatientFragment();
+        }
+        else {
+            setDoctorFragment();
+        }*/
+        setPatientFragment();
+
+
+
+        // More on this code, check the tutorial at http://www.vogella.com/tutorials/AndroidFragments/article.html
+        fragmentManager = getFragmentManager();
+
+        // Add the default Fragment once the user logged in
+        FragmentTransaction ft = fragmentManager.beginTransaction();
+        ft.add(R.id.fragment_container, new PatientInformationFragment());
+
+        ft.commit();
+
+
+
+        getLocationPermission();
+    }
+
+    private void setPatientFragment() {
         setContentView(R.layout.activity_main);
 
         // the default fragment on display is the patient information
@@ -129,6 +163,7 @@ public class MainActivity extends AppCompatActivity {
 
         // go look for the main drawer layout
         mDrawerLayout = findViewById(R.id.main_drawer_layout);
+        //mDrawerLayout.addView();
 
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -225,21 +260,8 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
         );
-
-
-        // More on this code, check the tutorial at http://www.vogella.com/tutorials/AndroidFragments/article.html
-        fragmentManager = getFragmentManager();
-
-        // Add the default Fragment once the user logged in
-        FragmentTransaction ft = fragmentManager.beginTransaction();
-        ft.add(R.id.fragment_container, new PatientInformationFragment());
-
-        ft.commit();
-
-        setUser();
-
-        getLocationPermission();
     }
+
 
     /**
      * Called when one of the items in the toolbar was clicked, in this case, the menu button.
