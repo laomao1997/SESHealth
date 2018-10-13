@@ -29,11 +29,7 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import five.seshealthpatient.Activities.DoctorActivity;
 import five.seshealthpatient.Activities.LoginActivity;
-import five.seshealthpatient.Activities.MainActivity;
-import five.seshealthpatient.Activities.RegisterInformation;
-import five.seshealthpatient.Activities.RegisterInformationDoctor;
 import five.seshealthpatient.Model.UserInformation;
 import five.seshealthpatient.R;
 
@@ -50,7 +46,7 @@ import static android.content.ContentValues.TAG;
  * <p>
 
  */
-public class PatientInformationFragment extends Fragment {
+public class DoctorInformationFragment extends Fragment {
 
     private static final String TAG = "MainActivity";
 
@@ -62,29 +58,29 @@ public class PatientInformationFragment extends Fragment {
     private FirebaseAuth.AuthStateListener mAuthListener;
     private DatabaseReference myRef;
     private String userID;
-    private UserInformation uInfo;
+
     /**
      * UI references
      */
     @BindView(R.id.tvName) TextView mName;
     @BindView(R.id.tvEmail) TextView mEmail;
-    @BindView(R.id.tvAge) TextView mAge;
+    //@BindView(R.id.tvAge) TextView mAge;
     @BindView(R.id.tvGender) TextView mGender;
     @BindView(R.id.tvGroup) TextView mGroup;
-    @BindView(R.id.tvBirth) TextView mBirthday;
-    @BindView(R.id.tvHeight) TextView mHeight;
-    @BindView(R.id.tvWeight) TextView mWeight;
-    @BindView(R.id.tvCondition) TextView mCondition;
+    //@BindView(R.id.tvBirth) TextView mBirthday;
+    //@BindView(R.id.tvHeight) TextView mHeight;
+    //@BindView(R.id.tvWeight) TextView mWeight;
+    //@BindView(R.id.tvCondition) TextView mCondition;
     @BindView(R.id.btnEdit) Button mButtonEdit;
 
-    public PatientInformationFragment() {
+    public DoctorInformationFragment() {
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // Note the use of getActivity() to reference the Activity holding this fragment
-        getActivity().setTitle("Username Information");
+        getActivity().setTitle("Doctor Information");
     }
 
     @Override
@@ -92,7 +88,7 @@ public class PatientInformationFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         // Inflate the layout for this fragment
-        View v = inflater.inflate(R.layout.fragment_patient_information, container, false);
+        View v = inflater.inflate(R.layout.fragment_doctor_information, container, false);
 
         // Note how we are telling butter knife to bind during the on create view method
         ButterKnife.bind(this, v);
@@ -148,28 +144,29 @@ public class PatientInformationFragment extends Fragment {
      * Get data from firebase and store in local string
      * @param dataSnapshot
      */
+
     private void showData(DataSnapshot dataSnapshot) {
         for(DataSnapshot ds : dataSnapshot.getChildren()){
-            uInfo = new UserInformation();
+            UserInformation uInfo = new UserInformation();
             uInfo.setName(ds.child(userID).getValue(UserInformation.class).getName()); //set the name
             uInfo.setEmail(ds.child(userID).getValue(UserInformation.class).getEmail()); //set the email
-            uInfo.setAge(ds.child(userID).getValue(UserInformation.class).getAge()); //set the age
+            //uInfo.setAge(ds.child(userID).getValue(UserInformation.class).getAge()); //set the age
             uInfo.setGender(ds.child(userID).getValue(UserInformation.class).isGender()); //set the gender
-            uInfo.setBirthday(ds.child(userID).getValue(UserInformation.class).getBirthday()); //set the birthday
+            //uInfo.setBirthday(ds.child(userID).getValue(UserInformation.class).getBirthday()); //set the birthday
             uInfo.setGroup(ds.child(userID).getValue(UserInformation.class).getGroup()); //set the group
-            uInfo.setHeight(ds.child(userID).getValue(UserInformation.class).getHeight()); //set the height
-            uInfo.setWeight(ds.child(userID).getValue(UserInformation.class).getWeight()); //set the weight
-            uInfo.setCondition(ds.child(userID).getValue(UserInformation.class).getCondition()); //set the group
+            //uInfo.setHeight(ds.child(userID).getValue(UserInformation.class).getHeight()); //set the height
+            //uInfo.setWeight(ds.child(userID).getValue(UserInformation.class).getWeight()); //set the weight
+            //uInfo.setCondition(ds.child(userID).getValue(UserInformation.class).getCondition()); //set the group
 
             mName.setText("Name: " + uInfo.getName());
             mEmail.setText("Email: " + uInfo.getEmail());
-            mAge.setText("Age: " + uInfo.getAge());
+            //mAge.setText("Age: " + uInfo.getAge());
             mGender.setText("Gender: " + (uInfo.isGender()?"male":"female"));
-            mBirthday.setText("Birthday: " + uInfo.getBirthday());
+            //mBirthday.setText("Birthday: " + uInfo.getBirthday());
             mGroup.setText("Group: " + uInfo.getGroup());
-            mHeight.setText("Height: " + uInfo.getHeight());
-            mWeight.setText("Weight: " + uInfo.getWeight());
-            mCondition.setText("Medical condition: " + uInfo.getCondition());
+            //mHeight.setText("Height: " + uInfo.getHeight());
+            //mWeight.setText("Weight: " + uInfo.getWeight());
+           // mCondition.setText("Medical condition: " + uInfo.getCondition());
 
         }
     }
@@ -182,14 +179,6 @@ public class PatientInformationFragment extends Fragment {
                 .addToBackStack(null)
                 .commit();
     }
-    @OnClick(R.id.btnPair)
-    public void doPair() {
-        Intent intentToPair = new Intent(getContext(), UsersActivity.class);
-        startActivity(intentToPair);
-    }
-
-
-
 
     /**
      * customizable toast

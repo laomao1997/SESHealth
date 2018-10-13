@@ -1,0 +1,112 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="five.seshealthpatient.Fragments.EditInformationFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/nameET"
+            style="@style/LoginStyles"
+            android:layout_width="195dp"
+            android:layout_height="wrap_content"
+            android:hint="@string/name_txt"
+            android:inputType="text" />
+
+        <EditText
+            android:id="@+id/emailET"
+            style="@style/LoginStyles"
+            android:layout_width="195dp"
+            android:layout_height="wrap_content"
+            android:hint="@string/email_txt"
+            android:inputType="text" />
+
+        <EditText
+            android:id="@+id/ageET"
+            style="@style/LoginStyles"
+            android:layout_width="195dp"
+            android:layout_height="wrap_content"
+            android:hint="@string/age_txt"
+            android:inputType="text" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:visibility="visible"
+            tools:layout_height="5dp" />
+
+        <EditText
+            android:id="@+id/genderET"
+            style="@style/LoginStyles"
+            android:layout_width="195dp"
+            android:layout_height="wrap_content"
+            android:hint="@string/gender_txt"
+            android:inputType="text" />
+
+        <EditText
+            android:id="@+id/birthET"
+            style="@style/LoginStyles"
+            android:layout_width="195dp"
+            android:layout_height="wrap_content"
+            android:hint="@string/birth_txt"
+            android:inputType="text" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:visibility="visible"
+            tools:layout_height="5dp" />
+
+        <EditText
+            android:id="@+id/heightET"
+            style="@style/LoginStyles"
+            android:layout_width="195dp"
+            android:layout_height="wrap_content"
+            android:hint="@string/height_txt"
+            android:inputType="text" />
+
+        <EditText
+            android:id="@+id/weightET"
+            style="@style/LoginStyles"
+            android:layout_width="195dp"
+            android:layout_height="wrap_content"
+            android:hint="@string/weight_txt"
+            android:inputType="text" />
+
+        <EditText
+            android:id="@+id/conditionET"
+            style="@style/LoginStyles"
+            android:layout_width="195dp"
+            android:layout_height="wrap_content"
+            android:hint="@string/condition_txt"
+            android:inputType="text" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:visibility="visible"
+            tools:layout_height="5dp" />
+
+        <Button
+            android:id="@+id/btnConfirm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/btn_confirm"
+            android:textAlignment="center" />
+
+        <Button
+            android:id="@+id/btnExit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/btn_exit"
+            android:textAlignment="center" />
+    </LinearLayout>
+</FrameLayout>

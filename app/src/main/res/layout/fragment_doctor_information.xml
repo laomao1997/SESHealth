@@ -1,0 +1,65 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="five.seshealthpatient.Fragments.DoctorInformationFragment">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Name: "
+            android:textAlignment="textStart"
+            android:textSize="18sp"
+            android:padding="5dp" />
+
+        <TextView
+            android:id="@+id/tvEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Email: "
+            android:textAlignment="textStart"
+            android:textSize="18sp"
+            android:padding="5dp" />
+
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:visibility="visible"
+            tools:layout_height="5dp" />
+
+        <TextView
+            android:id="@+id/tvGender"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Gender: "
+            android:textAlignment="textStart"
+            android:textSize="18sp"
+            android:padding="5dp" />
+
+        <TextView
+            android:id="@+id/tvGroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="User group: "
+            android:textAlignment="textStart"
+            android:textSize="18sp"
+            android:padding="5dp" />
+
+        <Button
+            android:id="@+id/btnEdit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Edit information"
+            android:textAlignment="center" />
+    </LinearLayout>
+</FrameLayout>

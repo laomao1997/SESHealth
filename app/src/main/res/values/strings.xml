@@ -4,7 +4,34 @@
     <string name="email_example_com">email@example.com</string>
     <string name="password_txt">Password</string>
     <string name="log_in_txt">Log In</string>
-    <string name="login_activity_title">Log In</string>
+    <string name="create_account_txt">Create new account</string>
+    <string name="login_activity_title">Login</string>
+    <string name="minimum_password">Password too short, enter minimum 6 characters!</string>
+    <string name="auth_failed">Authentication failed, check your email and password or sign up</string>
+    <string name="register_activity_title">Register!</string>
+    <string name="reset_password_activity_title">Reset password</string>
+    <string name="forgot_password_txt">Forgot Password?</string>
+    <string name="register_txt">Register</string>
+    <string name="reset_txt">Reset password</string>
+    <string name="back_txt">Go back</string>
+    <string name="signOut_txt">Sign Out</string>
+    <string name="btn_link_to_login">Already registered. Login Me!</string>
+    <string name="btn_confirm">Confirm</string>
+    <string name="btn_exit">Exit</string>
+    <string name="name_txt">Enter name</string>
+    <string name="email_txt">Enter email</string>
+    <string name="age_txt">Enter age</string>
+    <string name="gender_txt">Enter gender</string>
+    <string name="birth_txt">Enter D.O.B</string>
+    <string name="height_txt">Enter height</string>
+    <string name="weight_txt">Enter weight</string>
+    <string name="condition_txt">Enter medical condition</string>
+    <string name="doctor_txt">Doctor</string>
+    <string name="patient_txt">Patient</string>
+    <string name="doctor_information">Doctor Information</string>
+    <string name="view_data_packet_txt">View Data Packet</string>
+
+
     <string name="google_maps_API_key">AIzaSyDAIxknZFuRLpebFVGRaWgEYm0-LRrDNZU</string>
 
     <!-- TODO: Remove or change this placeholder text -->
@@ -20,14 +47,6 @@
     <string name="drawer_open">Drawer Open</string>
     <string name="drawer_close">Drawer Close</string>
 
-    <string name="reset_txt">Reset password</string>
-    <string name="back_txt">Go back</string>
-    <string name="register_activity_title">Register!</string>
-    <string name="forgot_password_txt">Forgot Password?</string>
-    <string name="create_account_txt">Create new account</string>
-    <string name="register_txt">Register</string>
-    <string name="auth_failed">Authentication failed, check your email and password or sign up</string>
-    <string name="minimum_password">Password too short, enter minimum 6 characters!</string>
 
     <string name="signout_txt">Sign Out</string>
 </resources>

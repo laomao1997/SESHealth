@@ -19,10 +19,19 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import five.seshealthpatient.Model.UserInformation;
 import five.seshealthpatient.R;
 
 /**
@@ -60,7 +69,15 @@ public class LoginActivity extends AppCompatActivity {
      */
     private static String TAG = "LoginActivity";
     private ProgressDialog progressDialog;
-    private FirebaseAuth firebaseAuth;
+    private FirebaseAuth mAuth;
+    private FirebaseDatabase mFirebaseDatabase;
+    private DatabaseReference myRef;
+    private FirebaseAuth.AuthStateListener mAuthListener;
+    private StorageReference mStorageRef;
+    private UserInformation uInfo;
+    private String group;
+    private String userID;
+    private boolean doctor = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,18 +94,21 @@ public class LoginActivity extends AppCompatActivity {
         progressDialog = new ProgressDialog(this);
 
         //Initialise firebase auth
-        firebaseAuth = FirebaseAuth.getInstance();
+        mAuth = FirebaseAuth.getInstance();
+        mFirebaseDatabase = FirebaseDatabase.getInstance();
+        myRef = mFirebaseDatabase.getReference();
 
         // Please try to use more String resources (values -> strings.xml) vs hardcoded Strings.
         setTitle(R.string.login_activity_title);
 
-        if (firebaseAuth.getCurrentUser() != null) {
-            startActivity(new Intent(LoginActivity.this, MainActivity.class));
-            finish();
-        }
-        firebaseAuth = FirebaseAuth.getInstance();
-
+        //if (mAuth.getCurrentUser() != null) {
+            //startActivity(new Intent(LoginActivity.this, MainActivity.class));
+            //finish();
+        //}
+        mAuth = FirebaseAuth.getInstance();
     }
+
+
 
 
     /**
@@ -99,12 +119,6 @@ public class LoginActivity extends AppCompatActivity {
     public void LogIn() {
         String username = usernameEditText.getText().toString();
         final String password = passwordEditText.getText().toString();
-
-        /**
-         * for test auth
-         */
-        // String username = "jinghaodoctor@outlook.com";
-        // final String password = "12345678";
 
         // Having a tag, and the name of the function on the console message helps allot in
         // knowing where the message should appear.
@@ -122,7 +136,7 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         //authenticate user
-        firebaseAuth.signInWithEmailAndPassword(username, password)
+        mAuth.signInWithEmailAndPassword(username, password)
                 .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
@@ -135,9 +149,11 @@ public class LoginActivity extends AppCompatActivity {
                             }
                         } else {
                             // Start a new activity
-                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                            startActivity(intent);
-                            finish();
+                            firebaseInfo();
+                            if(!doctor) {
+                                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                startActivity(intent);
+                            }
                         }
                     }
                 });
@@ -155,5 +171,71 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    private void toastMessage(String message){
+        Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
+    }
 
+    private void firebaseInfo(){
+        mAuth = FirebaseAuth.getInstance();
+        mFirebaseDatabase = FirebaseDatabase.getInstance();
+        myRef = mFirebaseDatabase.getReference();
+        FirebaseUser user = mAuth.getCurrentUser();
+        userID = user.getUid();
+
+        mAuthListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+                if (user != null) {
+                    // User is signed in
+                    Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
+                    toastMessage("Successfully signed in with: " + user.getEmail());
+                } else {
+                    // User is signed out
+                    Log.d(TAG, "onAuthStateChanged:signed_out");
+                    toastMessage("Successfully signed out.");
+                }
+                // ...
+            }
+        };
+
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                // This method is called once with the initial value and again
+                // whenever data at this location is updated.
+                showData(dataSnapshot);
+                if(uInfo.getGroup().toLowerCase().equals("doctor")){
+                    doctor = true;
+                    Intent intent = new Intent();
+                    intent.setClass(LoginActivity.this,DoctorActivity.class);
+                    LoginActivity.this.startActivity(intent);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // Failed to read value + add exception
+                Log.w(TAG, "Failed to read value.");
+            }
+        });
+    }
+
+
+    private void showData(DataSnapshot dataSnapshot){
+        for(DataSnapshot ds : dataSnapshot.getChildren()){
+            uInfo = new UserInformation();
+            uInfo.setName(ds.child(userID).getValue(UserInformation.class).getName()); //set the name
+            uInfo.setEmail(ds.child(userID).getValue(UserInformation.class).getEmail()); //set the email
+            //uInfo.setAge(ds.child(userID).getValue(UserInformation.class).getAge()); //set the age
+            uInfo.setGender(ds.child(userID).getValue(UserInformation.class).isGender()); //set the gender
+            // uInfo.setBirthday(ds.child(userID).getValue(UserInformation.class).getBirthday()); //set the birthday
+            uInfo.setGroup(ds.child(userID).getValue(UserInformation.class).getGroup()); //set the group
+            Log.d(TAG, "!!!!ZZLSDJFI USER:" +uInfo.getGroup() + uInfo.getName());
+            //group = ds.child(userID).getValue(UserInformation.class).getGroup();
+            //uInfo.setHeight(ds.child(userID).getValue(UserInformation.class).getHeight()); //set the height
+            // uInfo.setWeight(ds.child(userID).getValue(UserInformation.class).getWeight()); //set the weight
+            // uInfo.setCondition(ds.child(userID).getValue(UserInformation.class).getCondition()); //set the group
+        }
+    }
 }
