@@ -22,6 +22,7 @@
             android:textSize="25sp"
             android:text="View Data Packets of Patient" />
 
+
         <EditText
             android:id="@+id/editTextComment"
             android:layout_width="match_parent"

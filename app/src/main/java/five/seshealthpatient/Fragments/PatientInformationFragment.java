@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -59,6 +60,7 @@ public class PatientInformationFragment extends Fragment {
     private DatabaseReference myRef;
     private String userID;
 
+
     /**
      * UI references
      */
@@ -72,6 +74,7 @@ public class PatientInformationFragment extends Fragment {
     @BindView(R.id.tvWeight) TextView mWeight;
     @BindView(R.id.tvCondition) TextView mCondition;
     @BindView(R.id.btnEdit) Button mButtonEdit;
+
 
     public PatientInformationFragment() {
     }
@@ -175,6 +178,7 @@ public class PatientInformationFragment extends Fragment {
         Intent intentToPair = new Intent(getContext(), UsersActivity.class);
         startActivity(intentToPair);
     }
+
 
 
 
