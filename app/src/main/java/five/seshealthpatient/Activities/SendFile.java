@@ -85,8 +85,8 @@ public class SendFile extends AppCompatActivity implements ChangePhotoDialog.OnP
     Task<Uri> urlTask;
 
     private TextView fileAddress;
-    private EditText imageName, fileName;
-    private Button submitBtn, addImage, addFile;
+
+    private Button submitBtn, addImage, addFile, btnReturn;
     private ImageView imageAdded;
     String time;
     String mImageName;
@@ -147,7 +147,9 @@ public class SendFile extends AppCompatActivity implements ChangePhotoDialog.OnP
 
         Intent intent = getIntent(); //Get filepath from FolderActivity.
         filePath = intent.getStringExtra("filePath");
-        fileAddress.setText(filePath);
+        if(filePath != null) {
+            fileAddress.setText(filePath);
+        }
 
         addImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -167,6 +169,14 @@ public class SendFile extends AppCompatActivity implements ChangePhotoDialog.OnP
             }
         });
 
+        btnReturn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(SendFile.this, MainActivity.class);
+                startActivity(intent);
+            }
+        });
+
         submitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -174,23 +184,14 @@ public class SendFile extends AppCompatActivity implements ChangePhotoDialog.OnP
                 time = df.format(new Date());
                 //Upload the New Photo
                 if(mSelectedImageUri != null){
-                    mImageName = imageName.getText().toString();
-                    if(mImageName.equals("")){
-                        mImageName = "Unnamed";
-                    }
+
+
                     uploadNewPhoto(mSelectedImageUri);
                 }else if(mSelectedImageBitmap  != null){
-                    mImageName = imageName.getText().toString();
-                    if(mImageName.equals("")){
-                        mImageName = "Unnamed";
-                    }
                     Log.d(TAG, "onClick: test 555");
                     uploadNewPhoto(mSelectedImageBitmap);
                 }
-                mFileName = fileName.getText().toString();
-                if(mFileName.equals("")){
-                    mFileName = "Unnamed";
-                }
+
                 if(filePath!=null) uploadfile(filePath);
             }
         });
@@ -473,10 +474,8 @@ public class SendFile extends AppCompatActivity implements ChangePhotoDialog.OnP
 
     private void findID() {
         imageAdded = (ImageView) findViewById(R.id.imageAdded);
-        imageName = (EditText) findViewById(R.id.imageName);
         addImage = (Button) findViewById(R.id.addImage);
-
-        fileName = (EditText) findViewById(R.id.fileName);
+        btnReturn = (Button) findViewById(R.id.btnReturn);
         fileAddress = (TextView) findViewById(R.id.fileAddress);
         addFile = (Button) findViewById(R.id.addFile);
 
