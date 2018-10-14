@@ -16,11 +16,11 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/icons8_hospital_96"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+        android:theme="@style/AppTheme">
 
         <meta-data
             android:name="com.google.android.gms.version"
@@ -30,7 +30,8 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyDAIxknZFuRLpebFVGRaWgEYm0-LRrDNZU"/>
 
-        <activity android:name=".Activities.LoginActivity">
+        <activity android:name=".Activities.LoginActivity"
+            android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

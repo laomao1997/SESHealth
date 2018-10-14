@@ -152,8 +152,6 @@ public class LoginActivity extends AppCompatActivity {
                                 Toast.makeText(LoginActivity.this, getString(R.string.auth_failed), Toast.LENGTH_LONG).show();
                             }
                         } else {
-
-                            myRef = mFirebaseDatabase.getReference();
                             FirebaseUser user = mAuth.getCurrentUser();
                             userID = user.getUid();
                             myRef.addValueEventListener(new ValueEventListener() {

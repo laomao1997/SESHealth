@@ -1,82 +1,114 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context="five.seshealthpatient.Activities.LoginActivity">
+    android:orientation="vertical" >
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/login_toolbar"
+
+
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="@color/colorPrimaryDark"
-        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-        app:titleTextColor="@color/whiteColor"
-        />
+        android:layout_height="match_parent"
+        android:padding="30dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/welcomeTV"
-        style="@style/HeadingStyles"
-        android:layout_width="wrap_content"
+        <ImageView
+            android:layout_width="96dp"
+            android:layout_height="96dp"
+            android:layout_marginTop="50dp"
+            android:src="@drawable/icons8_hospital_96"/>
+
+        <TextView
+            android:id="@+id/welcomeTV"
+            style="@style/HeadingStyles"
+            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/blackText"
+            android:textStyle="bold"
+            android:text="Log in to SES Health" />
+
+        <!-- Email Label -->
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp">
+            <EditText
+                android:id="@+id/usernameET"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Email address"
+                android:inputType="textEmailAddress" />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <!-- Password Label -->
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp">
+            <EditText
+                android:id="@+id/passwordET"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/password_txt"
+                android:inputType="textPassword" />
+        </android.support.design.widget.TextInputLayout>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/reset_password_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:text="@string/forgot_password_txt"
+                android:textAllCaps="false"
+                android:textColor="@color/colorPrimary"
+                android:layout_alignParentEnd="true"/>
+
+
+
+            <Button
+                android:id="@+id/create_account_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:text="@string/create_account_txt"
+                android:textAllCaps="false"
+                android:textColor="@color/colorPrimary"
+                android:layout_alignParentStart="true"/>
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="162dp"
-        android:text="@string/app_name"
-        android:textStyle="bold" />
+        android:elevation="10dp"
+        android:padding="10dp"
+        android:background="#fff"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:fitsSystemWindows="true">
 
-    <EditText
-        android:id="@+id/usernameET"
-        style="@style/LoginStyles"
-        android:layout_width="195dp"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:hint="@string/email_example_com"
-        android:inputType="textEmailAddress" />
+        <Button
+            android:id="@+id/login_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/btn_bg_blue"
+            android:text="@string/log_in_txt"
+            android:textColor="@color/whiteColor"/>
 
-    <EditText
-        android:id="@+id/passwordET"
-
-        android:layout_width="195dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_margin="210dp"
-        android:hint="@string/password_txt"
-        android:inputType="textPassword" />
-
-    <Button
-        android:id="@+id/reset_password_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/usernameET"
-        android:layout_below="@+id/passwordET"
-        android:layout_marginTop="-210dp"
-        android:background="@null"
-        android:text="@string/forgot_password_txt"
-        android:textAllCaps="false"
-        android:textColor="@android:color/black" />
-
-    <Button
-        android:id="@+id/login_btn"
-
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="94dp"
-        android:text="@string/log_in_txt" />
-
-    <Button
-        android:id="@+id/create_account_btn"
-        style="@style/CreateAccountStyles"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="25dp"
-        android:text="@string/create_account_txt" />
+    </LinearLayout>
 
 
-</RelativeLayout>
+</LinearLayout>

@@ -4,6 +4,8 @@ import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -31,9 +33,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -124,7 +128,6 @@ public class SendDataPacket extends AppCompatActivity {
 
         initGPS();
 
-
         Intent intent = getIntent();
         file += intent.getStringExtra("file");
         Log.d(TAG, "onCreate: file: " + file);
@@ -146,7 +149,7 @@ public class SendDataPacket extends AppCompatActivity {
             for(DataSnapshot dataSnapshot1 : dataSnapshot.child("user").child(userID).child("heartrate").getChildren()) {
                 i++;
                 if(i == countOfHeartRate) {
-                    heartRate.setText("Heart rate: " + dataSnapshot1.getValue(String.class));
+                    heartRate.setText(dataSnapshot1.getValue(String.class));
                 }
             }
         }
@@ -155,8 +158,13 @@ public class SendDataPacket extends AppCompatActivity {
     @OnClick(R.id.submitBtn)
     public void SubmitDataPacket() {
         if(!textViewChooseFile.equals("null")) {
-            filePacket.setDate(file.substring(file.lastIndexOf("\n")+1));
-            filePacket.setFileName(file.substring(0, file.lastIndexOf("\n")));
+            try{
+                filePacket.setDate(file.substring(file.lastIndexOf("\n")+1));
+                filePacket.setFileName(file.substring(0, file.lastIndexOf("\n")));
+            }catch (Exception e)
+            {
+                toastMessage(file);
+            }
         }
         toastMessage("Adding relevant information to database...");
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -166,13 +174,23 @@ public class SendDataPacket extends AppCompatActivity {
             userRelevantText = "Adding relevant information to database...";
         else
             userRelevantText = relevantText.getText().toString();
-        DataPacket dPack = new DataPacket(userRelevantText, GPS, filePacket.getFileName(), "65");
-        myRef.child("user").child(userID).child("packet").child(time).child("file").setValue(dPack.getFile());
-        myRef.child("user").child(userID).child("packet").child(time).child("heartrate").setValue(dPack.getHeartrate());
-        myRef.child("user").child(userID).child("packet").child(time).child("gps").setValue(dPack.getGps());
-        myRef.child("user").child(userID).child("packet").child(time).child("text").setValue(dPack.getText());
-        toastMessage("Complete");
-        relevantText.setText("");
+        try{
+            DataPacket dPack =
+                    new DataPacket(
+                            userRelevantText,
+                            currentLocation.getText().toString(),
+                            filePacket.getFileName(),
+                            heartRate.getText().toString());
+            myRef.child("user").child(userID).child("packet").child(time).child("file").setValue(dPack.getFile());
+            myRef.child("user").child(userID).child("packet").child(time).child("heartrate").setValue(dPack.getHeartrate());
+            myRef.child("user").child(userID).child("packet").child(time).child("gps").setValue(dPack.getGps());
+            myRef.child("user").child(userID).child("packet").child(time).child("text").setValue(dPack.getText());
+            toastMessage("Complete");
+            relevantText.setText("");
+        }catch (Exception e) {
+
+        }
+
     }
 
     @OnClick(R.id.textViewChooseFile)
@@ -204,7 +222,11 @@ public class SendDataPacket extends AppCompatActivity {
                                 if (location != null) {
                                     // Logic to handle location object
                                     GPS = "["+location.getLatitude()+","+location.getLongitude()+"]";
-                                    currentLocation.setText("Current Location: " + GPS);
+                                    try{
+                                        currentLocation.setText(getAddressFromLocation(GPS));
+                                    }catch (Exception e) {
+
+                                    }
                                 }
                             }
                         });
@@ -217,7 +239,38 @@ public class SendDataPacket extends AppCompatActivity {
         }
     }
 
+    private String getAddressFromLocation(String location) throws IOException {
+        Geocoder geocoder = new Geocoder(this, Locale.getDefault());
+        boolean falg = geocoder.isPresent();
+        String addressName = "";
+        double latitude;
+        double longitude;
+        location = location.substring(1,location.length()-1);
+        latitude = Double.parseDouble(location.substring(0, location.indexOf(",")));
+        longitude = Double.parseDouble(location.substring(location.indexOf(",")+1, location.length()-1));
+        try{
+            List<Address> addresses = geocoder.getFromLocation(latitude, longitude, 1);
+            StringBuilder stringBuilder = new StringBuilder();
+            if(addresses.size() > 0){
+                Address address = addresses.get(0);
+                for(int i = 0; i < address.getMaxAddressLineIndex()+1; i++) {
+                    stringBuilder.append(address.getAddressLine(i)).append(" ");
+                }
+                //stringBuilder.append(address.getLocality()).append("_");
+                //stringBuilder.append(address.getPostalCode()).append("_");
+                //stringBuilder.append(address.getCountryCode()).append("_");
+                //stringBuilder.append(address.getCountryName()).append("_");
 
+                addressName = stringBuilder.toString();
+            }
+        } catch (IOException e) {
+            // Log.d(TAG, "getAddressFromLocation: 经度:" + latitude);
+        }
+        Log.d(TAG, "getAddressFromLocation: 经度:" + latitude);
+        Log.d(TAG, "getAddressFromLocation: 纬度:" + longitude);
+        Log.d(TAG, "getAddressFromLocation: " + addressName);
+        return addressName;
+    }
 
     @Override
     public void onStart() {

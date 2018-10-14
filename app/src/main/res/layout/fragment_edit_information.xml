@@ -12,7 +12,6 @@
 
         <EditText
             android:id="@+id/nameET"
-            style="@style/LoginStyles"
             android:layout_width="195dp"
             android:layout_height="wrap_content"
             android:hint="@string/name_txt"
@@ -20,7 +19,6 @@
 
         <EditText
             android:id="@+id/emailET"
-            style="@style/LoginStyles"
             android:layout_width="195dp"
             android:layout_height="wrap_content"
             android:hint="@string/email_txt"
@@ -28,7 +26,6 @@
 
         <EditText
             android:id="@+id/ageET"
-            style="@style/LoginStyles"
             android:layout_width="195dp"
             android:layout_height="wrap_content"
             android:hint="@string/age_txt"
@@ -43,7 +40,6 @@
 
         <EditText
             android:id="@+id/genderET"
-            style="@style/LoginStyles"
             android:layout_width="195dp"
             android:layout_height="wrap_content"
             android:hint="@string/gender_txt"
@@ -51,7 +47,6 @@
 
         <EditText
             android:id="@+id/birthET"
-            style="@style/LoginStyles"
             android:layout_width="195dp"
             android:layout_height="wrap_content"
             android:hint="@string/birth_txt"
@@ -66,7 +61,6 @@
 
         <EditText
             android:id="@+id/heightET"
-            style="@style/LoginStyles"
             android:layout_width="195dp"
             android:layout_height="wrap_content"
             android:hint="@string/height_txt"
@@ -74,7 +68,6 @@
 
         <EditText
             android:id="@+id/weightET"
-            style="@style/LoginStyles"
             android:layout_width="195dp"
             android:layout_height="wrap_content"
             android:hint="@string/weight_txt"
@@ -82,7 +75,6 @@
 
         <EditText
             android:id="@+id/conditionET"
-            style="@style/LoginStyles"
             android:layout_width="195dp"
             android:layout_height="wrap_content"
             android:hint="@string/condition_txt"

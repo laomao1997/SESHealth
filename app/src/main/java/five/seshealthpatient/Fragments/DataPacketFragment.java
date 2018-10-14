@@ -72,7 +72,6 @@ public class DataPacketFragment extends Fragment {
     /**
      * UI references
      */
-    @BindView(R.id.tvDataPack) TextView mTextViewDataPack;
     @BindView(R.id.btnCreateNewPack) Button mButtonCreateNewPack;
     @BindView(R.id.listView) SwipeMenuListView mListView;
 
