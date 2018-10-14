@@ -270,10 +270,10 @@ public class AddNewPair extends AppCompatActivity {
         String userGroup = dsTest.child("user").child(userID).child("group").getValue(String.class);
         String userAddGroup = dsTest.child("user").child(userInformation.getUID()).child("group").getValue(String.class);
         long childrenCount = dsTest.child("user").child(userID).child("pair").getChildrenCount();
-        if(userGroup.equals("patient")&&childrenCount!=0){
+        /*if(userGroup.equals("patient")&&childrenCount!=0){
             toastMessage("Patients can only add one doctor.");
             return;
-        }
+        }*/
         if(userGroup.equals("doctor")){
             toastMessage("Doctors can only be added by patients");
             return;
