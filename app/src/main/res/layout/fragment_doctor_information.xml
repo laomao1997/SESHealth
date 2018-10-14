@@ -61,5 +61,12 @@
             android:layout_height="wrap_content"
             android:text="Edit information"
             android:textAlignment="center" />
+
+        <Button
+            android:id="@+id/btnPair"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Pair"
+            android:textAlignment="center" />
     </LinearLayout>
 </FrameLayout>

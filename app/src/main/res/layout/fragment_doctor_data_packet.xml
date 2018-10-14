@@ -20,12 +20,14 @@
             android:layout_height="wrap_content"
             android:textAlignment="center"
             android:textSize="25sp"
-            android:textColor="black"
             android:text="All your patients showed below" />
 
         <ListView
+            android:id="@+id/list_view"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:divider="@color/whiteColor"
+            android:dividerHeight="10dp" />
 
 
     </LinearLayout>

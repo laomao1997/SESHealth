@@ -30,6 +30,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import five.seshealthpatient.Activities.LoginActivity;
+import five.seshealthpatient.Activities.UsersActivity;
 import five.seshealthpatient.Model.UserInformation;
 import five.seshealthpatient.R;
 
@@ -178,6 +179,11 @@ public class DoctorInformationFragment extends Fragment {
                 .replace(R.id.fragment_container, editFrag,"findThisFragment")
                 .addToBackStack(null)
                 .commit();
+    }
+    @OnClick(R.id.btnPair)
+    public void doPair() {
+        Intent intentToPair = new Intent(getContext(), UsersActivity.class);
+        startActivity(intentToPair);
     }
 
     /**

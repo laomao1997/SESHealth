@@ -187,12 +187,7 @@ public class DataPacketFragment extends Fragment {
             map.put("date", ds.getKey());
             map.put("text", dPack.getText());
             map.put("heart", dPack.getHeartrate());
-            //map.put("gps", dPack.getGps());
-            try{
-                map.put("gps", getAddressFromLocation(dPack.getGps()));
-            }catch (IOException e){
-                Log.d(TAG, "showData: "+e.getMessage());
-            }
+            map.put("gps", dPack.getGps());
             map.put("file", dPack.getFile());
             map.put("comment", dPack.getComment());
             datas.add(map);
@@ -243,16 +238,13 @@ public class DataPacketFragment extends Fragment {
             if(addresses.size() > 0){
                 Address address = addresses.get(0);
                 for(int i = 0; i < address.getMaxAddressLineIndex()+1; i++) {
-                    stringBuilder.append(address.getAddressLine(i)).append(", ");
+                    stringBuilder.append(address.getAddressLine(i)).append(" ");
                 }
                 //stringBuilder.append(address.getLocality()).append("_");
                 //stringBuilder.append(address.getPostalCode()).append("_");
                 //stringBuilder.append(address.getCountryCode()).append("_");
                 //stringBuilder.append(address.getCountryName()).append("_");
-                stringBuilder
-                        .append(address.getLocality()).append(", ")
-                        .append(address.getAdminArea()).append(", ")
-                        .append(address.getCountryName());
+
                 addressName = stringBuilder.toString();
             }
         } catch (IOException e) {

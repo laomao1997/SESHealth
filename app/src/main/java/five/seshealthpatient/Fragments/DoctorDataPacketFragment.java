@@ -1,6 +1,7 @@
 package five.seshealthpatient.Fragments;
 
 import android.app.Fragment;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.location.Address;
@@ -12,16 +13,15 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.baoyz.swipemenulistview.SwipeMenu;
-import com.baoyz.swipemenulistview.SwipeMenuCreator;
-import com.baoyz.swipemenulistview.SwipeMenuItem;
-import com.baoyz.swipemenulistview.SwipeMenuListView;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -39,7 +39,10 @@ import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import five.seshealthpatient.Activities.DoctorActivity;
+import five.seshealthpatient.Activities.ViewPatientDataPacketActivity;
 import five.seshealthpatient.Model.DataPacket;
+import five.seshealthpatient.Model.UserInformation;
 import five.seshealthpatient.R;
 
 public class DoctorDataPacketFragment extends Fragment {
@@ -65,12 +68,8 @@ public class DoctorDataPacketFragment extends Fragment {
     /**
      * UI references
      */
-    @BindView(R.id.tvDataPack)
-    TextView mTextViewDataPack;
-    @BindView(R.id.listView)
-    SwipeMenuListView mListView;
-    @BindView(R.id.editTextComment)
-    EditText mEditTextComment;
+    @BindView(R.id.list_view)
+    ListView listView;
 
     public DoctorDataPacketFragment() {
 
@@ -121,6 +120,7 @@ public class DoctorDataPacketFragment extends Fragment {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
                 showData(dataSnapshot);
+
             }
 
             @Override
@@ -136,8 +136,51 @@ public class DoctorDataPacketFragment extends Fragment {
      * @param dataSnapshot
      */
     private void showData(DataSnapshot dataSnapshot) {
+        final List<Map<String, Object>> datas=new ArrayList<Map<String, Object>>();
+        for(DataSnapshot ds : dataSnapshot.child("user").child(userID).child("pair").getChildren())
+        {
+            UserInformation uInfo = new UserInformation();
+            //uInfo.setName(ds.child(userID).child("pair").getValue(UserInformation.class).getName()); //set the name
+            String UID = "";
+            String userName = null;
+            long numDataPack = 0;
+            if(ds.getValue().equals("passed")){
+                UID = ds.getKey();
+                uInfo.setUID(UID);
+                Log.d(TAG, "getPairedUsers: test111UID :"+UID);
+                for(DataSnapshot ds1 : dataSnapshot.child("user").getChildren()){
+                    if(ds1.getKey().equals(UID)){
+                        userName = ds1.child("name").getValue(String.class);
+                        numDataPack = ds1.child("packet").getChildrenCount();
 
+                        Map map = new HashMap();
+                        map.put("patientID", UID);
+                        map.put("patientName", userName);
+                        map.put("numberOfDataPack", numDataPack);
+                        datas.add(map);
+                    }
+                }
 
+            }
+        }
+        simpleAdapter = new SimpleAdapter(getContext(), datas, R.layout.listview_doctor_patients,
+                new String[]{"patientID", "patientName", "numberOfDataPack"},
+                new int[]{R.id.tvPatientID, R.id.tvPatientName, R.id.tvPatientPackNumber});
+        listView.setAdapter(simpleAdapter);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener()
+        {
+            // 第position项被单击时激发该方法。
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id)
+            {
+                //toastMessage(datas.get(position).get("patientName").toString());
+                String choosePatientID = datas.get(position).get("patientID").toString();
+                Intent intent = new Intent(getActivity(), ViewPatientDataPacketActivity.class);
+                intent.putExtra("TRANS_PATIENT_ID", choosePatientID);
+                startActivity(intent);
+            }
+        });
     }
 
     private void toastMessage(String message){

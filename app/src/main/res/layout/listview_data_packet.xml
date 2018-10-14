@@ -2,33 +2,53 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:orientation="vertical"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:layout_marginTop="10dp"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
+    android:elevation="10dp"
+    android:background="#ffffff">
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="2dp">
 
-    <TextView
-        android:id="@+id/dateTvInLv"
-        android:text="time"
-        android:textStyle="bold"
-        android:gravity="center"
-        android:layout_marginStart="5dp"
-        android:textSize="20sp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/dateTvInLv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:gravity="center"
+            android:text="time"
+            android:textSize="14sp" />
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="3dp"
+            android:layout_toStartOf="@+id/heartTvInLv"
+            android:src="@drawable/red_icon" />
+
+        <TextView
+            android:id="@+id/heartTvInLv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="5dp"
+            android:gravity="center"
+            android:text="heart rate number"
+            android:textSize="14sp" />
+
+    </RelativeLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:padding="2dp">
-        <TextView
-            android:text="Text: "
-            android:gravity="start"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginStart="5dp"
-            android:textSize="14sp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
 
         <TextView
             android:id="@+id/textTvInLv"
@@ -37,59 +57,31 @@
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
             android:layout_marginStart="5dp"
-            android:textSize="14sp"
+            android:textSize="16sp"
+            android:textColor="@color/blackText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:padding="2dp">
 
-        <TextView
-            android:text="Heart rate: "
-            android:gravity="start"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
+        <ImageView
+            android:layout_width="18dp"
+            android:layout_height="18dp"
             android:layout_marginStart="5dp"
-            android:textSize="14sp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <TextView
-            android:id="@+id/heartTvInLv"
-            android:text="heart rate number"
-            android:gravity="center"
-            android:layout_marginStart="5dp"
-            android:textSize="14sp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="2dp">
-
-        <TextView
-            android:text="Location: "
-            android:gravity="start"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginStart="5dp"
-            android:textSize="14sp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:src="@drawable/ic_action_location" />
 
         <TextView
             android:id="@+id/gpsTvInLv"
             android:text="gps"
-            android:gravity="center"
-            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
             android:textSize="14sp"
+            android:textAlignment="textStart"
+            android:textColor="@color/colorPrimary"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
@@ -101,15 +93,11 @@
         android:orientation="horizontal"
         android:padding="2dp">
 
-        <TextView
-            android:text="File name: "
-            android:gravity="start"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
+        <ImageView
+            android:layout_width="16dp"
+            android:layout_height="16dp"
             android:layout_marginStart="5dp"
-            android:textSize="14sp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:src="@drawable/ic_action_choose_file" />
 
         <TextView
             android:id="@+id/fileTvInLv"
@@ -117,6 +105,7 @@
             android:gravity="center"
             android:layout_marginStart="5dp"
             android:textSize="14sp"
+            android:textColor="@color/colorPrimary"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </LinearLayout>
@@ -143,6 +132,7 @@
             android:gravity="center"
             android:layout_marginStart="5dp"
             android:textSize="14sp"
+            android:textColor="@color/blackText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </LinearLayout>
