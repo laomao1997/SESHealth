@@ -1,72 +1,107 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="five.seshealthpatient.Fragments.DoctorInformationFragment">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical">
 
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
+        android:layout_weight="1"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/tvName"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Name: "
-            android:textAlignment="textStart"
-            android:textSize="18sp"
-            android:padding="5dp" />
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/tvEmail"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Email: "
-            android:textAlignment="textStart"
-            android:textSize="18sp"
-            android:padding="5dp" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_margin="10dp"
+                android:elevation="10dp"
+                android:background="#fff">
+
+                <TextView
+                    android:id="@+id/tvName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Name: "
+                    android:textAlignment="textStart"
+                    android:textSize="18sp"
+                    android:padding="5dp" />
+
+                <TextView
+                    android:id="@+id/tvEmail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Email: "
+                    android:textAlignment="textStart"
+                    android:textSize="18sp"
+                    android:padding="5dp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_margin="10dp"
+                android:elevation="10dp"
+                android:background="#fff">
+                <TextView
+                    android:id="@+id/tvGender"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Gender: "
+                    android:textAlignment="textStart"
+                    android:textSize="18sp"
+                    android:padding="5dp" />
+
+                <TextView
+                    android:id="@+id/tvGroup"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="User group: "
+                    android:textAlignment="textStart"
+                    android:textSize="18sp"
+                    android:padding="5dp" />
+            </LinearLayout>
 
 
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="0"
-            android:visibility="visible"
-            tools:layout_height="5dp" />
+            <Button
+                android:id="@+id/btnPair"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:layout_marginStart="10dp"
+                android:text="View your patients"
+                android:textAlignment="textStart"
+                android:textAllCaps="false"
+                android:textColor="@color/colorPrimary" />
+        </LinearLayout>
 
-        <TextView
-            android:id="@+id/tvGender"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Gender: "
-            android:textAlignment="textStart"
-            android:textSize="18sp"
-            android:padding="5dp" />
+    </LinearLayout>
 
-        <TextView
-            android:id="@+id/tvGroup"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="User group: "
-            android:textAlignment="textStart"
-            android:textSize="18sp"
-            android:padding="5dp" />
-
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:elevation="10dp"
+        android:padding="10dp"
+        android:background="#fff"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:fitsSystemWindows="true">
         <Button
             android:id="@+id/btnEdit"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/btn_bg_blue"
             android:text="Edit information"
-            android:textAlignment="center" />
-
-        <Button
-            android:id="@+id/btnPair"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Pair"
-            android:textAlignment="center" />
+            android:textColor="@color/whiteColor"/>
     </LinearLayout>
-</FrameLayout>
+</LinearLayout>

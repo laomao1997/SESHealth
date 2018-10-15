@@ -1,44 +1,34 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="five.seshealthpatient.Fragments.SendFileFragment">
+    android:orientation="vertical" >
 
-    <!-- TODO: Update blank fragment layout -->
+    <com.baoyz.swipemenulistview.SwipeMenuListView
+        android:id="@+id/listView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:footerDividersEnabled="false"
+        android:headerDividersEnabled="false"
+        android:divider="@null">
+    </com.baoyz.swipemenulistview.SwipeMenuListView>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
+        android:layout_height="wrap_content"
+        android:elevation="10dp"
+        android:padding="10dp"
+        android:background="#fff"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:fitsSystemWindows="true">
         <Button
             android:id="@+id/btn_upload_file"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:background="@drawable/btn_bg_blue"
+            android:textColor="@color/whiteColor"
             android:text="Upload new file" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textAlignment="center"
-            android:layout_marginTop="10dp"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:text="Files uploaded"/>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:padding="5dp">
-
-            <com.baoyz.swipemenulistview.SwipeMenuListView
-                android:id="@+id/listView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-
-        </RelativeLayout>
-
     </LinearLayout>
-</FrameLayout>
+</LinearLayout>

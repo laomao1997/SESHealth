@@ -1,53 +1,39 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="five.seshealthpatient.Fragments.MapFragment">
+    android:orientation="vertical" >
 
-    <Button
-        android:id="@+id/button_GPS"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="70dp"
-        android:layout_marginLeft="10dp"
-        android:text="GPS" />
-
-    <com.google.android.gms.maps.MapView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/map" />
-    <!--
-    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/map"
-        tools:context=".MapsActivity"
-        android:name="com.google.android.gms.maps.SupportMapFragment" />
-    -->
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:elevation="10dp"
-        android:background="#fff"
-        android:id="@+id/relLayout1">
-
-
-        <EditText
+        android:layout_weight="1"
+        android:orientation="vertical">
+        <com.google.android.gms.maps.MapView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_centerVertical="true"
-            android:textSize="15sp"
-            android:textColor="#000"
-            android:id="@+id/input_search"
-            android:background="@null"
-            android:hint="Enter Address, City or Zip Code"/>
+            android:id="@+id/map" />
+    </LinearLayout>
 
-    </RelativeLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:elevation="10dp"
+        android:padding="10dp"
+        android:background="#fff"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:fitsSystemWindows="true">
 
 
-</FrameLayout>
+        <Button
+            android:id="@+id/button_GPS"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Show facilities"
+            android:background="@drawable/btn_bg_blue"
+            android:textColor="@color/whiteColor"/>
+
+    </LinearLayout>
+
+</LinearLayout>

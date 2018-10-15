@@ -154,7 +154,7 @@ public class LoginActivity extends AppCompatActivity {
                         } else {
                             FirebaseUser user = mAuth.getCurrentUser();
                             userID = user.getUid();
-                            myRef.addValueEventListener(new ValueEventListener() {
+                            myRef.addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(DataSnapshot dataSnapshot) {
                                     // This method is called once with the initial value and again
@@ -176,6 +176,7 @@ public class LoginActivity extends AppCompatActivity {
 
                                 }
                             });
+
 
 
                         }

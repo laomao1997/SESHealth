@@ -1,131 +1,169 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="five.seshealthpatient.Fragments.PatientInformationFragment">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical">
 
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:padding="10dp">
+        android:layout_weight="1"
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/tvName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Name: "
+            android:text="Welcome, "
+            android:layout_marginTop="40dp"
+            android:layout_marginStart="10dp"
             android:textAlignment="textStart"
-            android:textSize="18sp"
+            android:textSize="25sp"
+            android:textColor="@color/blackText"
             android:padding="5dp" />
 
-        <TextView
-            android:id="@+id/tvEmail"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Email: "
-            android:textAlignment="textStart"
-            android:textSize="18sp"
-            android:padding="5dp" />
+            android:orientation="vertical"
+            android:layout_margin="10dp"
+            android:elevation="10dp"
+            android:background="#fff">
 
-        <TextView
-            android:id="@+id/tvAge"
+
+            <TextView
+                android:id="@+id/tvEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Email: "
+                android:textAlignment="textStart"
+                android:textColor="@color/blackText"
+                android:textSize="18sp"
+                android:padding="5dp" />
+
+            <TextView
+                android:id="@+id/tvAge"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:textColor="@color/blackText"
+                android:text="Age: "
+                android:textAlignment="textStart"
+                android:textSize="18sp" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="5dp"
-            android:text="Age: "
-            android:textAlignment="textStart"
-            android:textSize="18sp" />
+            android:orientation="vertical"
+            android:elevation="10dp"
+            android:layout_margin="10dp"
+            android:background="#fff">
 
-        <Space
+            <TextView
+                android:id="@+id/tvGender"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Gender: "
+                android:textAlignment="textStart"
+                android:textColor="@color/blackText"
+                android:textSize="18sp"
+                android:padding="5dp" />
+
+            <TextView
+                android:id="@+id/tvGroup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="User group: "
+                android:textColor="@color/blackText"
+                android:textAlignment="textStart"
+                android:textSize="18sp"
+                android:padding="5dp" />
+
+            <TextView
+                android:id="@+id/tvBirth"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:text="D.O.B: "
+                android:textColor="@color/blackText"
+                android:textAlignment="textStart"
+                android:textSize="18sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="0"
-            android:visibility="visible"
-            tools:layout_height="5dp" />
+            android:orientation="vertical"
+            android:elevation="10dp"
+            android:layout_margin="10dp"
+            android:background="#fff">
 
-        <TextView
-            android:id="@+id/tvGender"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Gender: "
-            android:textAlignment="textStart"
-            android:textSize="18sp"
-            android:padding="5dp" />
+            <TextView
+                android:id="@+id/tvHeight"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Height: "
+                android:textColor="@color/blackText"
+                android:textAlignment="textStart"
+                android:textSize="18sp"
+                android:padding="5dp" />
 
-        <TextView
-            android:id="@+id/tvGroup"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="User group: "
-            android:textAlignment="textStart"
-            android:textSize="18sp"
-            android:padding="5dp" />
+            <TextView
+                android:id="@+id/tvWeight"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Weight: "
+                android:textColor="@color/blackText"
+                android:textAlignment="textStart"
+                android:textSize="18sp"
+                android:padding="5dp" />
 
-        <TextView
-            android:id="@+id/tvBirth"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="5dp"
-            android:text="D.O.B: "
-            android:textAlignment="textStart"
-            android:textSize="18sp" />
+            <TextView
+                android:id="@+id/tvCondition"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:textColor="@color/blackText"
+                android:text="Medical condition: "
+                android:textAlignment="textStart"
+                android:textSize="18sp" />
 
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="0"
-            android:visibility="visible"
-            tools:layout_height="5dp" />
+        </LinearLayout>
 
-        <TextView
-            android:id="@+id/tvHeight"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Height: "
-            android:textAlignment="textStart"
-            android:textSize="18sp"
-            android:padding="5dp" />
-
-        <TextView
-            android:id="@+id/tvWeight"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Weight: "
-            android:textAlignment="textStart"
-            android:textSize="18sp"
-            android:padding="5dp" />
-
-        <TextView
-            android:id="@+id/tvCondition"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="5dp"
-            android:text="Medical condition: "
-            android:textAlignment="textStart"
-            android:textSize="18sp" />
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="0"
-            android:visibility="visible"
-            tools:layout_height="5dp" />
-
-        <Button
-            android:id="@+id/btnEdit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Edit information"
-            android:textAlignment="center" />
 
         <Button
             android:id="@+id/btnPair"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Pair"
+            android:textAllCaps="false"
+            android:text="View your doctors"
+            android:layout_marginStart="10dp"
+            android:textColor="@color/colorPrimary"
+            android:background="@null"
             android:textAlignment="center" />
     </LinearLayout>
-</FrameLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:elevation="10dp"
+        android:padding="10dp"
+        android:background="#fff"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:fitsSystemWindows="true">
+        <Button
+            android:id="@+id/btnEdit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/btn_bg_blue"
+            android:text="Edit information"
+            android:textColor="@color/whiteColor"/>
+    </LinearLayout>
+</LinearLayout>

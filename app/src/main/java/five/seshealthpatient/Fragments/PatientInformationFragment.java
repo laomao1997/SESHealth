@@ -162,11 +162,11 @@ public class PatientInformationFragment extends Fragment {
             uInfo.setWeight(ds.child(userID).getValue(UserInformation.class).getWeight()); //set the weight
             uInfo.setCondition(ds.child(userID).getValue(UserInformation.class).getCondition()); //set the group
 
-            mName.setText("Name: " + uInfo.getName());
+            mName.setText("Welcome, " + uInfo.getName());
             mEmail.setText("Email: " + uInfo.getEmail());
             mAge.setText("Age: " + uInfo.getAge());
             mGender.setText("Gender: " + (uInfo.isGender()?"male":"female"));
-            mBirthday.setText("Birthday: " + uInfo.getBirthday());
+            mBirthday.setText("D.O.B: " + uInfo.getBirthday());
             mGroup.setText("Group: " + uInfo.getGroup());
             mHeight.setText("Height: " + uInfo.getHeight());
             mWeight.setText("Weight: " + uInfo.getWeight());

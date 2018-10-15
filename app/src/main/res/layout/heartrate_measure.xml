@@ -77,7 +77,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Resting Heart Rate:"
-            android:textColor="@color/colorPrimaryDark"
+            android:textColor="@color/whiteColor"
             android:textSize="22sp" />
 
         <TextView
@@ -86,7 +86,7 @@
             android:layout_height="wrap_content"
             android:hint="get RHR"
             android:paddingLeft="8dp"
-            android:textColor="@color/colorPrimaryDark"
+            android:textColor="@color/whiteColor"
             android:textSize="22sp" />
     </LinearLayout>
 
@@ -104,7 +104,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Check Workout Efficiency"
-            android:textColor="@color/colorPrimaryDark"
+            android:textColor="@color/whiteColor"
             android:textSize="22sp"/>
 
     </LinearLayout>

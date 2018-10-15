@@ -1,104 +1,136 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="five.seshealthpatient.Fragments.EditInformationFragment">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
+        android:padding="10dp"
+        android:layout_weight="1"
         android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/nameET"
-            android:layout_width="195dp"
-            android:layout_height="wrap_content"
-            android:hint="@string/name_txt"
-            android:inputType="text" />
-
-        <EditText
-            android:id="@+id/emailET"
-            android:layout_width="195dp"
-            android:layout_height="wrap_content"
-            android:hint="@string/email_txt"
-            android:inputType="text" />
-
-        <EditText
-            android:id="@+id/ageET"
-            android:layout_width="195dp"
-            android:layout_height="wrap_content"
-            android:hint="@string/age_txt"
-            android:inputType="text" />
-
-        <Space
+        <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="0"
-            android:visibility="visible"
-            tools:layout_height="5dp" />
+            android:layout_height="wrap_content">
+            <EditText
+                android:id="@+id/nameET"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/name_txt"
+                android:inputType="text" />
+        </android.support.design.widget.TextInputLayout>
 
-        <EditText
-            android:id="@+id/genderET"
-            android:layout_width="195dp"
-            android:layout_height="wrap_content"
-            android:hint="@string/gender_txt"
-            android:inputType="text" />
-
-        <EditText
-            android:id="@+id/birthET"
-            android:layout_width="195dp"
-            android:layout_height="wrap_content"
-            android:hint="@string/birth_txt"
-            android:inputType="text" />
-
-        <Space
+        <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="0"
-            android:visibility="visible"
-            tools:layout_height="5dp" />
+            android:layout_height="wrap_content">
+            <EditText
+                android:id="@+id/emailET"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/email_txt"
+                android:inputType="text" />
+        </android.support.design.widget.TextInputLayout>
 
-        <EditText
-            android:id="@+id/heightET"
-            android:layout_width="195dp"
-            android:layout_height="wrap_content"
-            android:hint="@string/height_txt"
-            android:inputType="text" />
-
-        <EditText
-            android:id="@+id/weightET"
-            android:layout_width="195dp"
-            android:layout_height="wrap_content"
-            android:hint="@string/weight_txt"
-            android:inputType="text" />
-
-        <EditText
-            android:id="@+id/conditionET"
-            android:layout_width="195dp"
-            android:layout_height="wrap_content"
-            android:hint="@string/condition_txt"
-            android:inputType="text" />
-
-        <Space
+        <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="0"
-            android:visibility="visible"
-            tools:layout_height="5dp" />
+            android:layout_height="wrap_content">
+            <EditText
+                android:id="@+id/ageET"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/age_txt"
+                android:inputType="text" />
+        </android.support.design.widget.TextInputLayout>
 
-        <Button
-            android:id="@+id/btnConfirm"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/btn_confirm"
-            android:textAlignment="center" />
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <EditText
+                android:id="@+id/genderET"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/gender_txt"
+                android:inputType="text" />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <EditText
+                android:id="@+id/birthET"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/birth_txt"
+                android:inputType="text" />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <EditText
+                android:id="@+id/heightET"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/height_txt"
+                android:inputType="text" />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <EditText
+                android:id="@+id/weightET"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/weight_txt"
+                android:inputType="text" />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <EditText
+                android:id="@+id/conditionET"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/condition_txt"
+                android:inputType="text" />
+        </android.support.design.widget.TextInputLayout>
 
         <Button
             android:id="@+id/btnExit"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:textAlignment="textStart"
+            android:textAllCaps="false"
+            android:textColor="@color/colorPrimary"
             android:text="@string/btn_exit"
-            android:textAlignment="center" />
+            android:background="@null"
+             />
     </LinearLayout>
-</FrameLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:elevation="10dp"
+        android:padding="10dp"
+        android:background="#fff"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:fitsSystemWindows="true">
+
+        <Button
+            android:id="@+id/btnConfirm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/btn_bg_blue"
+            android:text="@string/btn_confirm"
+            android:textColor="@color/whiteColor"/>
+    </LinearLayout>
+
+</LinearLayout>
+

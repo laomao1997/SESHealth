@@ -41,8 +41,10 @@ import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -68,6 +70,18 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1234;
     private static final float DEFAULT_ZOOM = 15f;
 
+    /**
+     * Hospitals in Sydney City
+     */
+    private static final LatLng ST_VINCENT = new LatLng(-33.8809265258, 151.2199616432);
+    private static final LatLng PRINCE_ALFRED = new LatLng(-33.8891562498, 151.1829471588);
+    private static final LatLng EAST_SYDNEY = new LatLng(-33.8737404548, 151.2159517407);
+    private static final LatLng DAY_SURGERY = new LatLng(-33.8916744401, 151.1831671000);
+    private static final LatLng BALMAIN = new LatLng(-33.8591682652,151.1818313599);
+    private static final LatLng SYDNEY_DAY = new LatLng(-33.8669928858,151.2121128969);
+    private static final LatLng EYE = new LatLng(-33.8684880273,151.2124809623);
+    private static final LatLng SKIN = new LatLng(-33.8754229003,151.2158444524);
+
     GoogleMap mGoogleMap;
     MapView mMapView;
     View mView;
@@ -77,9 +91,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     private FusedLocationProviderClient mFusedLocationClient;
 
 
-    //widgets
-    @BindView(R.id.input_search)
-    EditText mSearchText;
 
     public MapFragment() {
         // Required empty public constructor
@@ -134,6 +145,59 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
         // googleMap.addMarker(new MarkerOptions().position(new LatLng(-33.8839197, 151.1991928)));
         moveCamera(new LatLng(-33.8839197, 151.1991928), DEFAULT_ZOOM);
+
+        initGPS();
+    }
+
+    @OnClick(R.id.button_GPS)
+    public void getFacilities() {
+        String searchString = "clinic";
+
+        Geocoder geocoder = new Geocoder(getContext());
+        List<Address> list = new ArrayList<>();
+        try{
+            list = geocoder.getFromLocationName(searchString, 1);
+        }catch (IOException e){
+            Log.e(TAG, "geoLocate: IOException: " + e.getMessage() );
+        }
+
+        for(Address address : list) {
+            mGoogleMap.addMarker(new MarkerOptions()
+                    .position(new LatLng(address.getLatitude(), address.getLongitude()))
+                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.icons8_facilities)));
+        }
+        mGoogleMap.addMarker(new MarkerOptions()
+                .position(ST_VINCENT)
+                .title("St Vincent's Hospital Sydney")
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.icons8_facilities)));
+        mGoogleMap.addMarker(new MarkerOptions()
+                .position(PRINCE_ALFRED)
+                .title("Royal Prince Alfred Hospital")
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.icons8_facilities)));
+        mGoogleMap.addMarker(new MarkerOptions()
+                .position(EAST_SYDNEY)
+                .title("East Sydney ")
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.icons8_facilities)));
+        mGoogleMap.addMarker(new MarkerOptions()
+                .position(DAY_SURGERY)
+                .title("Sydney Day Surgery Prince Alfred")
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.icons8_facilities)));
+        mGoogleMap.addMarker(new MarkerOptions()
+                .position(BALMAIN)
+                .title("Baimain Hospital")
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.icons8_facilities)));
+        mGoogleMap.addMarker(new MarkerOptions()
+                .position(SYDNEY_DAY)
+                .title("Sydney Day Hospital")
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.icons8_facilities)));
+        mGoogleMap.addMarker(new MarkerOptions()
+                .position(EYE)
+                .title("Sydney Hospital and Sydney Eye Hospital")
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.icons8_facilities)));
+        mGoogleMap.addMarker(new MarkerOptions()
+                .position(SKIN)
+                .title("The Skin Hospital")
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.icons8_facilities)));
     }
 
 
@@ -167,7 +231,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         }
     }
 
-    @OnClick(R.id.button_GPS)
+
     public void initGPS() {
 
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(getActivity());
@@ -208,7 +272,14 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
         mGoogleMap.setMyLocationEnabled(true);
 
+        //getFacilities();
     }
 
-
+    /**
+     * customizable toast
+     * @param message
+     */
+    private void toastMessage(String message){
+        Toast.makeText(getActivity(),message,Toast.LENGTH_SHORT).show();
+    }
 }
