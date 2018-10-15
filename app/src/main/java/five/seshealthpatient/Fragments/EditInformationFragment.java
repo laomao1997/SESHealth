@@ -133,16 +133,30 @@ public class EditInformationFragment extends Fragment {
                 for(DataSnapshot ds : dataSnapshot.getChildren()) {
                     uInfo = new UserInformation();
                     uInfo.setName(ds.child(userID).getValue(UserInformation.class).getName()); //set the name
+                    mName.setText(uInfo.getName());
                     uInfo.setEmail(ds.child(userID).getValue(UserInformation.class).getEmail()); //set the email
+                    mEmail.setText(uInfo.getEmail());
                     uInfo.setAge(ds.child(userID).getValue(UserInformation.class).getAge()); //set the age
+                    mAge.setText(uInfo.getAge());
                     uInfo.setGender(ds.child(userID).getValue(UserInformation.class).isGender()); //set the gender
+                    if(uInfo.isGender()) {
+                        mGender.setText("Male");
+                    }else{
+                        mGender.setText("Female");
+                    }
                     //store previous gender value in variable
-                    prevGender = ds.child(userID).getValue(UserInformation.class).isGender();
+                    //prevGender = ds.child(userID).getValue(UserInformation.class).isGender();
+
                     uInfo.setBirthday(ds.child(userID).getValue(UserInformation.class).getBirthday()); //set the birthday
+                    mBirthday.setText(uInfo.getBirthday());
                     uInfo.setGroup(ds.child(userID).getValue(UserInformation.class).getGroup()); //set the group
+                    //mGroup.setText(uInfo.getGroup());
                     uInfo.setHeight(ds.child(userID).getValue(UserInformation.class).getHeight()); //set the height
+                    mHeight.setText(uInfo.getHeight());
                     uInfo.setWeight(ds.child(userID).getValue(UserInformation.class).getWeight()); //set the weight
+                    mWeight.setText(uInfo.getWeight());
                     uInfo.setCondition(ds.child(userID).getValue(UserInformation.class).getCondition()); //set the group
+                    mCondition.setText(uInfo.getCondition());
                 }
             }
 
@@ -161,7 +175,17 @@ public class EditInformationFragment extends Fragment {
             FirebaseUser user = mAuth.getCurrentUser();
             userID = user.getUid();
             updateInfo();
-            myRef.child(userID).setValue(uInfo);
+            myRef.child(userID).child("name").setValue(uInfo.getName());
+            myRef.child(userID).child("email").setValue(uInfo.getEmail());
+            myRef.child(userID).child("age").setValue(uInfo.getAge());
+            myRef.child(userID).child("gender").setValue(mGender.getText().toString());
+            myRef.child(userID).child("birthday").setValue(uInfo.getBirthday());
+            myRef.child(userID).child("height").setValue(uInfo.getHeight());
+            myRef.child(userID).child("weight").setValue(uInfo.getWeight());
+            myRef.child(userID).child("condition").setValue(uInfo.getCondition());
+
+
+
             getActivity().getFragmentManager().popBackStack();
     }
 

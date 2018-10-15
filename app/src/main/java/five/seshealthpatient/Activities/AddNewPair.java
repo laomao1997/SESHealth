@@ -128,7 +128,6 @@ public class AddNewPair extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
-                Log.d(TAG, "onDataChange:");
                 dsTest = dataSnapshot;
                 userList.clear(); // I have to clear the list, or once the dataChange, the data will be added repeated into the list.
                 btnStateTextList.clear();
