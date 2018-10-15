@@ -178,7 +178,12 @@ public class EditInformationFragment extends Fragment {
             myRef.child(userID).child("name").setValue(uInfo.getName());
             myRef.child(userID).child("email").setValue(uInfo.getEmail());
             myRef.child(userID).child("age").setValue(uInfo.getAge());
-            myRef.child(userID).child("gender").setValue(mGender.getText().toString());
+        if(uInfo.isGender()) {
+            myRef.child(userID).child("gender").setValue(true);
+        }else{
+            myRef.child(userID).child("gender").setValue(false);
+        }
+
             myRef.child(userID).child("birthday").setValue(uInfo.getBirthday());
             myRef.child(userID).child("height").setValue(uInfo.getHeight());
             myRef.child(userID).child("weight").setValue(uInfo.getWeight());
