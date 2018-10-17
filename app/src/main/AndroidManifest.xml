@@ -58,6 +58,9 @@
         <activity android:name="five.seshealthpatient.Fragments.HeartRate_MainActivity" />
         <activity android:name=".Activities.DoctorActivity" />
         <activity android:name=".Activities.ViewPatientDataPacketActivity" />
+        <activity android:name=".Activities.SelectUserActivity"/>
+        <activity android:name=".Activities.RegisterInformation"/>
+        <activity android:name=".Activities.RegisterInformationDoctor"/>
     </application>
 
 </manifest>
